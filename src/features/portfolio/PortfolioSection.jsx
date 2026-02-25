@@ -5,9 +5,9 @@ import { useRef, useState, useEffect } from "react";
 const projects = [
     {
         code: "SPMB",
-        title: "Portal Pendaftaran",
+        title: "Antrian SPMB",
         category: "Web App",
-        tech: ["Laravel"],
+        tech: ["Go","React.JS"],
         description:
             "Sistem Portal Penerimaan Mahasiswa Baru yang terintegrasi.",
         images: [
@@ -18,9 +18,9 @@ const projects = [
     },
     {
         code: "BFS",
-        title: "Backend System",
+        title: "Sistem Financial Bank",
         category: "API",
-        tech: ["Node.js"],
+        tech: ["Laravel", "Vue.JS"],
         description:
             "Backend Financial System untuk manajemen keuangan terintegrasi.",
         images: [
@@ -31,11 +31,11 @@ const projects = [
     },
     {
         code: "POS",
-        title: "Seragam SMK",
+        title: "Seragam",
         category: "POS",
-        tech: ["React"],
+        tech: ["Next.JS"],
         description:
-            "Point of Sale untuk penjualan seragam SMK dengan inventory tracking.",
+            "Point of Sale untuk penjualan seragam dengan inventory tracking.",
         images: [
             "https://picsum.photos/seed/pos1/800/600",
             "https://picsum.photos/seed/pos2/800/600",
@@ -46,7 +46,7 @@ const projects = [
         code: "INV",
         title: "Management System",
         category: "Inventory",
-        tech: ["Database"],
+        tech: ["Laravel"],
         description:
             "Sistem manajemen inventori dengan real-time monitoring dan laporan.",
         images: [
@@ -57,9 +57,9 @@ const projects = [
     },
     {
         code: "OCVS",
-        title: "Verification System",
+        title: "One Click Voting System",
         category: "Security",
-        tech: ["AI"],
+        tech: ["Laravel"],
         description:
             "Optical Character & Vision System untuk verifikasi dokumen otomatis.",
         images: [
@@ -72,7 +72,7 @@ const projects = [
         code: "BASECAMP",
         title: "anakalam.com",
         category: "Website",
-        tech: ["Community"],
+        tech: ["Go"],
         description:
             "Platform komunitas untuk berbagi cerita dan pengalaman anak alam.",
         images: [
@@ -85,7 +85,7 @@ const projects = [
         code: "CODEX",
         title: "Learning Platform",
         category: "EdTech",
-        tech: ["Coding"],
+        tech: ["Go", "React.JS"],
         description:
             "Platform pembelajaran coding intensif dengan mentoring personal.",
         images: [
