@@ -7,7 +7,12 @@ export default function HeroCube({ cubeStyle, mouse, className, onClick }) {
     return (
         <div
             onClick={onClick}
-            className={`relative w-80 h-80 animate-float cursor-pointer active:scale-95 transition-transform duration-150  ${className}`}
+            className={`relative 
+w-52 h-52
+sm:w-64 sm:h-64
+md:w-72 md:h-72
+xl:w-80 xl:h-80
+animate-float cursor-pointer active:scale-95 transition-transform duration-150 ${className}`}
         >
 
 
@@ -34,6 +39,18 @@ export default function HeroCube({ cubeStyle, mouse, className, onClick }) {
                         <stop offset="100%" stopColor="#0c4a6e" stopOpacity="0.5" /> */}
                     </linearGradient>
 
+                    <linearGradient id="cubeShimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="transparent" />
+                        <stop offset="50%" stopColor="white" stopOpacity="0.6" />
+                        <stop offset="100%" stopColor="transparent" />
+                    </linearGradient>
+
+                    <linearGradient id="shimmerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="transparent" />
+                        <stop offset="50%" stopColor="white" stopOpacity="0.45" />
+                        <stop offset="100%" stopColor="transparent" />
+                    </linearGradient>
+
                     <filter id="glow">
                         <feGaussianBlur stdDeviation="3" result="coloredBlur" />
                         <feMerge>
@@ -48,13 +65,24 @@ export default function HeroCube({ cubeStyle, mouse, className, onClick }) {
                             <feMergeNode in="SourceGraphic" />
                         </feMerge>
                     </filter>
+
+                    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="6" result="blur" />
+                        <feMerge>
+                            <feMergeNode in="blur" />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                    <clipPath id="cubeClip">
+                        <polygon points="100,20 170,60 170,140 100,180 30,140 30,60" />
+                    </clipPath>
                 </defs>
 
                 {/* Back face */}
                 <polygon
                     points="100,20 170,60 170,140 100,180 30,140 30,60"
                     fill="url(#cubeGrad2)"
-                    filter="url(#glow)"
+                    filter="url(#softGlow)"
                 />
 
                 {/* Right face */}
@@ -100,8 +128,30 @@ export default function HeroCube({ cubeStyle, mouse, className, onClick }) {
                     }}
                     className="drop-shadow-[0_0_8px_rgba(59,130,246,0.6)]"
                 />
+
+                <g clipPath="url(#cubeClip)">
+                    <rect
+                        x="-200"
+                        y="-200"
+                        width="140"
+                        height="600"
+                        fill="url(#shimmerGrad)"
+                        opacity="0.28"
+                        transform="rotate(35 100 100)"
+                    >
+                        <animateTransform
+                            attributeName="transform"
+                            type="translate"
+                            from="-300 -300"
+                            to="300 300"
+                            dur="8s"
+                            repeatCount="indefinite"
+                            additive="sum"
+                        />
+                    </rect>
+                </g>
             </svg>
-            <div
+            {/* <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
                     background: `radial-gradient(
@@ -113,7 +163,7 @@ export default function HeroCube({ cubeStyle, mouse, className, onClick }) {
             />
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="shine-line"></div>
-            </div>
+            </div> */}
         </div>
     );
 }
