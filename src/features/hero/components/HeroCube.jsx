@@ -8,11 +8,11 @@ export default function HeroCube({ cubeStyle, mouse, className, onClick }) {
         <div
             onClick={onClick}
             className={`relative 
-w-52 h-52
-sm:w-64 sm:h-64
-md:w-72 md:h-72
-xl:w-80 xl:h-80
-animate-float cursor-pointer active:scale-95 transition-transform duration-150 ${className}`}
+                        w-52 h-52
+                        sm:w-64 sm:h-64
+                        md:w-72 md:h-72
+                        xl:w-80 xl:h-80
+                        animate-float cursor-pointer active:scale-95 transition-transform duration-150 will-change-transform ${className}`}
         >
 
 

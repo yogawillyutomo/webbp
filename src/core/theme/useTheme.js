@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export default function useTheme() {
   const getInitialTheme = () => {
     if (typeof window === "undefined") {
-      return "dark"; // server render default
+      return "dark"; // default saat SSR
     }
 
     return localStorage.getItem("theme") ?? "dark";
@@ -12,9 +12,20 @@ export default function useTheme() {
 
   const [theme, setTheme] = useState(getInitialTheme);
 
-  // sync ke DOM dan localStorage
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    const root = document.documentElement;
+
+    // CSS system Anda
+    root.setAttribute("data-theme", theme);
+
+    // Tailwind system
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+
+    // simpan theme
     localStorage.setItem("theme", theme);
   }, [theme]);
 
