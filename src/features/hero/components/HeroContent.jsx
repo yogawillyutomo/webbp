@@ -4,7 +4,7 @@ import RevealSection from "@/shared/ui/RevealSection";
 
 export default function HeroContent() {
     return (
-        <RevealSection duration={1000}>
+        <RevealSection disableInitial>
             <div className="space-y-6 text-center xl:text-left pt-8 xl:pt-0">
 
                 {/* BADGE */}

@@ -1,61 +1,60 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+
+import { motion } from "framer-motion";
 
 export default function RevealSection({
   children,
   className = "",
-  repeat = false,
   delay = 0,
-  duration = 800,
-  threshold = 0.2,
-  direction = "up", // up | none
-  subtle = true,
+  duration = 0.6,
+  direction = "up",
+  zoom = false,
+  fade = true,
+  distance = 40,
+  repeat = false,
+  disableInitial = false
 }) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (repeat) {
-          setVisible(entry.isIntersecting);
-        } else {
-          if (entry.isIntersecting) {
-            setVisible(true);
-            observer.disconnect();
-          }
-        }
-      },
-      { threshold }
-    );
+  let x = 0;
+  let y = 0;
 
-    if (ref.current) observer.observe(ref.current);
+  if (direction === "up") y = distance;
+  if (direction === "down") y = -distance;
+  if (direction === "left") x = distance;
+  if (direction === "right") x = -distance;
 
-    return () => observer.disconnect();
-  }, [repeat, threshold]);
-
-  const translate =
-    direction === "up" ? "translate-y-8" : "translate-y-0";
-
-  const subtleScale = subtle ? "scale-[0.98]" : "";
+  const variants = {
+    hidden: {
+      opacity: fade ? 0 : 1,
+      x,
+      y,
+      scale: zoom ? 0.92 : 1
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      scale: 1
+    }
+  };
 
   return (
-    <div
-      ref={ref}
-      style={{
-        transitionDuration: `${duration}ms`,
-        transitionDelay: `${delay}ms`,
+    <motion.div
+      className={className}
+      variants={variants}
+      initial={disableInitial ? false : "hidden"}
+      whileInView="visible"
+      viewport={{
+        once: !repeat,
+        margin: "-120px"
       }}
-      className={`
-        transition-[opacity,transform] ease-[cubic-bezier(.16,1,.3,1)]
-        will-change-[opacity,transform]
-        ${visible
-          ? "opacity-100 translate-y-0 scale-100"
-          : `opacity-0 ${translate} ${subtleScale}`}
-        ${className}
-      `}
+      transition={{
+        duration,
+        delay,
+        ease: [0.16, 1, 0.3, 1]
+      }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }

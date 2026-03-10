@@ -3,19 +3,21 @@ import CyberBadge from "./CyberBadge";
 
 export default function ServicesHeader() {
     return (
-        <RevealSection direction="up" duration={900}>
+        <RevealSection direction="up" duration={0.9}>
 
             <div className="text-center mb-20 space-y-6">
 
-                <h2 className="
-        font-orbitron
-        text-4xl lg:text-5xl
-        font-bold
-        leading-[1.2]
-        pb-2
-        bg-[linear-gradient(120deg,#3b82f6,#06b6d4,#3b82f6)]
-        bg-clip-text text-transparent animate-gradient
-        ">
+                <h2
+                    className="
+            font-orbitron
+            text-4xl lg:text-5xl
+            font-bold
+            leading-[1.2]
+            pb-2
+            bg-[linear-gradient(120deg,#3b82f6,#06b6d4,#3b82f6)]
+            bg-clip-text text-transparent animate-gradient
+          "
+                >
                     Building Intelligent Digital Ecosystems
                 </h2>
 
@@ -33,8 +35,8 @@ export default function ServicesHeader() {
                     ].map((item, index) => (
                         <RevealSection
                             key={index}
-                            delay={index * 120}
-                            duration={700}
+                            delay={index * 0.12}
+                            duration={0.7}
                             direction="up"
                         >
                             <CyberBadge>{item}</CyberBadge>

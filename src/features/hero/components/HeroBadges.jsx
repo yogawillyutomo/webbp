@@ -1,7 +1,7 @@
 import { badges } from "../hero.data";
 import FloatingBadge from "@/shared/ui/FloatingBadge";
 import RevealSection from "@/shared/ui/RevealSection";
-
+import { motion } from "framer-motion";
 export default function HeroBadges({
     showBadges,
     isMobile

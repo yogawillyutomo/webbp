@@ -1,16 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
+
 import ServicesBackground from "./components/ServicesBackground";
 import ServicesHeader from "./components/ServicesHeader";
 import ServicesGrid from "./components/ServicesGrid";
 import SectionDivider from "@/shared/ui/SectionDivider";
 
+import { staggerContainer } from "@/shared/animations/staggerContainer";
+
 export default function ServicesSection() {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const handleToggle = (index) => {
-    setActiveIndex(prev => (prev === index ? null : index));
+    setActiveIndex((prev) => (prev === index ? null : index));
   };
 
   return (
@@ -18,8 +22,13 @@ export default function ServicesSection() {
 
       <ServicesBackground />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-100px" }}
+        className="relative z-10 max-w-7xl mx-auto px-6"
+      >
         <ServicesHeader />
 
         <ServicesGrid
@@ -27,9 +36,10 @@ export default function ServicesSection() {
           onToggle={handleToggle}
         />
 
-      </div>
+      </motion.div>
 
       <SectionDivider />
+
     </section>
   );
 }
