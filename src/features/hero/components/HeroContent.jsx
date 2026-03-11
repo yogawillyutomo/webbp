@@ -1,8 +1,48 @@
 import Link from "next/link";
 import { EyeIcon } from "@/shared/icons/TechIcons";
 import RevealSection from "@/shared/ui/RevealSection";
+import { useEffect, useRef } from "react";
 
-export default function HeroContent() {
+export default function HeroContent({ onWrapChange }) {
+
+    const buttonRef = useRef(null);
+
+    useEffect(() => {
+
+        const checkWrap = () => {
+
+            const el = buttonRef.current;
+            if (!el) return;
+
+            const children = el.children;
+            if (children.length < 2) return;
+
+            const firstTop = children[0].offsetTop;
+            const secondTop = children[1].offsetTop;
+
+            const wrapped = secondTop > firstTop;
+
+            onWrapChange?.(wrapped);
+        };
+
+        // delay sedikit agar layout selesai render
+        const timer = setTimeout(checkWrap, 100);
+
+        // resize window
+        window.addEventListener("resize", checkWrap);
+
+        // observer jika ukuran container berubah
+        const observer = new ResizeObserver(checkWrap);
+        if (buttonRef.current) observer.observe(buttonRef.current);
+
+        return () => {
+            clearTimeout(timer);
+            window.removeEventListener("resize", checkWrap);
+            observer.disconnect();
+        };
+
+    }, [onWrapChange]);
+
     return (
         <RevealSection disableInitial>
             <div className="space-y-6 text-center xl:text-left pt-8 xl:pt-0">
@@ -37,8 +77,10 @@ export default function HeroContent() {
                 </p>
 
                 {/* BUTTONS */}
-                <div className="flex flex-wrap gap-4 justify-center xl:justify-start">
-
+                <div
+                    ref={buttonRef}
+                    className="flex flex-wrap gap-4 justify-center xl:justify-start"
+                >
                     <Link
                         href="#contact"
                         className="btn-cyber animate-pulse-glow px-8 py-4 rounded-lg font-semibold text-lg bg-linear-to-r from-blue-600 to-cyan-500 inline-block"
@@ -53,7 +95,6 @@ export default function HeroContent() {
                         <EyeIcon />
                         Watch Demo
                     </Link>
-
                 </div>
 
             </div>

@@ -117,20 +117,16 @@ export default function PortfolioFilter({
                         className={`
             relative z-10
             px-8 py-3
-
             text-[15px]
             font-black
             tracking-wide
-
             whitespace-nowrap
-
             transition-all duration-300
             active:scale-95
-
             ${activeCategory === cat
-                                ? "text-black"
-                                : "text-white/70 hover:text-white"
-                            }
+            ? "text-black dark:text-black"
+            : "text-gray-700 hover:text-black dark:text-white/70 dark:hover:text-white"
+            }
             `}
                     >
                         {cat}

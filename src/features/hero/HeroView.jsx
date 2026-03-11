@@ -3,9 +3,12 @@ import HeroContent from "./components/HeroContent";
 import HeroVisual from "./components/HeroVisual";
 import ScrollIndicator from "./components/ScrollIndicator";
 import SectionDivider from "@/shared/ui/SectionDivider";
+import { useState } from "react";
 
 export default function HeroView(props) {
     const { mouse, time, isMobile, hideScroll } = props;
+    const [hideCube, setHideCube] = useState(false);
+
     return (
         <section
             id="home"
@@ -18,15 +21,17 @@ export default function HeroView(props) {
 
                 <div className="grid xl:grid-cols-2 gap-12 items-center">
 
-                    <HeroContent />
+                    <HeroContent onWrapChange={setHideCube} />
 
-                    <div className="hidden md:flex justify-center">
-                        <HeroVisual
-                            mouse={mouse}
-                            time={time}
-                            isMobile={isMobile}
-                        />
-                    </div>
+                    {!hideCube && (
+                        <div className="hidden lg:flex justify-center animate-fade-in">
+                            <HeroVisual
+                                mouse={mouse}
+                                time={time}
+                                isMobile={isMobile}
+                            />
+                        </div>
+                    )}
 
                 </div>
 

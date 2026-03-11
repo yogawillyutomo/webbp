@@ -27,11 +27,11 @@ export default function HeroVisual({
 
                     <div className="
                         flex items-center justify-center
-                        -translate-y-6
-                        sm:translate-y-6
-                        xl:translate-y-14
-                        mb-6 xl:mb-0
+                        -translate-y-10
+                        lg:-translate-y-6
+                        xl:translate-y-10
                     ">
+
 
                         <HeroCube
                             pulse={pulse}

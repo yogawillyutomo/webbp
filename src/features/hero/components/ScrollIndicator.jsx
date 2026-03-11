@@ -2,7 +2,7 @@ import RevealSection from "@/shared/ui/RevealSection";
 
 export default function ScrollIndicator({ hideScroll }) {
     return (
-        <div className="absolute bottom-[12vh] sm:bottom-[8vh] lg:bottom-[6vh] left-0 w-full flex justify-center z-20">
+         <div className="absolute bottom-[12vh] sm:bottom-[10vh] lg:bottom-[14vh] xl:bottom-[6vh] left-0 w-full flex justify-center z-20">
             <div
                 className={`
                     flex flex-col items-center gap-4
