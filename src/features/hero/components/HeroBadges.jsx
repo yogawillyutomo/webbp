@@ -52,24 +52,44 @@ function BadgeOrbit({
     return (
         <motion.div
             className="absolute"
+            initial={{
+                x: 0,
+                y: 0,
+                scale: 0.2,
+                opacity: 0
+            }}
             animate={{
                 x: showBadges ? x : 0,
                 y: showBadges ? y : 0,
-                scale: showBadges ? 1 : 0.3,
+                scale: showBadges ? 1 : 0.2,
                 opacity: showBadges ? 1 : 0
             }}
             transition={{
                 delay,
                 type: "spring",
-                stiffness: 120,
-                damping: 18
+                stiffness: 140,
+                damping: 16
+            }}
+            style={{
+                transformOrigin: "center"
             }}
         >
-            <FloatingBadge
-                title={badge.title}
-                subtitle={badge.subtitle}
-                icon={badge.icon}
-            />
+            <motion.div
+                animate={{
+                    scale: showBadges ? [0.2, 1.15, 1] : 0.2
+                }}
+                transition={{
+                    delay,
+                    duration: 0.45,
+                    ease: "easeOut"
+                }}
+            >
+                <FloatingBadge
+                    title={badge.title}
+                    subtitle={badge.subtitle}
+                    icon={badge.icon}
+                />
+            </motion.div>
         </motion.div>
     );
 }
