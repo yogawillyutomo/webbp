@@ -16,7 +16,7 @@ export default function HeroVisual({
 
             <div className="relative w-[clamp(140px,50vw,420px)] h-[clamp(140px,50vw,420px)]">
 
-                <div className="hidden xl:block">
+                <div className="hidden 2xl:block">
                     <HeroBadges
                         showBadges={showBadges}
                         isMobile={isMobile}
