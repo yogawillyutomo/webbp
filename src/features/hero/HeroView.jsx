@@ -20,11 +20,13 @@ export default function HeroView(props) {
 
                     <HeroContent />
 
-                    <HeroVisual
-                        mouse={mouse}
-                        time={time}
-                        isMobile={isMobile}
-                    />
+                    <div className="hidden md:flex justify-center">
+                        <HeroVisual
+                            mouse={mouse}
+                            time={time}
+                            isMobile={isMobile}
+                        />
+                    </div>
 
                 </div>
 

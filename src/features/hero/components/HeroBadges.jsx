@@ -2,74 +2,74 @@ import { badges } from "../hero.data";
 import FloatingBadge from "@/shared/ui/FloatingBadge";
 import RevealSection from "@/shared/ui/RevealSection";
 import { motion } from "framer-motion";
+
+
 export default function HeroBadges({
     showBadges,
     isMobile
 }) {
-    const radius = isMobile ? 120 : 230;
+
+    const radius = isMobile ? 140 : 260;
 
     return (
-        <div
-            className={`
-        hidden xl:block absolute inset-0
-        transition-all duration-500 ease-[cubic-bezier(.16,1,.3,1)]
-        ${showBadges
-                    ? "opacity-100 scale-100 blur-0"
-                    : "opacity-0 scale-95 blur-sm pointer-events-none"}
-      `}
-        >
-            <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
 
-                {badges.map((badge, i) => {
+            {badges.map((badge, i) => {
 
-                    const angle = (360 / badges.length) * i;
+                const angle = (360 / badges.length) * i;
 
-                    return (
-                        <BadgeOrbit
-                            key={i}
-                            badge={badge}
-                            angle={angle}
-                            radius={radius}
-                            delay={i * 0.1}
-                        />
-                    );
-                })}
+                return (
+                    <BadgeOrbit
+                        key={i}
+                        badge={badge}
+                        angle={angle}
+                        radius={radius}
+                        delay={i * 0.06}
+                        showBadges={showBadges}
+                    />
+                );
 
-            </div>
+            })}
+
         </div>
     );
 }
+
 
 function BadgeOrbit({
     badge,
     angle,
     radius,
-    delay
+    delay,
+    showBadges
 }) {
+
     const offsetY = badge.offsetY ?? 0;
 
+    const x = Math.cos(angle * Math.PI / 180) * radius;
+    const y = Math.sin(angle * Math.PI / 180) * radius + offsetY;
+
     return (
-        <div
+        <motion.div
             className="absolute"
-            style={{
-                transform: `
-          rotate(${angle}deg)
-          translate(${radius}px)
-          rotate(-${angle}deg)
-        `
+            animate={{
+                x: showBadges ? x : 0,
+                y: showBadges ? y : 0,
+                scale: showBadges ? 1 : 0.3,
+                opacity: showBadges ? 1 : 0
+            }}
+            transition={{
+                delay,
+                type: "spring",
+                stiffness: 120,
+                damping: 18
             }}
         >
-            <div style={{ transform: `translateY(${offsetY}px)` }}>
-
-                <RevealSection delay={delay}>
-                    <FloatingBadge
-                        title={badge.title}
-                        subtitle={badge.subtitle}
-                        icon={badge.icon}
-                    />
-                </RevealSection>
-
-            </div>
-        </div>
+            <FloatingBadge
+                title={badge.title}
+                subtitle={badge.subtitle}
+                icon={badge.icon}
+            />
+        </motion.div>
     );
 }

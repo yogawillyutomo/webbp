@@ -1,5 +1,5 @@
 "use client";
-export default function HeroCube({ cubeStyle, mouse, className, onClick }) {
+export default function HeroCube({ pulse, cubeStyle, mouse, className, onClick }) {
 
     const x = mouse?.x || 0;
     const y = mouse?.y || 0;
@@ -12,7 +12,14 @@ export default function HeroCube({ cubeStyle, mouse, className, onClick }) {
                         sm:w-64 sm:h-64
                         md:w-72 md:h-72
                         xl:w-80 xl:h-80
-                        animate-float cursor-pointer active:scale-95 transition-transform duration-150 will-change-transform ${className}`}
+                        animate-float
+                        cursor-pointer
+                        active:scale-95
+                        will-change-transform
+                        transition-all duration-500 ease-[cubic-bezier(.16,1,.3,1)]
+                        ${className}
+                        ${pulse ? "scale-110 drop-shadow-[0_0_40px_rgba(59,130,246,0.6)]" : ""}
+                        `}
         >
 
 
