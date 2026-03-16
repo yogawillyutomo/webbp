@@ -1,7 +1,6 @@
 import { useState } from "react";
 import HeroCube from "./HeroCube";
 import HeroBadges from "./HeroBadges";
-import RevealSection from "@/shared/ui/RevealSection";
 
 export default function HeroVisual({
     mouse,
@@ -10,6 +9,26 @@ export default function HeroVisual({
 }) {
     const [showBadges, setShowBadges] = useState(true);
     const [pulse, setPulse] = useState(false);
+
+    const handleClick = () => {
+        setShowBadges(prev => !prev);
+        setPulse(true);
+
+        setTimeout(() => {
+            setPulse(false);
+        }, 350);
+    };
+
+    const cubeStyle =
+        isMobile
+            ? {}
+            : {
+                transform: `
+          translateY(${mouse.current.y * 2}px)
+          rotateX(${mouse.current.y * 2 + Math.sin(time.current) * 1.5}deg)
+          rotateY(${mouse.current.x * 2 + Math.cos(time.current) * 1.5}deg)
+        `
+            };
 
     return (
         <div className="relative flex items-center justify-center">
@@ -25,33 +44,19 @@ export default function HeroVisual({
 
                 <div className="flex items-center justify-center cursor-pointer">
 
-                    <div className="
-                        flex items-center justify-center
-                        -translate-y-10
-                        lg:-translate-y-6
-                        xl:translate-y-10
-                    ">
-
+                    <div
+                        className="
+            flex items-center justify-center
+            -translate-y-10
+            lg:-translate-y-6
+            xl:translate-y-10
+          "
+                    >
 
                         <HeroCube
                             pulse={pulse}
-                            onClick={() => {
-                                setShowBadges(prev => !prev);
-                                setPulse(true);
-
-                                setTimeout(() => setPulse(false), 400);
-                            }}
-                            cubeStyle={
-                                isMobile
-                                    ? {}
-                                    : {
-                                        transform: `
-                                        translateY(${mouse.current.y * 4}px)
-                                        rotateX(${mouse.current.y * 4 + Math.sin(time.current) * 2}deg)
-                                        rotateY(${mouse.current.x * 4 + Math.cos(time.current) * 2}deg)
-                                        `
-                                    }
-                            }
+                            onClick={handleClick}
+                            cubeStyle={cubeStyle}
                             mouse={isMobile ? { x: 0, y: 0 } : mouse.current}
                         />
 

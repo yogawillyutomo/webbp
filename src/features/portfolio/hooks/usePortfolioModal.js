@@ -1,19 +1,16 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 export default function usePortfolioModal() {
 
-    /*
-    =========================
-    STATE
-    =========================
-    */
-
     const [selectedProject, setSelectedProject] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
+
     const [originRect, setOriginRect] = useState(null);
-
-
+    const [originImageRect, setOriginImageRect] = useState(null);
+    const [isClosing, setIsClosing] = useState(false);
     /*
     =========================
     OPEN MODAL
@@ -22,21 +19,18 @@ export default function usePortfolioModal() {
 
     const openModal = (event, project) => {
 
-        const rect = event.currentTarget.getBoundingClientRect();
+        const card = event.currentTarget;
+        const rect = card.getBoundingClientRect();
 
-        // simpan posisi awal card
-        setOriginRect({
-            top: rect.top,
-            left: rect.left,
-            width: rect.width,
-            height: rect.height
-        });
+        const image = card.querySelector("[data-project-image]");
+        const imageRect = image?.getBoundingClientRect();
+
+        setOriginRect(rect);
+        setOriginImageRect(imageRect);
 
         setSelectedProject(project);
         setCurrentImageIndex(0);
-
     };
-
 
     /*
     =========================
@@ -46,15 +40,17 @@ export default function usePortfolioModal() {
 
     const closeModal = () => {
 
+        setIsClosing(true);
         setIsVisible(false);
 
         setTimeout(() => {
             setSelectedProject(null);
             setOriginRect(null);
-        }, 700);
+            setOriginImageRect(null);
+            setIsClosing(false);
+        }, 600);
 
     };
-
 
     /*
     =========================
@@ -65,108 +61,133 @@ export default function usePortfolioModal() {
     useEffect(() => {
 
         if (selectedProject) {
-            setTimeout(() => setIsVisible(true), 20);
+            requestAnimationFrame(() => {
+                setIsVisible(true);
+            });
         }
 
     }, [selectedProject]);
 
-
     /*
-=========================
-CAROUSEL
-=========================
-*/
+    =========================
+    CAROUSEL
+    =========================
+    */
 
     const nextImage = () => {
 
-        setCurrentImageIndex(prev =>
+        if (!selectedProject) return;
+
+        setCurrentImageIndex((prev) =>
             (prev + 1) % selectedProject.images.length
         );
-
     };
 
     const prevImage = () => {
 
-        setCurrentImageIndex(prev =>
+        if (!selectedProject) return;
+
+        setCurrentImageIndex((prev) =>
             (prev - 1 + selectedProject.images.length) %
             selectedProject.images.length
         );
-
     };
 
     /*
     =========================
-    BODY SCROLL LOCK
+    MODAL FLIP TRANSFORM
     =========================
     */
-
-    useEffect(() => {
-
-        if (!selectedProject) return;
-
-        const scrollbarWidth =
-            window.innerWidth - document.documentElement.clientWidth;
-
-        document.body.style.overflow = "hidden";
-        document.body.style.paddingRight = `${scrollbarWidth}px`;
-
-        const handleKey = (e) => {
-
-            if (e.key === "Escape") {
-                closeModal();
-            }
-
-            if (e.key === "ArrowRight") {
-                nextImage();
-            }
-
-            if (e.key === "ArrowLeft") {
-                prevImage();
-            }
-
-        };
-
-        window.addEventListener("keydown", handleKey);
-
-        return () => {
-            document.body.style.overflow = "auto";
-            document.body.style.paddingRight = "0px";
-            window.removeEventListener("keydown", handleKey);
-        };
-
-    }, [selectedProject, nextImage, prevImage, closeModal]);
-
-
-
-
-
-    /*
-    =========================
-    MORPH ANIMATION STYLE
-    =========================
-    */
-    const getMorphStyle = () => {
+    const getFlipTransform = () => {
 
         if (!originRect) return {};
 
-        if (!isVisible) {
+        const modalWidth = Math.min(900, window.innerWidth * 0.92);
+        const modalHeight = window.innerHeight * 0.8;
+
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        const startX = originRect.left + originRect.width / 2;
+        const startY = originRect.top + originRect.height / 2;
+
+        const deltaX = startX - centerX;
+        const deltaY = startY - centerY;
+
+        const scaleX = originRect.width / modalWidth;
+        const scaleY = originRect.height / modalHeight;
+
+        /*
+        OPEN
+        */
+
+        if (!isVisible && !isClosing) {
             return {
-                top: originRect.top + "px",
-                left: originRect.left + "px",
-                width: originRect.width + "px",
-                height: originRect.height + "px",
-                transform: "translate(0,0)"
+                transform: `
+            translate(calc(-50% + ${deltaX}px), calc(-50% + ${deltaY}px))
+            scale(${scaleX}, ${scaleY})
+            `
             };
         }
 
-        const modalWidth = Math.min(900, window.innerWidth * 0.92);
+        /*
+        CLOSE
+        */
+
+        if (isClosing) {
+            return {
+                transform: `
+            translate(-50%, -50%)
+            scale(0.1)
+            `,
+                opacity: 0
+            };
+        }
+
+        /*
+        MODAL STATE
+        */
 
         return {
-            top: "50%",
-            left: "50%",
-            width: modalWidth + "px",
-            maxHeight: "90vh",
-            transform: "translate(-50%, -50%)"
+            transform: "translate(-50%, -50%) scale(1)",
+            opacity: 1
+        };
+    };
+
+    /*
+    =========================
+    IMAGE FLIP TRANSFORM
+    =========================
+    */
+
+    const getImageFlipTransform = () => {
+
+        if (!originImageRect) return {};
+
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        const startX = originImageRect.left + originImageRect.width / 2;
+        const startY = originImageRect.top + originImageRect.height / 2;
+
+        const deltaX = startX - centerX;
+        const deltaY = startY - centerY;
+
+        const modalWidth = Math.min(900, window.innerWidth * 0.92);
+
+        const scale = originImageRect.width / modalWidth;
+
+        if (!isVisible) {
+            return {
+                transform: `
+        translate(${deltaX}px, ${deltaY}px)
+        scale(${scale})
+      `
+            };
+        }
+
+        return {
+            transform: "translate(0px,0px) scale(1)"
         };
 
     };
@@ -178,11 +199,9 @@ CAROUSEL
     */
 
     return {
-
         selectedProject,
         currentImageIndex,
         isVisible,
-        originRect,
 
         openModal,
         closeModal,
@@ -190,9 +209,9 @@ CAROUSEL
         nextImage,
         prevImage,
 
-        getMorphStyle,
+        getFlipTransform,
+        getImageFlipTransform,
+
         setCurrentImageIndex
-
     };
-
 }

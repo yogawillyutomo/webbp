@@ -119,7 +119,7 @@ useEffect(() => {
       font-semibold text-lg
       border border-blue-500/50
       hover:bg-blue-500/10
-      flex items-center gap-3
+      flex items-center justify-center gap-3
       transition-all duration-300
     "
   >

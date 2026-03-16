@@ -495,7 +495,42 @@ html[data-theme="dark"] .hero-title {
       rgba(0, 0, 0, 0.8));
 }
 
+/* =================================
+   EDGE FADE PORTFOLIO FILTER
+================================= */
 
+.portfolio-scroll-mask::before,
+.portfolio-scroll-mask::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 8px; /* penting supaya tidak menutup scrollbar */
+  width: 40px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.portfolio-scroll-mask::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(11,15,26,0.9),
+    rgba(11,15,26,0)
+  );
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+}
+
+.portfolio-scroll-mask::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(11,15,26,0.9),
+    rgba(11,15,26,0)
+  );
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+}
 /* Firefox */
 /* html {
   scrollbar-width: thin;

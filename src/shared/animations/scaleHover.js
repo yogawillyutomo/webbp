@@ -1,8 +1,8 @@
 export const scaleHover = {
     whileHover: {
-        scale: 1.05,
+        scale: 1.03,
         transition: {
-            duration: 0.2
+            duration: 0.18
         }
     }
 };

@@ -6,24 +6,35 @@ export default function useScrollProgress(maxScroll = 80) {
 
   useEffect(() => {
     let ticking = false;
+    let lastY = 0;
 
     const handleScroll = () => {
+      const currentY = window.scrollY;
+
+      // skip jika perubahan sangat kecil
+      if (Math.abs(currentY - lastY) < 1) return;
+
+      lastY = currentY;
+
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
+          setScrollY(currentY);
           ticking = false;
         });
+
         ticking = true;
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const progress = Math.min(scrollY / maxScroll, 1);
 
-  // shrink logic
   const logoScale = 1 - progress * 0.08;
   const padding = 18 - progress * 6;
   const blur = 18 + progress * 10;

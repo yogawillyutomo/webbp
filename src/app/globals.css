@@ -578,6 +578,33 @@ html[data-theme="light"] .glass-border {
       rgba(0, 0, 0, 0.8));
 }
 
+/* =================================
+   PORTFOLIO FILTER SCROLLBAR
+================================= */
+
+.no-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.no-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 0 20px;
+}
+
+.no-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #3b82f6, #22d3ee);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.no-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg,
+      #2563eb,
+      #06b6d4);
+}
+
+
 
 /* Firefox */
 /* html {

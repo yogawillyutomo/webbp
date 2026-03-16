@@ -1,5 +1,11 @@
 "use client";
+
+import { useState, useEffect } from "react";
+
 export default function HeroCube({ pulse, cubeStyle, mouse, className, onClick }) {
+
+
+    const [mounted, setMounted] = useState(false);
 
     const x = mouse?.x || 0;
     const y = mouse?.y || 0;
@@ -18,7 +24,7 @@ export default function HeroCube({ pulse, cubeStyle, mouse, className, onClick }
                         will-change-transform
                         transition-all duration-500 ease-[cubic-bezier(.16,1,.3,1)]
                         ${className}
-                        ${pulse ? "scale-110 drop-shadow-[0_0_40px_rgba(59,130,246,0.6)]" : ""}
+                        ${pulse ? "scale-[1.06] drop-shadow-[0_0_32px_rgba(59,130,246,0.5)]" : ""}
                         `}
         >
 
@@ -27,7 +33,7 @@ export default function HeroCube({ pulse, cubeStyle, mouse, className, onClick }
                 viewBox="0 0 200 200"
                 className="w-full h-full"
                 style={{
-                    ...cubeStyle,
+                    ...(mounted ? cubeStyle : {}),
                     transformStyle: "preserve-3d"
                 }}
             >
@@ -74,7 +80,7 @@ export default function HeroCube({ pulse, cubeStyle, mouse, className, onClick }
                     </filter>
 
                     <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-                        <feGaussianBlur stdDeviation="6" result="blur" />
+                        <feGaussianBlur stdDeviation="3" result="blur" />
                         <feMerge>
                             <feMergeNode in="blur" />
                             <feMergeNode in="SourceGraphic" />

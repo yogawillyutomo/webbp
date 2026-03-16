@@ -2,29 +2,32 @@
 import { useEffect, useState } from "react";
 
 export default function useActiveSection(ids = []) {
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState(ids[0] || "");
 
   useEffect(() => {
-    const observers = [];
+    const sections = ids
+      .map((id) => document.getElementById(id.replace("#", "")))
+      .filter(Boolean);
 
-    ids.forEach((id) => {
-      const el = document.getElementById(id.replace("#", ""));
-      if (!el) return;
+    if (!sections.length) return;
 
-      const observer = new IntersectionObserver(
-        ([entry]) => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActive(id);
+            setActive(`#${entry.target.id}`);
           }
-        },
-        { rootMargin: "-40% 0px -50% 0px" }
-      );
+        });
+      },
+      {
+        rootMargin: "-30% 0px -30% 0px",
+        threshold: 0,
+      }
+    );
 
-      observer.observe(el);
-      observers.push(observer);
-    });
+    sections.forEach((section) => observer.observe(section));
 
-    return () => observers.forEach((o) => o.disconnect());
+    return () => observer.disconnect();
   }, [ids]);
 
   return active;

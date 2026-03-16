@@ -5,7 +5,8 @@ export default function PortfolioModal({
     selectedProject,
     isVisible,
     closeModal,
-    getMorphStyle,
+    getFlipTransform,
+    getImageFlipTransform,
     currentImageIndex,
     nextImage,
     prevImage,
@@ -31,17 +32,25 @@ export default function PortfolioModal({
             {/* MODAL */}
             <div
                 onClick={(e) => e.stopPropagation()}
-                style={getMorphStyle()}
-                className={`
-                fixed z-50
-                rounded-2xl overflow-hidden
-                bg-[var(--card-bg)]
-                border border-blue-500/30
-                shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]
-                transition-all duration-700
-                ease-[cubic-bezier(0.22,1,0.36,1)]
-                ${isVisible ? "opacity-100" : "opacity-90"}
-                `}
+                style={getFlipTransform()}
+                className="
+  fixed left-1/2 top-1/2
+  w-[min(900px,92vw)]
+  max-h-[90vh]
+  z-50
+  rounded-2xl overflow-hidden
+
+  bg-[var(--card-bg)]
+  border border-blue-500/30
+  shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]
+
+  origin-center
+  transform-gpu
+  will-change-transform
+
+  transition-all duration-500
+  ease-[cubic-bezier(.16,1,.3,1)]
+"
             >
                 {/* CLOSE BUTTON */}
                 <button
@@ -69,43 +78,83 @@ export default function PortfolioModal({
 
 
                 {/* IMAGE CAROUSEL */}
-                <ImageCarousel
-                    images={selectedProject.images}
-                    currentImageIndex={currentImageIndex}
-                    nextImage={nextImage}
-                    prevImage={prevImage}
-                    isVisible={isVisible}
-                    setCurrentImageIndex={setCurrentImageIndex}
-                />
+                <div
+                    style={{
+                        ...getImageFlipTransform(),
+                        backfaceVisibility: "hidden"
+                    }}
+                    className="
+  relative
+  w-full
+  h-[382px]
+  -mb-[2px]
+  overflow-hidden
+  rounded-t-2xl
+
+  origin-center
+  transition-transform duration-700
+  ease-[cubic-bezier(.16,1,.3,1)]
+
+  transform-gpu
+  will-change-transform
+  [contain:paint]
+"
+                >
+                    <ImageCarousel
+                        images={selectedProject.images}
+                        currentImageIndex={currentImageIndex}
+                        nextImage={nextImage}
+                        prevImage={prevImage}
+                        isVisible={isVisible}
+                        setCurrentImageIndex={setCurrentImageIndex}
+                    />
+                </div>
 
 
                 {/* CONTENT */}
-                <div
-                    className={`
-    p-8
-    max-h-[50vh]
-    overflow-y-auto
+                <div className="p-8 max-h-[50vh] overflow-y-auto">
 
-    transition-all duration-700 delay-150
-    ease-[cubic-bezier(0.22,1,0.36,1)]
-
-    ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}
-    `}
-                >
-
-                    <h3 className="font-orbitron text-3xl mb-3">
+                    <h3
+                        className={`
+                            font-orbitron text-3xl mb-3
+                            transition-all duration-500
+                            ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
+                        `}
+                        style={{ transitionDelay: "120ms" }}
+                    >
                         {selectedProject.title}
                     </h3>
 
-                    <div className="text-[var(--brand-color)] mb-4 text-sm tracking-wide">
+                    <div
+                        className={`
+                            text-[var(--brand-color)] mb-4 text-sm tracking-wide
+                            transition-all duration-500
+                            ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
+                        `}
+                        style={{ transitionDelay: "200ms" }}
+                    >
                         {selectedProject.category}
                     </div>
 
-                    <p className="text-[var(--muted-text)] leading-relaxed mb-6">
+                    <p
+                        className={`
+                            text-[var(--muted-text)] leading-relaxed mb-6
+                            transition-all duration-500
+                            ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
+                        `}
+                        style={{ transitionDelay: "280ms" }}
+                    >
                         {selectedProject.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-3">
+                    <div
+                        className={`
+                            flex flex-wrap gap-3
+                            transition-all duration-500
+                            ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
+                        `}
+                        style={{ transitionDelay: "360ms" }}
+                    >
                         {selectedProject.tech.map((tech, index) => (
                             <span
                                 key={index}

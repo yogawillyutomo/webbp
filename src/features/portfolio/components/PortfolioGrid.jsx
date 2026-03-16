@@ -1,6 +1,6 @@
 import ProjectCard from "./ProjectCard";
 
-export default function PortfolioGrid({ projects, openModal }) {
+export default function PortfolioGrid({ projects, openModal, isModalOpen }) {
 
     return (
 
@@ -11,6 +11,7 @@ export default function PortfolioGrid({ projects, openModal }) {
                 <ProjectCard
                     key={project.code || index}
                     project={project}
+                    isModalOpen={isModalOpen}
                     onClick={(e) => openModal(e, project)}
                 />
 

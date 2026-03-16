@@ -2,16 +2,21 @@
 import { useEffect, useState } from "react";
 
 export default function useDevice() {
-  const [isMobile, setIsMobile] = useState(false);
+  const getInitial = () => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(max-width: 1024px)").matches;
+  };
+
+  const [isMobile, setIsMobile] = useState(getInitial);
 
   useEffect(() => {
-    const check = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
+    const media = window.matchMedia("(max-width: 1024px)");
 
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    const handler = (e) => setIsMobile(e.matches);
+
+    media.addEventListener("change", handler);
+
+    return () => media.removeEventListener("change", handler);
   }, []);
 
   return { isMobile };

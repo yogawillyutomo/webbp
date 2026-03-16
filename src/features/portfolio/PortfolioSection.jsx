@@ -41,7 +41,8 @@ export default function PortfolioSection() {
         closeModal,
         nextImage,
         prevImage,
-        getMorphStyle,
+        getFlipTransform,
+        getImageFlipTransform,
         setCurrentImageIndex
     } = usePortfolioModal();
 
@@ -51,11 +52,11 @@ export default function PortfolioSection() {
         <section
             id="portfolio"
             className={`
-      relative py-28
-      transition-transform duration-500
-      ease-[cubic-bezier(0.22,1,0.36,1)]
-      ${selectedProject ? "scale-[0.98]" : "scale-100"}
-      `}
+            relative py-28
+            transition-transform duration-500
+            ease-[cubic-bezier(0.22,1,0.36,1)]
+            ${selectedProject ? "scale-[0.98]" : "scale-100"}
+            `}
         >
 
             <div className="max-w-7xl mx-auto px-6">
@@ -80,6 +81,7 @@ export default function PortfolioSection() {
                 <PortfolioGrid
                     projects={filteredProjects}
                     openModal={openModal}
+                    isModalOpen={!!selectedProject}
                 />
 
 
@@ -89,7 +91,8 @@ export default function PortfolioSection() {
                     selectedProject={selectedProject}
                     isVisible={isVisible}
                     closeModal={closeModal}
-                    getMorphStyle={getMorphStyle}
+                    getFlipTransform={getFlipTransform}
+                    getImageFlipTransform={getImageFlipTransform}
                     currentImageIndex={currentImageIndex}
                     nextImage={nextImage}
                     prevImage={prevImage}

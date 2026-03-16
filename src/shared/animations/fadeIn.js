@@ -5,7 +5,7 @@ export const fadeIn = {
     show: {
         opacity: 1,
         transition: {
-            duration: 0.6,
+            duration: 0.5,
             ease: "easeOut"
         }
     }

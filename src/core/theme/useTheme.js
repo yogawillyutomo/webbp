@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 
 export default function useTheme() {
   const getInitialTheme = () => {
-    if (typeof window === "undefined") {
-      return "dark"; // default saat SSR
-    }
+    if (typeof window === "undefined") return "dark";
 
-    return localStorage.getItem("theme") ?? "dark";
+    const stored = localStorage.getItem("theme");
+    if (stored) return stored;
+
+    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return systemDark ? "dark" : "light";
   };
 
   const [theme, setTheme] = useState(getInitialTheme);
@@ -15,22 +17,15 @@ export default function useTheme() {
   useEffect(() => {
     const root = document.documentElement;
 
-    // CSS system Anda
     root.setAttribute("data-theme", theme);
 
-    // Tailwind system
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
+    root.classList.toggle("dark", theme === "dark");
 
-    // simpan theme
     localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => (prev === "dark" ? "light" : "dark"));
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
   return { theme, toggleTheme };

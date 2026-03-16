@@ -20,6 +20,10 @@ export const metadata = {
     default: "Bakaran Project - Solusi Teknologi Terdepan",
     template: "%s | Bakaran Project",
   },
+  icons: {
+    icon: "/ico.svg",
+  },
+
   description: "Solusi Teknologi Terdepan dalam pengembangan software dan teknologi digital.",
   metadataBase: new URL("https://bakaranproject.com"),
 };
