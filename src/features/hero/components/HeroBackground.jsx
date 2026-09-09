@@ -1,16 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import RevealSection from "@/shared/ui/RevealSection";
 
 export default function HeroBackground({ mouse, isMobile }) {
-
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
     return (
         <RevealSection disableInitial duration={1200} direction="none">
             <div className="absolute inset-0 overflow-hidden">
@@ -19,7 +11,7 @@ export default function HeroBackground({ mouse, isMobile }) {
                     className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
                     style={{
                         transform:
-                            mounted && !isMobile
+                            !isMobile
                                 ? `translate(${(mouse?.current?.x ?? 0) * 20}px, ${(mouse?.current?.y ?? 0) * 20}px)`
                                 : "translate(0px, 0px)"
                     }}
@@ -29,7 +21,7 @@ export default function HeroBackground({ mouse, isMobile }) {
                     className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl"
                     style={{
                         transform:
-                            mounted && !isMobile
+                            !isMobile
                                 ? `translate(${(mouse?.current?.x ?? 0) * -15}px, ${(mouse?.current?.y ?? 0) * -15}px)`
                                 : "translate(0px, 0px)"
                     }}
