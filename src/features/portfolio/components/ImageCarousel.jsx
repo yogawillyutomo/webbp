@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+"use client";
+
+import { useRef, useState } from "react";
 
 export default function ImageCarousel({
     images,
@@ -9,19 +11,7 @@ export default function ImageCarousel({
     setCurrentImageIndex
 }) {
     const touchStartX = useRef(null);
-    const progressRef = useRef({ index: currentImageIndex, value: 0 });
-    const [progressState, setProgressState] = useState({
-        index: currentImageIndex,
-        value: 0
-    });
     const [isPaused, setIsPaused] = useState(false);
-
-    if (progressRef.current.index !== currentImageIndex) {
-        progressRef.current = { index: currentImageIndex, value: 0 };
-    }
-
-    const progress =
-        progressState.index === currentImageIndex ? progressState.value : 0;
 
     const handleTouchStart = (e) => {
         touchStartX.current = e.touches[0].clientX;
@@ -41,32 +31,6 @@ export default function ImageCarousel({
         touchStartX.current = null;
     };
 
-    useEffect(() => {
-        if (isPaused) return;
-
-        const interval = setInterval(() => {
-            const nextValue = progressRef.current.value + 1;
-
-            if (nextValue >= 100) {
-                progressRef.current = { index: currentImageIndex, value: 0 };
-                setProgressState({ index: currentImageIndex, value: 0 });
-                nextImage();
-                return;
-            }
-
-            progressRef.current = {
-                index: currentImageIndex,
-                value: nextValue
-            };
-            setProgressState({
-                index: currentImageIndex,
-                value: nextValue
-            });
-        }, 40);
-
-        return () => clearInterval(interval);
-    }, [currentImageIndex, isPaused, nextImage]);
-
     return (
         <div
             className="relative h-[380px]"
@@ -84,8 +48,13 @@ export default function ImageCarousel({
         >
             <div className="absolute top-3 left-6 right-6 h-1 bg-white/30 rounded-full overflow-hidden z-30">
                 <div
-                    className="h-full bg-white transition-all duration-100 z-40"
-                    style={{ width: `${progress}%` }}
+                    key={currentImageIndex}
+                    className="h-full bg-white origin-left"
+                    style={{
+                        animation: "portfolio-progress 4s linear forwards",
+                        animationPlayState: isPaused ? "paused" : "running"
+                    }}
+                    onAnimationEnd={nextImage}
                 />
             </div>
 
@@ -168,6 +137,18 @@ export default function ImageCarousel({
                     />
                 ))}
             </div>
+
+            <style jsx>{`
+                @keyframes portfolio-progress {
+                    from {
+                        transform: scaleX(0);
+                    }
+
+                    to {
+                        transform: scaleX(1);
+                    }
+                }
+            `}</style>
         </div>
     );
 }
