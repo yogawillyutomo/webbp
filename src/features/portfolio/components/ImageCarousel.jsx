@@ -49,9 +49,8 @@ export default function ImageCarousel({
             <div className="absolute top-3 left-6 right-6 h-1 bg-white/30 rounded-full overflow-hidden z-30">
                 <div
                     key={currentImageIndex}
-                    className="h-full bg-white origin-left"
+                    className="portfolio-progress h-full bg-white origin-left"
                     style={{
-                        animation: "portfolio-progress 4s linear forwards",
                         animationPlayState: isPaused ? "paused" : "running"
                     }}
                     onAnimationEnd={nextImage}
@@ -137,18 +136,6 @@ export default function ImageCarousel({
                     />
                 ))}
             </div>
-
-            <style jsx>{`
-                @keyframes portfolio-progress {
-                    from {
-                        transform: scaleX(0);
-                    }
-
-                    to {
-                        transform: scaleX(1);
-                    }
-                }
-            `}</style>
         </div>
     );
 }
