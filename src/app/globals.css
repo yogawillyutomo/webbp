@@ -1,8 +1,9 @@
 @import "tailwindcss";
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050508;
+  --foreground: #ffffff;
   --font-orbitron: 'Orbitron', sans-serif;
   --font-rajdhani: 'Rajdhani', sans-serif;
   --bg: #050508;
@@ -14,22 +15,14 @@
   --brand-color: #2563eb;
   --muted-text: #9ca3af;
   --nav-bg-opacity: 0.8;
-  --card-bg: rgba(255, 255, 255, 0.8);
-  --card-border: rgba(0, 0, 0, 0.1);
+  --card-bg: rgba(2, 6, 23, 0.65);
+  --card-border: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-rajdhani);
 }
 
 body {
@@ -38,10 +31,6 @@ body {
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-.dark {
-  --card-bg: rgba(255, 255, 255, 0.05);
-  --card-border: rgba(255, 255, 255, 0.1);
-}
 
 .font-orbitron {
   font-family: var(--font-orbitron);
@@ -151,7 +140,8 @@ body {
 }
 
 html[data-theme="light"] {
-  /* --bg: #f5f7fa; */
+  --background: #eef1f5;
+  --foreground: #1f2937;
   --bg: #eef1f5;
   /* --bg: #f3f4f6; */
   --text: #1f2937;
