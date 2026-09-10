@@ -4,7 +4,7 @@ import RevealSection from "@/shared/ui/RevealSection";
 
 export default function HeroBackground({ mouse, isMobile }) {
     return (
-        <RevealSection disableInitial duration={1200} direction="none">
+        <RevealSection disableInitial duration={1.2} direction="none">
             <div className="absolute inset-0 overflow-hidden">
 
                 <div
