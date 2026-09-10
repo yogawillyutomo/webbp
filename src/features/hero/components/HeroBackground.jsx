@@ -12,7 +12,7 @@ export default function HeroBackground({ mouse, isMobile }) {
                     style={{
                         transform:
                             !isMobile
-                                ? `translate(${(mouse?.current?.x ?? 0) * 20}px, ${(mouse?.current?.y ?? 0) * 20}px)`
+                                ? `translate(${(mouse?.x ?? 0) * 20}px, ${(mouse?.y ?? 0) * 20}px)`
                                 : "translate(0px, 0px)"
                     }}
                 />
