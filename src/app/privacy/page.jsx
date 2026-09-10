@@ -1,9 +1,28 @@
 import Link from "next/link";
 import { SITE } from "@/config/site";
 
+const title = "Privacy Policy";
+const description = "Kebijakan privasi website Bakaran Project.";
+
 export const metadata = {
-  title: "Privacy Policy",
-  description: "Kebijakan privasi website Bakaran Project.",
+  title,
+  description,
+  alternates: {
+    canonical: "/privacy",
+  },
+  openGraph: {
+    title: `${title} | ${SITE.name}`,
+    description,
+    url: "/privacy",
+    siteName: SITE.name,
+    locale: SITE.locale,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ${SITE.name}`,
+    description,
+  },
 };
 
 export default function PrivacyPage() {
