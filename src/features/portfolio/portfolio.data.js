@@ -37,7 +37,7 @@ export const projects = [
         category: "Education",
         status: "Pre-production",
         statusDetail: "Staged refactor; production hardening and cut-over gates are not complete.",
-        tech: ["Laravel", "PostgreSQL", "Redis", "REST API"],
+        tech: ["Laravel", "PHP", "PostgreSQL", "Spatie RBAC"],
         description:
             "Platform kolaborasi sekolah dan dunia kerja untuk mengelola siklus PKL secara end-to-end, dari partnership dan placement sampai monitoring, assessment, dan completion.",
         proof: [
