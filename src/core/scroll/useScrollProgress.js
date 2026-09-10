@@ -1,51 +1,82 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useSyncExternalStore } from "react";
+
+let scrollY = 0;
+let frame = null;
+let listening = false;
+const listeners = new Set();
+
+const emit = () => {
+  listeners.forEach((listener) => listener());
+};
+
+const handleScroll = () => {
+  if (frame !== null) return;
+
+  frame = window.requestAnimationFrame(() => {
+    frame = null;
+
+    const nextScrollY = window.scrollY;
+
+    if (nextScrollY === scrollY) return;
+
+    scrollY = nextScrollY;
+    emit();
+  });
+};
+
+const startListening = () => {
+  if (listening) return;
+
+  listening = true;
+  scrollY = window.scrollY;
+  window.addEventListener("scroll", handleScroll, { passive: true });
+};
+
+const stopListening = () => {
+  if (!listening) return;
+
+  listening = false;
+  window.removeEventListener("scroll", handleScroll);
+
+  if (frame !== null) {
+    window.cancelAnimationFrame(frame);
+    frame = null;
+  }
+};
+
+const subscribe = (listener) => {
+  listeners.add(listener);
+  startListening();
+
+  return () => {
+    listeners.delete(listener);
+
+    if (listeners.size === 0) {
+      stopListening();
+    }
+  };
+};
+
+const getSnapshot = () => scrollY;
+const getServerSnapshot = () => 0;
 
 export default function useScrollProgress(maxScroll = 80) {
-  const [scrollY, setScrollY] = useState(0);
+  const currentScrollY = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
+  );
 
-  useEffect(() => {
-    let ticking = false;
-    let lastY = 0;
-
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-
-      // skip jika perubahan sangat kecil
-      if (Math.abs(currentY - lastY) < 1) return;
-
-      lastY = currentY;
-
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrollY(currentY);
-          ticking = false;
-        });
-
-        ticking = true;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const progress = Math.min(scrollY / maxScroll, 1);
-
-  const logoScale = 1 - progress * 0.08;
-  const padding = 18 - progress * 6;
-  const blur = 18 + progress * 10;
-  const shadowOpacity = 0.05 + progress * 0.15;
+  const progress = Math.min(currentScrollY / maxScroll, 1);
 
   return {
-    scrollY,
+    scrollY: currentScrollY,
     progress,
-    logoScale,
-    padding,
-    blur,
-    shadowOpacity,
+    logoScale: 1 - progress * 0.08,
+    padding: 18 - progress * 6,
+    blur: 18 + progress * 10,
+    shadowOpacity: 0.05 + progress * 0.15,
   };
 }
