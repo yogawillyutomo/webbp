@@ -9,6 +9,7 @@ const STATUS_STYLES = {
 export default function PortfolioModal({
     selectedProject,
     isVisible,
+    dialogRef,
     closeModal,
     getFlipTransform,
 }) {
@@ -35,9 +36,11 @@ export default function PortfolioModal({
             />
 
             <div
+                ref={dialogRef}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby={`portfolio-title-${selectedProject.code}`}
+                tabIndex={-1}
                 onClick={(event) => event.stopPropagation()}
                 style={getFlipTransform()}
                 className="
