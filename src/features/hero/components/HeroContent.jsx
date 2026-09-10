@@ -52,7 +52,7 @@ export default function HeroContent({ onWrapChange }) {
                     <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
 
                     <span className="text-sm font-medium tracking-wide">
-                        Innovative App Development
+                        Digital Product Engineering
                     </span>
                 </div>
 
@@ -64,16 +64,17 @@ export default function HeroContent({ onWrapChange }) {
                     </span>
 
                     <span className="block mt-3 text-lg md:text-3xl xl:text-4xl bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent animate-gradient">
-                        Solusi Teknologi Terdepan
+                        Sistem Digital untuk Operasional Nyata
                     </span>
 
                 </h1>
 
                 {/* DESCRIPTION */}
                 <p className="text-base md:text-lg muted-text leading-relaxed max-w-xl xl:max-w-2xl mx-auto xl:mx-0">
-                    Mengubah ide menjadi pengalaman digital yang powerful.
-                    Kami membangun aplikasi cutting-edge yang mendorong
-                    inovasi dan akselerasi pertumbuhan bisnis Anda.
+                    Bakaran Project membangun sistem digital dari kebutuhan operasional nyata—
+                    mulai dari pendidikan, integrasi data, hingga mobility systems.
+                    Setiap produk dikembangkan bertahap dengan boundary, source of truth,
+                    dan evidence engineering yang jelas.
                 </p>
 
                 {/* BUTTONS */}
@@ -85,7 +86,7 @@ export default function HeroContent({ onWrapChange }) {
                         href="#contact"
                         className="btn-cyber animate-pulse-glow px-8 py-4 rounded-lg font-semibold text-lg bg-linear-to-r from-blue-600 to-cyan-500 inline-block"
                     >
-                        Free Consultation
+                        Diskusikan Kebutuhan
                     </Link>
 
                     <Link
@@ -93,7 +94,7 @@ export default function HeroContent({ onWrapChange }) {
                         className="btn-cyber px-8 py-4 rounded-lg font-semibold text-lg border border-blue-500/50 hover:bg-blue-500/10 flex items-center gap-3"
                     >
                         <EyeIcon />
-                        Watch Demo
+                        Lihat Produk
                     </Link>
                 </div>
 
