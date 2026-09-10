@@ -1,14 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
-export default function HeroCube({ pulse, cubeStyle, mouse, className, onClick }) {
-
-
-    const [mounted, setMounted] = useState(false);
+export default function HeroCube({ pulse, cubeStyle, mouse, className = "", onClick }) {
 
     const x = mouse?.x || 0;
-    const y = mouse?.y || 0;
 
     return (
         <div
@@ -33,7 +27,7 @@ export default function HeroCube({ pulse, cubeStyle, mouse, className, onClick }
                 viewBox="0 0 200 200"
                 className="w-full h-full"
                 style={{
-                    ...(mounted ? cubeStyle : {}),
+                    ...cubeStyle,
                     transformStyle: "preserve-3d"
                 }}
             >

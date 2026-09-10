@@ -3,17 +3,13 @@ import useDevice from "@/core/device/useDevice";
 import useHeroMotion from "./useHeroMotion";
 
 export default function useHeroEffects() {
-  const {scrollY} = useScrollProgress();
+  const { scrollY } = useScrollProgress();
   const { isMobile } = useDevice();
-  const { mouse, time } = useHeroMotion();
-
-  const hideScroll = scrollY > 50;
+  const { mouse } = useHeroMotion(!isMobile);
 
   return {
-    scrollY,
     mouse,
-    time,
     isMobile,
-    hideScroll
+    hideScroll: scrollY > 50,
   };
 }

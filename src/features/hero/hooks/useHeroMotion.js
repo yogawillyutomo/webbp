@@ -1,37 +1,42 @@
 "use client";
-import { useEffect, useRef } from "react";
 
-export default function useHeroMotion() {
-  const mouse = useRef({ x: 0, y: 0 });
-  const target = useRef({ x: 0, y: 0 });
-  const time = useRef(0);
+import { useEffect, useState } from "react";
+
+export default function useHeroMotion(enabled = true) {
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const handleMove = (e) => {
+    if (!enabled) return;
+
+    let frame = null;
+    let nextPosition = { x: 0, y: 0 };
+
+    const handleMove = (event) => {
       const { innerWidth, innerHeight } = window;
-      target.current.x = (e.clientX / innerWidth - 0.5) * 2;
-      target.current.y = (e.clientY / innerHeight - 0.5) * 2;
+
+      nextPosition = {
+        x: (event.clientX / innerWidth - 0.5) * 2,
+        y: (event.clientY / innerHeight - 0.5) * 2,
+      };
+
+      if (frame !== null) return;
+
+      frame = window.requestAnimationFrame(() => {
+        setMouse(nextPosition);
+        frame = null;
+      });
     };
 
-    window.addEventListener("mousemove", handleMove);
-
-    let frame;
-    const animate = () => {
-      // smooth lerp
-      mouse.current.x += (target.current.x - mouse.current.x) * 0.05;
-      mouse.current.y += (target.current.y - mouse.current.y) * 0.05;
-      time.current += 0.003;
-
-      frame = requestAnimationFrame(animate);
-    };
-
-    animate();
+    window.addEventListener("mousemove", handleMove, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", handleMove);
-      cancelAnimationFrame(frame);
-    };
-  }, []);
 
-  return { mouse, time };
+      if (frame !== null) {
+        window.cancelAnimationFrame(frame);
+      }
+    };
+  }, [enabled]);
+
+  return { mouse };
 }
