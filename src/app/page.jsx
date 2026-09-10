@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <Navbar />
 
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <HeroSection />
         <ServicesSection />
         <PortfolioSection />
