@@ -36,13 +36,6 @@ export default function Contact() {
     };
   }, []);
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setTimeout(() => {
-        setVisible(true);
-      }, 300);
-    }
-  }, []);
 
   return (
     <section id="contact" className="py-32 relative">
@@ -127,7 +120,7 @@ export default function Contact() {
                 >
                   <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>
-                View Our Work
+                Lihat Produk
               </a>
             </div>
 
