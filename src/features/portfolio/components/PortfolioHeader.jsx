@@ -1,38 +1,39 @@
 export default function PortfolioHeader() {
-
     return (
-        <div className="text-center mb-20">
+        <div className="mb-20 text-center">
+            <div className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">
+                Product Ecosystem
+            </div>
 
             <h2
                 className="
-        font-orbitron
-        text-4xl
-        lg:text-5xl
-        font-bold
-
-        bg-[linear-gradient(120deg,#3b82f6,#06b6d4,#3b82f6)]
-        bg-clip-text
-        text-transparent
-
-        animate-gradient
-        "
+                    font-orbitron
+                    text-4xl
+                    font-bold
+                    lg:text-5xl
+                    bg-[linear-gradient(120deg,#3b82f6,#06b6d4,#3b82f6)]
+                    bg-clip-text
+                    text-transparent
+                    animate-gradient
+                "
             >
-                Featured Projects
+                Produk & Sistem Bakaran Project
             </h2>
 
             <p
                 className="
-        text-lg
-        text-[var(--muted-text)]
-        mt-6
-        max-w-2xl
-        mx-auto
-        "
+                    mx-auto
+                    mt-6
+                    max-w-3xl
+                    text-lg
+                    leading-relaxed
+                    text-[var(--muted-text)]
+                "
             >
-                Discover our latest work and see how we bring ideas to life.
+                Produk yang ditampilkan di sini mengikuti kondisi engineering yang
+                dapat dibuktikan. Status pengembangan ditulis apa adanya—termasuk
+                ketika sebuah sistem masih pre-production atau prototype.
             </p>
-
         </div>
     );
-
 }
