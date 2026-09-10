@@ -741,18 +741,3 @@ html[data-theme="dark"] .cyber-badge {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
-
-/* Portfolio carousel progress */
-@keyframes portfolio-progress {
-  from {
-    transform: scaleX(0);
-  }
-
-  to {
-    transform: scaleX(1);
-  }
-}
-
-.portfolio-progress {
-  animation: portfolio-progress 4s linear forwards;
-}
