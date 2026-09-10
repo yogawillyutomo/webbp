@@ -21,6 +21,7 @@ export default function PortfolioSection() {
     const {
         selectedProject,
         isVisible,
+        dialogRef,
         openModal,
         closeModal,
         getFlipTransform,
@@ -54,6 +55,7 @@ export default function PortfolioSection() {
                 <PortfolioModal
                     selectedProject={selectedProject}
                     isVisible={isVisible}
+                    dialogRef={dialogRef}
                     closeModal={closeModal}
                     getFlipTransform={getFlipTransform}
                 />
