@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function usePortfolioModal() {
     const [selectedProject, setSelectedProject] = useState(null);
@@ -13,7 +13,7 @@ export default function usePortfolioModal() {
         setSelectedProject(project);
     };
 
-    const closeModal = () => {
+    const closeModal = useCallback(() => {
         setIsClosing(true);
         setIsVisible(false);
 
@@ -22,7 +22,7 @@ export default function usePortfolioModal() {
             setOriginRect(null);
             setIsClosing(false);
         }, 500);
-    };
+    }, []);
 
     useEffect(() => {
         if (!selectedProject) return;
@@ -51,7 +51,7 @@ export default function usePortfolioModal() {
             document.body.style.overflow = originalOverflow;
             window.removeEventListener("keydown", onKeyDown);
         };
-    }, [selectedProject]);
+    }, [selectedProject, closeModal]);
 
     const getFlipTransform = () => {
         if (!originRect) return {};
