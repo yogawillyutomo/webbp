@@ -15,39 +15,14 @@ export default function ServiceCard({
   const cardRef = useRef(null);
 
   const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = (y - centerY) / 28;
-    const rotateY = (centerX - x) / 28;
-
-    const shadowX = (x - centerX) / 15;
-    const shadowY = (y - centerY) / 15;
-
     cardRef.current.style.setProperty("--mouse-x", `${x}px`);
     cardRef.current.style.setProperty("--mouse-y", `${y}px`);
-
-    cardRef.current.style.transform =
-      `perspective(1200px)
-       rotateX(${rotateX}deg)
-       rotateY(${rotateY}deg)
-       translateZ(6px)`;
-
-    cardRef.current.style.boxShadow =
-      `${shadowX}px ${shadowY}px 50px rgba(59,130,246,0.25)`;
-  };
-
-  const resetTilt = () => {
-    cardRef.current.style.transform =
-      "perspective(1200px) rotateX(0deg) rotateY(0deg) translateZ(0)";
-    cardRef.current.style.boxShadow =
-      active
-        ? "0 0 60px rgba(59,130,246,0.25)"
-        : "none";
   };
 
   return (
@@ -55,7 +30,6 @@ export default function ServiceCard({
       ref={cardRef}
       onClick={onClick}
       onMouseMove={handleMouseMove}
-      onMouseLeave={resetTilt}
       whileHover={{ scale: 1.03, y: -8 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
       className={`
@@ -142,7 +116,7 @@ export default function ServiceCard({
             {subtitle}
           </div>
 
-          <p className="text-sm text-muted">
+          <p className="text-sm text-[var(--muted-text)]">
             {shortDesc}
           </p>
 
@@ -155,7 +129,7 @@ export default function ServiceCard({
             transition={{ duration: 0.35 }}
             className="overflow-hidden"
           >
-            <p className="mt-4 text-sm lleading-relaxed text-muted">
+            <p className="mt-4 text-sm leading-relaxed text-[var(--muted-text)]">
               {fullDesc}
             </p>
           </motion.div>
