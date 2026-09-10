@@ -45,8 +45,17 @@ export default function RootLayout({ children }) {
               (function() {
                 try {
                   const savedTheme = localStorage.getItem("theme");
-                  const theme = savedTheme ? savedTheme : "dark";
-                  document.documentElement.setAttribute("data-theme", theme);
+                  const validSavedTheme =
+                    savedTheme === "dark" || savedTheme === "light"
+                      ? savedTheme
+                      : null;
+                  const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+                    ? "dark"
+                    : "light";
+                  document.documentElement.setAttribute(
+                    "data-theme",
+                    validSavedTheme || systemTheme
+                  );
                 } catch(e) {}
               })();
             `,
