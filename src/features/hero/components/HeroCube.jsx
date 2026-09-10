@@ -1,30 +1,31 @@
 "use client";
 
-export default function HeroCube({ pulse, cubeStyle, mouse, className = "", onClick }) {
+import { useReducedMotion } from "framer-motion";
+
+export default function HeroCube({ cubeStyle, mouse, className = "" }) {
 
     const x = mouse?.x || 0;
+    const shouldReduceMotion = useReducedMotion();
 
     return (
         <div
-            onClick={onClick}
-            className={`relative 
+            aria-hidden="true"
+            className={`relative
                         w-52 h-52
                         sm:w-64 sm:h-64
                         md:w-72 md:h-72
                         xl:w-80 xl:h-80
                         animate-float
-                        cursor-pointer
-                        active:scale-95
                         will-change-transform
                         transition-all duration-500 ease-[cubic-bezier(.16,1,.3,1)]
                         ${className}
-                        ${pulse ? "scale-[1.06] drop-shadow-[0_0_32px_rgba(59,130,246,0.5)]" : ""}
                         `}
         >
 
 
             <svg
                 viewBox="0 0 200 200"
+                focusable="false"
                 className="w-full h-full"
                 style={{
                     ...cubeStyle,
@@ -146,15 +147,17 @@ export default function HeroCube({ pulse, cubeStyle, mouse, className = "", onCl
                         opacity="0.28"
                         transform="rotate(35 100 100)"
                     >
-                        <animateTransform
-                            attributeName="transform"
-                            type="translate"
-                            from="-300 -300"
-                            to="300 300"
-                            dur="8s"
-                            repeatCount="indefinite"
-                            additive="sum"
-                        />
+                        {!shouldReduceMotion && (
+                            <animateTransform
+                                attributeName="transform"
+                                type="translate"
+                                from="-300 -300"
+                                to="300 300"
+                                dur="8s"
+                                repeatCount="indefinite"
+                                additive="sum"
+                            />
+                        )}
                     </rect>
                 </g>
             </svg>
