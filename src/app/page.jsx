@@ -5,6 +5,7 @@ import PortfolioSection from "@/features/portfolio/PortfolioSection";
 import ContactSection from "@/features/contact/ContactSection";
 import Footer from "@/shared/layout/Footer";
 import OrganizationJsonLd from "@/shared/seo/OrganizationJsonLd";
+import { SOCIAL_IMAGE } from "@/shared/seo/socialMetadata";
 import { SITE } from "@/config/site";
 
 export const metadata = {
@@ -22,11 +23,13 @@ export const metadata = {
     siteName: SITE.name,
     locale: SITE.locale,
     type: "website",
+    images: [SOCIAL_IMAGE.openGraph],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE.title,
     description: SITE.description,
+    images: [SOCIAL_IMAGE.twitter],
   },
 };
 
