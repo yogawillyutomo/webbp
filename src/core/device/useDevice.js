@@ -1,23 +1,25 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useSyncExternalStore } from "react";
+
+const QUERY = "(max-width: 1024px)";
+
+const subscribe = (callback) => {
+  const media = window.matchMedia(QUERY);
+  media.addEventListener("change", callback);
+
+  return () => media.removeEventListener("change", callback);
+};
+
+const getSnapshot = () => window.matchMedia(QUERY).matches;
+const getServerSnapshot = () => false;
 
 export default function useDevice() {
-  const getInitial = () => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(max-width: 1024px)").matches;
-  };
-
-  const [isMobile, setIsMobile] = useState(getInitial);
-
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 1024px)");
-
-    const handler = (e) => setIsMobile(e.matches);
-
-    media.addEventListener("change", handler);
-
-    return () => media.removeEventListener("change", handler);
-  }, []);
+  const isMobile = useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot
+  );
 
   return { isMobile };
 }
