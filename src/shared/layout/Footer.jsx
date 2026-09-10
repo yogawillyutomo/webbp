@@ -103,9 +103,9 @@ export default function Footer() {
 function FooterColumn({ title, links }) {
   return (
     <div>
-      <h4 className="font-orbitron font-bold mb-6 text-[var(--text-primary)]">
+      <h2 className="font-orbitron font-bold mb-6 text-[var(--text-primary)]">
         {title}
-      </h4>
+      </h2>
 
       <ul className="space-y-3">
         {links.map((link) => (
