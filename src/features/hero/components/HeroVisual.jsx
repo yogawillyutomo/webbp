@@ -1,20 +1,7 @@
-import { useState } from "react";
 import HeroCube from "./HeroCube";
 import HeroBadges from "./HeroBadges";
 
 export default function HeroVisual({ mouse, isMobile }) {
-    const [showBadges, setShowBadges] = useState(true);
-    const [pulse, setPulse] = useState(false);
-
-    const handleClick = () => {
-        setShowBadges((prev) => !prev);
-        setPulse(true);
-
-        window.setTimeout(() => {
-            setPulse(false);
-        }, 350);
-    };
-
     const cubeStyle = isMobile
         ? {}
         : {
@@ -30,12 +17,12 @@ export default function HeroVisual({ mouse, isMobile }) {
             <div className="relative w-[clamp(140px,50vw,420px)] h-[clamp(140px,50vw,420px)]">
                 <div className="hidden 2xl:block">
                     <HeroBadges
-                        showBadges={showBadges}
+                        showBadges
                         isMobile={isMobile}
                     />
                 </div>
 
-                <div className="flex items-center justify-center cursor-pointer">
+                <div className="flex items-center justify-center">
                     <div
                         className="
                             flex items-center justify-center
@@ -45,8 +32,6 @@ export default function HeroVisual({ mouse, isMobile }) {
                         "
                     >
                         <HeroCube
-                            pulse={pulse}
-                            onClick={handleClick}
                             cubeStyle={cubeStyle}
                             mouse={isMobile ? { x: 0, y: 0 } : mouse}
                         />
