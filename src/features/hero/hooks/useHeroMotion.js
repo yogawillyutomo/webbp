@@ -9,7 +9,7 @@ export default function useHeroMotion(enabled = true) {
     if (!enabled) return;
 
     let frame = null;
-    let nextPosition = mouse;
+    let nextPosition = { x: 0, y: 0 };
 
     const handleMove = (event) => {
       const { innerWidth, innerHeight } = window;
