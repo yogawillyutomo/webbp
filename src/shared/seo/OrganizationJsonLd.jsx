@@ -6,7 +6,7 @@ export default function OrganizationJsonLd() {
     "@type": "Organization",
     name: SITE.name,
     url: SITE.url,
-    logo: `${SITE.url}/ico.png`,
+    logo: `${SITE.url}/ico.svg`,
     description: SITE.description,
     email: SITE.email,
     sameAs: [SITE.social.github],
