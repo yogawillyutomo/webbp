@@ -53,10 +53,6 @@ body {
   }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
 .glass-card {
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
