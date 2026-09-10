@@ -1,6 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const FOCUSABLE_SELECTOR = [
+    "a[href]",
+    "button:not([disabled])",
+    "input:not([disabled])",
+    "select:not([disabled])",
+    "textarea:not([disabled])",
+    '[tabindex]:not([tabindex="-1"])',
+].join(",");
 
 export default function usePortfolioModal() {
     const [selectedProject, setSelectedProject] = useState(null);
@@ -8,20 +17,38 @@ export default function usePortfolioModal() {
     const [originRect, setOriginRect] = useState(null);
     const [isClosing, setIsClosing] = useState(false);
 
+    const openerRef = useRef(null);
+    const dialogRef = useRef(null);
+    const closeTimerRef = useRef(null);
+
     const openModal = (event, project) => {
+        openerRef.current = event.currentTarget;
         setOriginRect(event.currentTarget.getBoundingClientRect());
         setSelectedProject(project);
     };
 
     const closeModal = useCallback(() => {
+        if (closeTimerRef.current !== null) {
+            window.clearTimeout(closeTimerRef.current);
+        }
+
         setIsClosing(true);
         setIsVisible(false);
 
-        window.setTimeout(() => {
+        const reduceMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+        closeTimerRef.current = window.setTimeout(() => {
             setSelectedProject(null);
             setOriginRect(null);
             setIsClosing(false);
-        }, 500);
+
+            const opener = openerRef.current;
+            openerRef.current = null;
+            closeTimerRef.current = null;
+            opener?.focus();
+        }, reduceMotion ? 0 : 500);
     }, []);
 
     useEffect(() => {
@@ -29,6 +56,16 @@ export default function usePortfolioModal() {
 
         const frame = window.requestAnimationFrame(() => {
             setIsVisible(true);
+
+            const focusable = dialogRef.current?.querySelector(
+                FOCUSABLE_SELECTOR
+            );
+
+            if (focusable instanceof HTMLElement) {
+                focusable.focus();
+            } else {
+                dialogRef.current?.focus();
+            }
         });
 
         return () => window.cancelAnimationFrame(frame);
@@ -37,9 +74,41 @@ export default function usePortfolioModal() {
     useEffect(() => {
         if (!selectedProject) return;
 
+        const dialog = dialogRef.current;
+        if (!dialog) return;
+
         const onKeyDown = (event) => {
             if (event.key === "Escape") {
+                event.preventDefault();
                 closeModal();
+                return;
+            }
+
+            if (event.key !== "Tab") return;
+
+            const focusableItems = Array.from(
+                dialog.querySelectorAll(FOCUSABLE_SELECTOR)
+            ).filter(
+                (element) =>
+                    element instanceof HTMLElement &&
+                    !element.hasAttribute("disabled")
+            );
+
+            if (focusableItems.length === 0) {
+                event.preventDefault();
+                dialog.focus();
+                return;
+            }
+
+            const first = focusableItems[0];
+            const last = focusableItems[focusableItems.length - 1];
+
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
             }
         };
 
@@ -52,6 +121,14 @@ export default function usePortfolioModal() {
             window.removeEventListener("keydown", onKeyDown);
         };
     }, [selectedProject, closeModal]);
+
+    useEffect(() => {
+        return () => {
+            if (closeTimerRef.current !== null) {
+                window.clearTimeout(closeTimerRef.current);
+            }
+        };
+    }, []);
 
     const getFlipTransform = () => {
         if (!originRect) return {};
@@ -93,6 +170,7 @@ export default function usePortfolioModal() {
     return {
         selectedProject,
         isVisible,
+        dialogRef,
         openModal,
         closeModal,
         getFlipTransform,

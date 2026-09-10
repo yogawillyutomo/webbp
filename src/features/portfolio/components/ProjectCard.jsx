@@ -14,6 +14,7 @@ export default function ProjectCard({ project, onClick, isModalOpen }) {
             type="button"
             onClick={onClick}
             aria-label={`Lihat detail ${project.title}`}
+            aria-haspopup="dialog"
             className={`
                 group relative w-full overflow-hidden rounded-2xl text-left
                 border border-[var(--card-border)]

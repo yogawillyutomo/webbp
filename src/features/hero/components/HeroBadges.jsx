@@ -12,7 +12,7 @@ export default function HeroBadges({
     const radius = isMobile ? 140 : 260;
 
     return (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center pointer-events-none">
 
             {badges.map((badge, i) => {
 

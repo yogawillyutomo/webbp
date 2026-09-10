@@ -9,11 +9,15 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <HeroSection />
-      <ServicesSection />
-      <PortfolioSection/>
-      <ContactSection />
-      <Footer/>
+
+      <main id="main-content" tabIndex={-1}>
+        <HeroSection />
+        <ServicesSection />
+        <PortfolioSection />
+        <ContactSection />
+      </main>
+
+      <Footer />
     </>
   );
 }

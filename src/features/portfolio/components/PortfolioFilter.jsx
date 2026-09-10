@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useLayoutEffect } from "react";
+import { useLayoutEffect, useRef } from "react";
+import { useReducedMotion } from "framer-motion";
 
 export default function PortfolioFilter({
     categories,
@@ -11,6 +12,7 @@ export default function PortfolioFilter({
     const containerRef = useRef(null);
     const indicatorRef = useRef(null);
     const buttonRefs = useRef([]);
+    const shouldReduceMotion = useReducedMotion();
 
     /*
     =========================
@@ -51,10 +53,10 @@ export default function PortfolioFilter({
 
         container.scrollTo({
             left: scrollPosition,
-            behavior: isMobile ? "auto" : "smooth"
+            behavior: isMobile || shouldReduceMotion ? "auto" : "smooth"
         });
 
-    }, [activeCategory, categories]);
+    }, [activeCategory, categories, shouldReduceMotion]);
 
 
 
@@ -65,6 +67,7 @@ export default function PortfolioFilter({
     */
 
     const handleMouseMove = (e, index) => {
+        if (shouldReduceMotion) return;
 
         const button = buttonRefs.current[index];
         if (!button) return;
@@ -93,7 +96,7 @@ export default function PortfolioFilter({
 
         <div className="flex justify-center mt-16 mb-24">
 
-            <div className="relative portfolio-scroll-mask max-w-full">
+            <div role="group" aria-label="Filter produk berdasarkan kategori" className="relative portfolio-scroll-mask max-w-full">
 
                 <div
                     ref={containerRef}
@@ -112,6 +115,7 @@ export default function PortfolioFilter({
 
                     <div
                         ref={indicatorRef}
+                        aria-hidden="true"
                         className="
             absolute top-2 bottom-2 left-0
             rounded-full
@@ -131,6 +135,7 @@ export default function PortfolioFilter({
                     {categories.map((cat, index) => (
 
                         <button
+                            type="button"
                             key={cat}
                             ref={(el) => (buttonRefs.current[index] = el)}
 
@@ -138,6 +143,7 @@ export default function PortfolioFilter({
                             onMouseLeave={() => resetMagnet(index)}
 
                             onClick={() => setActiveCategory(cat)}
+                            aria-pressed={activeCategory === cat}
 
                             className={`
                 relative z-10
@@ -148,6 +154,7 @@ export default function PortfolioFilter({
                 whitespace-nowrap
                 transition-colors duration-200
                 active:scale-95
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400
                 ${activeCategory === cat
                                     ? "text-black dark:text-black"
                                     : "text-gray-700 hover:text-black dark:text-white/70 dark:hover:text-white"}

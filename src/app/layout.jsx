@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Orbitron, Rajdhani } from "next/font/google";
+import MotionProvider from "@/shared/providers/MotionProvider";
 
 const orbitron = Orbitron({
   subsets: ["latin"],
@@ -62,9 +63,18 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        <div className="hex-pattern min-h-screen overflow-x-hidden">
-          {children}
-        </div>
+        <a
+          href="#main-content"
+          className="skip-link"
+        >
+          Lewati ke konten utama
+        </a>
+
+        <MotionProvider>
+          <div className="hex-pattern min-h-screen overflow-x-hidden">
+            {children}
+          </div>
+        </MotionProvider>
       </body>
     </html>
   );

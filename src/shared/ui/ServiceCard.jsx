@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useId, useRef } from "react";
 import { motion } from "framer-motion";
 
 export default function ServiceCard({
@@ -13,6 +13,7 @@ export default function ServiceCard({
   onClick,
 }) {
   const cardRef = useRef(null);
+  const detailId = useId();
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
@@ -25,10 +26,22 @@ export default function ServiceCard({
     cardRef.current.style.setProperty("--mouse-y", `${y}px`);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+
+    event.preventDefault();
+    onClick();
+  };
+
   return (
     <motion.div
       ref={cardRef}
+      role="button"
+      tabIndex={0}
+      aria-expanded={active}
+      aria-controls={detailId}
       onClick={onClick}
+      onKeyDown={handleKeyDown}
       onMouseMove={handleMouseMove}
       whileHover={{ scale: 1.03, y: -8 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
@@ -37,6 +50,8 @@ export default function ServiceCard({
         border overflow-hidden backdrop-blur-xl
         bg-[var(--card-bg)]
         group will-change-transform
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400
+        focus-visible:ring-offset-2 focus-visible:ring-offset-transparent
         ${active
           ? "border-transparent"
           : "border-[var(--card-border)]"}
@@ -106,6 +121,7 @@ export default function ServiceCard({
           </h3>
 
           <div
+            aria-hidden="true"
             className={`
               text-sm mb-3 transition-colors duration-300
               ${active
@@ -121,6 +137,8 @@ export default function ServiceCard({
           </p>
 
           <motion.div
+            id={detailId}
+            aria-hidden={!active}
             initial={false}
             animate={{
               height: active ? "auto" : 0,
