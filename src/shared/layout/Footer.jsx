@@ -18,10 +18,9 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-6">
               <Image
                 src="/ico.svg"
-                alt="Bakaran Project"
+                alt=""
                 width={26}
                 height={26}
-                priority
               />
 
               <span className="font-orbitron text-xl font-bold text-[var(--text-primary)]">
@@ -46,7 +45,7 @@ export default function Footer() {
             links={[
               { label: "Home", href: "#home" },
               { label: "Services", href: "#services" },
-              { label: "Portfolio", href: "#portfolio" },
+              { label: "Produk", href: "#portfolio" },
               { label: "Contact", href: "#contact" },
             ]}
           />
@@ -54,11 +53,12 @@ export default function Footer() {
           <FooterColumn
             title="Services"
             links={[
-              { label: "Web Development", href: "#services" },
-              { label: "Mobile Apps", href: "#services" },
-              { label: "AI Integration", href: "#services" },
-              { label: "Cloud Solutions", href: "#services" },
-              { label: "UI/UX Design", href: "#services" },
+              { label: "Digital Platforms", href: "#services" },
+              { label: "Digitalisasi Sekolah", href: "#services" },
+              { label: "System Integration", href: "#services" },
+              { label: "IoT & Edge Systems", href: "#services" },
+              { label: "AI & Computer Vision R&D", href: "#services" },
+              { label: "Operational UI", href: "#services" },
             ]}
           />
         </div>
