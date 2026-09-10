@@ -1,22 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+const subscribe = () => () => {};
 
 export default function ThemeToggle({ theme, toggleTheme }) {
-  const [mounted, setMounted] = useState(false);
+  const hydrated = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false
+  );
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
+  if (!hydrated) return null;
 
   return (
-    <div
+    <button
+      type="button"
       onClick={toggleTheme}
+      aria-label={theme === "dark" ? "Aktifkan tema terang" : "Aktifkan tema gelap"}
       className={`theme-toggle ${theme === "light" ? "light" : ""}`}
     >
-      <div className="theme-knob">
+      <div className="theme-knob" aria-hidden="true">
         {theme === "dark" ? (
           <svg
             className="theme-icon text-blue-500"
@@ -43,6 +47,6 @@ export default function ThemeToggle({ theme, toggleTheme }) {
           </svg>
         )}
       </div>
-    </div>
+    </button>
   );
 }
