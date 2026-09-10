@@ -96,7 +96,7 @@ export default function PortfolioFilter({
 
         <div className="flex justify-center mt-16 mb-24">
 
-            <div className="relative portfolio-scroll-mask max-w-full">
+            <div role="group" aria-label="Filter produk berdasarkan kategori" className="relative portfolio-scroll-mask max-w-full">
 
                 <div
                     ref={containerRef}
