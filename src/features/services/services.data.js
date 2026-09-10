@@ -4,83 +4,56 @@ import {
     CloudIcon,
     ChipIcon,
     LayoutIcon,
-    PhoneIcon,
-    ChartIcon,
-    TrophyIcon,
-    LearningIcon
+    LearningIcon,
 } from "@/shared/icons/TechIcons";
 
 export const servicesData = [
     {
-        title: "Web Development",
-        subtitle: "Clean Code • Best Practices",
-        shortDesc: "Platform web modern dan scalable.",
+        title: "Digital Platforms",
+        subtitle: "Web Apps • Operational Systems",
+        shortDesc: "Platform web untuk proses operasional nyata.",
         fullDesc:
-            "Pengembangan aplikasi web enterprise-ready menggunakan arsitektur modular, clean coding standard, dan performa tinggi untuk pertumbuhan jangka panjang.",
+            "Perancangan dan pengembangan aplikasi web dengan boundary domain yang jelas, source of truth terkontrol, serta fondasi yang dapat berkembang mengikuti kebutuhan produk.",
         icon: <CodeIcon />,
     },
     {
-        title: "Mobile Apps",
-        subtitle: "Fast Delivery • Agile Workflow",
-        shortDesc: "Aplikasi Android & iOS modern.",
+        title: "Digitalisasi Sekolah",
+        subtitle: "Attendance • PKL • Laboratory",
+        shortDesc: "Sistem digital untuk workflow sekolah.",
         fullDesc:
-            "Pengembangan aplikasi mobile native dan cross-platform dengan pendekatan agile untuk memastikan time-to-market cepat dan kualitas stabil.",
-        icon: <PhoneIcon />,
-    },
-    {
-        title: "IoT Solutions",
-        subtitle: "Secure System • Enterprise Grade",
-        shortDesc: "Integrasi perangkat & sistem pintar.",
-        fullDesc:
-            "Implementasi sistem IoT untuk monitoring, automation, dan integrasi data real-time dengan keamanan tingkat enterprise.",
-        icon: <ChipIcon />,
-    },
-    {
-        title: "AI Integration",
-        subtitle: "Intelligent Automation",
-        shortDesc: "Automasi & insight berbasis AI.",
-        fullDesc:
-            "Implementasi machine learning dan AI-driven system untuk pengambilan keputusan cerdas dan optimasi proses bisnis.",
-        icon: <BrainIcon />,
-    },
-    {
-        title: "UI/UX Design",
-        subtitle: "User-Centered Experience",
-        shortDesc: "Desain modern berfokus pengguna.",
-        fullDesc:
-            "Perancangan antarmuka dan pengalaman pengguna yang intuitif, estetik, dan berorientasi konversi.",
-        icon: <LayoutIcon />,
-    },
-    {
-        title: "Cloud Solutions",
-        subtitle: "Scalable • Cloud Ready",
-        shortDesc: "Arsitektur cloud fleksibel.",
-        fullDesc:
-            "Desain dan deployment infrastruktur cloud modern dengan auto-scaling, monitoring, dan reliability tinggi.",
-        icon: <CloudIcon />,
-    },
-    {
-        title: "Program Pembelajaran",
-        subtitle: "Training • Workshop • Kurikulum",
-        shortDesc: "Program pendidikan teknologi.",
-        fullDesc:
-            "Program pelatihan intensif untuk institusi pendidikan dan profesional dengan kurikulum berbasis industri.",
+            "Pengembangan sistem pendidikan yang berangkat dari kebutuhan operasional sekolah, termasuk presensi, kolaborasi PKL, pengelolaan laboratorium, dan fondasi master data bersama.",
         icon: <LearningIcon />,
     },
     {
-        title: "Konsultasi Teknologi",
-        subtitle: "Strategi • Transformasi Digital",
-        shortDesc: "Pendampingan transformasi digital.",
+        title: "System Integration",
+        subtitle: "API • Mapping • Reconciliation",
+        shortDesc: "Integrasi data dan layanan antar sistem.",
         fullDesc:
-            "Analisis dan perencanaan arsitektur sistem untuk membantu organisasi beradaptasi dengan teknologi terbaru.",
-        icon: <ChartIcon />,
+            "Membangun integration boundary untuk pertukaran data antaraplikasi dengan authorization, entity mapping, reconciliation, audit trail, dan adopsi bertahap.",
+        icon: <CloudIcon />,
     },
     {
-        title: "Mentoring Lomba",
-        subtitle: "LKS • Hackathon • Kompetisi",
-        shortDesc: "Pendampingan kompetisi teknologi.",
+        title: "IoT & Edge Systems",
+        subtitle: "Edge Runtime • Device Workflow",
+        shortDesc: "Integrasi software dengan perangkat dan edge.",
         fullDesc:
-            "Program mentoring khusus untuk persiapan kompetisi teknologi tingkat nasional dan internasional.",
-        icon: <TrophyIcon />,
+            "Eksperimen dan pengembangan workflow edge untuk kebutuhan seperti mobility access, perangkat laboratorium, local resilience, durable delivery, dan komunikasi perangkat.",
+        icon: <ChipIcon />,
+    },
+    {
+        title: "AI & Computer Vision R&D",
+        subtitle: "ANPR • Benchmark • Evidence",
+        shortDesc: "Riset terukur untuk computer vision dan automasi.",
+        fullDesc:
+            "Pengembangan prototype computer vision dengan benchmark, dataset governance, dan claim gate yang eksplisit. Hasil R&D tidak dipromosikan sebagai akurasi dunia nyata sebelum evidence memenuhi gate.",
+        icon: <BrainIcon />,
+    },
+    {
+        title: "Operational UI",
+        subtitle: "Admin • Dashboard • Workflow",
+        shortDesc: "Antarmuka untuk operator dan pengelola sistem.",
+        fullDesc:
+            "Perancangan dashboard, admin workspace, dan operational interface yang mengikuti ownership domain dan workflow pengguna, bukan sekadar kumpulan halaman CRUD.",
+        icon: <LayoutIcon />,
     },
 ];
