@@ -69,6 +69,21 @@ export function getSocialImageContent() {
   return seoContent.socialImage;
 }
 
+export function getHomePageContent() {
+  return {
+    site: getSiteSettings(),
+    navigation: getNavigation(),
+    hero: getHeroContent(),
+    solutionsSection: getSolutionsSection(),
+    solutionDomains: getSolutionDomains(),
+    portfolioSection: getPortfolioSection(),
+    products: getProducts(),
+    about: getAboutContent(),
+    contact: getContactContent(),
+    footer: getFooterContent(),
+  };
+}
+
 export const contentRepository = {
   getSiteSettings,
   getSocialLink,
@@ -84,4 +99,5 @@ export const contentRepository = {
   getFooterContent,
   getLegalPage,
   getSocialImageContent,
+  getHomePageContent,
 };
