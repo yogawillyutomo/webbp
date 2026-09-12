@@ -2,7 +2,19 @@
 
 import Image from "next/image";
 import { GitHubIcon } from "@/shared/icons/TechIcons";
-import { SITE } from "@/config/site";
+import {
+  getFooterContent,
+  getNavigation,
+  getSiteSettings,
+  getSocialLink,
+  getSolutionDomains,
+} from "@/content/repository";
+
+const footer = getFooterContent();
+const navigation = getNavigation();
+const solutions = getSolutionDomains();
+const site = getSiteSettings();
+const github = getSocialLink("github");
 
 export default function Footer() {
   return (
@@ -16,44 +28,42 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <Image src="/ico.svg" alt="" width={26} height={26} />
+              <Image
+                src={site.brandAssets.vectorLogo}
+                alt=""
+                width={26}
+                height={26}
+              />
 
               <span className="font-orbitron text-xl font-bold text-[var(--text-primary)]">
-                {SITE.name}
+                {site.siteName}
               </span>
             </div>
 
             <p className="text-[var(--muted-text)] mb-6 max-w-md leading-relaxed">
-              Digital product & systems engineering untuk kebutuhan operasional
-              nyata—dengan fokus pada pendidikan, platform dan integrasi, serta
-              smart mobility dan edge systems.
+              {footer.description}
             </p>
 
             <div className="flex gap-4">
-              <SocialLink href={SITE.social.github} label="Bakaran Project di GitHub">
-                <GitHubIcon className="w-5 h-5 text-blue-500 dark:text-white group-hover:text-blue-400 transition-colors" />
-              </SocialLink>
+              {github && (
+                <SocialLink href={github.href} label={github.label}>
+                  <GitHubIcon className="w-5 h-5 text-blue-500 dark:text-white group-hover:text-blue-400 transition-colors" />
+                </SocialLink>
+              )}
             </div>
           </div>
 
           <FooterColumn
-            title="Navigate"
-            links={[
-              { label: "Home", href: "#home" },
-              { label: "Solutions", href: "#solutions" },
-              { label: "Products", href: "#portfolio" },
-              { label: "About", href: "#about" },
-              { label: "Contact", href: "#contact" },
-            ]}
+            title={footer.navigationTitle}
+            links={navigation.map(({ label, href }) => ({ label, href }))}
           />
 
           <FooterColumn
-            title="Solution Domains"
-            links={[
-              { label: "Education Systems", href: "#solutions" },
-              { label: "Operational Platforms & Integration", href: "#solutions" },
-              { label: "Smart Mobility & Edge", href: "#solutions" },
-            ]}
+            title={footer.solutionsTitle}
+            links={solutions.map(({ title }) => ({
+              label: title,
+              href: "#solutions",
+            }))}
           />
         </div>
 
@@ -71,22 +81,19 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[var(--muted-text)] text-sm">
-            © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+            © {new Date().getFullYear()} {site.siteName}. {footer.copyrightSuffix}
           </p>
 
           <div className="flex gap-6 text-sm">
-            <a
-              href="/privacy"
-              className="text-[var(--muted-text)] hover:text-blue-400 transition-colors"
-            >
-              Privacy Policy
-            </a>
-            <a
-              href="/terms"
-              className="text-[var(--muted-text)] hover:text-blue-400 transition-colors"
-            >
-              Terms of Service
-            </a>
+            {footer.legalLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[var(--muted-text)] hover:text-blue-400 transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>
