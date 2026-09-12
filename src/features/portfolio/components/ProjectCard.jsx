@@ -1,3 +1,7 @@
+import { getSiteSettings } from "@/content/repository";
+
+const site = getSiteSettings();
+
 const STATUS_STYLES = {
     "Pre-production": "border-amber-400/30 bg-amber-400/10 text-amber-300",
     Prototype: "border-violet-400/30 bg-violet-400/10 text-violet-300",
@@ -54,7 +58,7 @@ export default function ProjectCard({ project, onClick, isModalOpen }) {
                     <div className="relative z-10 flex w-full items-end justify-between gap-4">
                         <div className="min-w-0">
                             <div className="mb-2 text-xs font-medium uppercase tracking-[0.28em] text-cyan-200/80">
-                                Bakaran Project
+                                {site.siteName}
                             </div>
                             <div className="truncate font-orbitron text-3xl font-bold text-white">
                                 {project.code}
