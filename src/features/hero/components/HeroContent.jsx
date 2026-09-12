@@ -4,101 +4,84 @@ import RevealSection from "@/shared/ui/RevealSection";
 import { useEffect, useRef } from "react";
 
 export default function HeroContent({ onWrapChange }) {
+  const buttonRef = useRef(null);
 
-    const buttonRef = useRef(null);
+  useEffect(() => {
+    const checkWrap = () => {
+      const el = buttonRef.current;
+      if (!el) return;
 
-    useEffect(() => {
+      const children = el.children;
+      if (children.length < 2) return;
 
-        const checkWrap = () => {
+      const firstTop = children[0].offsetTop;
+      const secondTop = children[1].offsetTop;
 
-            const el = buttonRef.current;
-            if (!el) return;
+      onWrapChange?.(secondTop > firstTop);
+    };
 
-            const children = el.children;
-            if (children.length < 2) return;
+    const timer = setTimeout(checkWrap, 100);
 
-            const firstTop = children[0].offsetTop;
-            const secondTop = children[1].offsetTop;
+    window.addEventListener("resize", checkWrap);
 
-            const wrapped = secondTop > firstTop;
+    const observer = new ResizeObserver(checkWrap);
+    if (buttonRef.current) observer.observe(buttonRef.current);
 
-            onWrapChange?.(wrapped);
-        };
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", checkWrap);
+      observer.disconnect();
+    };
+  }, [onWrapChange]);
 
-        // delay sedikit agar layout selesai render
-        const timer = setTimeout(checkWrap, 100);
+  return (
+    <RevealSection disableInitial>
+      <div className="space-y-6 text-center xl:text-left pt-8 xl:pt-0">
+        <div className="cyber-badge mt-6 xl:mt-0 mx-auto xl:mx-0 inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm text-[var(--brand-color)] bg-blue-500/15 border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.25)] xl:bg-transparent xl:border-[rgba(59,130,246,0.3)] xl:shadow-none">
+          <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+          <span className="text-sm font-medium tracking-wide">
+            Digital Product & Systems Engineering
+          </span>
+        </div>
 
-        // resize window
-        window.addEventListener("resize", checkWrap);
+        <h1 className="font-orbitron font-bold tracking-tight leading-[1.25] pb-1 hero-title">
+          <span className="block text-3xl md:text-5xl xl:text-6xl text-slate-900 hero-main-title">
+            Bakaran Project
+          </span>
 
-        // observer jika ukuran container berubah
-        const observer = new ResizeObserver(checkWrap);
-        if (buttonRef.current) observer.observe(buttonRef.current);
+          <span className="block mt-3 text-lg md:text-3xl xl:text-4xl bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent animate-gradient">
+            Sistem Digital untuk Operasional Nyata
+          </span>
+        </h1>
 
-        return () => {
-            clearTimeout(timer);
-            window.removeEventListener("resize", checkWrap);
-            observer.disconnect();
-        };
+        <p className="text-base md:text-lg muted-text leading-relaxed max-w-xl xl:max-w-2xl mx-auto xl:mx-0">
+          Bakaran Project mengembangkan produk dan sistem digital untuk kebutuhan
+          operasional nyata—dari ekosistem pendidikan dan integrasi platform
+          hingga smart mobility dan edge systems. Setiap produk dikembangkan
+          bertahap dengan ownership, source of truth, security boundary, dan
+          evidence engineering yang jelas.
+        </p>
 
-    }, [onWrapChange]);
+        <div
+          ref={buttonRef}
+          className="flex flex-wrap gap-4 justify-center xl:justify-start"
+        >
+          <Link
+            href="#solutions"
+            className="btn-cyber animate-pulse-glow px-8 py-4 rounded-lg font-semibold text-lg bg-linear-to-r from-blue-600 to-cyan-500 inline-block"
+          >
+            Jelajahi Solutions
+          </Link>
 
-    return (
-        <RevealSection disableInitial>
-            <div className="space-y-6 text-center xl:text-left pt-8 xl:pt-0">
-
-                {/* BADGE */}
-                <div className="cyber-badge mt-6 xl:mt-0 mx-auto xl:mx-0 inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm text-[var(--brand-color)] bg-blue-500/15 border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.25)] xl:bg-transparent xl:border-[rgba(59,130,246,0.3)] xl:shadow-none">
-                    <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
-
-                    <span className="text-sm font-medium tracking-wide">
-                        Digital Product Engineering
-                    </span>
-                </div>
-
-                {/* TITLE */}
-                <h1 className="font-orbitron font-bold tracking-tight leading-[1.25] pb-1 hero-title">
-
-                    <span className="block text-3xl md:text-5xl xl:text-6xl text-slate-900 hero-main-title">
-                        Bakaran Project
-                    </span>
-
-                    <span className="block mt-3 text-lg md:text-3xl xl:text-4xl bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent animate-gradient">
-                        Sistem Digital untuk Operasional Nyata
-                    </span>
-
-                </h1>
-
-                {/* DESCRIPTION */}
-                <p className="text-base md:text-lg muted-text leading-relaxed max-w-xl xl:max-w-2xl mx-auto xl:mx-0">
-                    Bakaran Project membangun sistem digital dari kebutuhan operasional nyata—
-                    mulai dari pendidikan, integrasi data, hingga mobility systems.
-                    Setiap produk dikembangkan bertahap dengan boundary, source of truth,
-                    dan evidence engineering yang jelas.
-                </p>
-
-                {/* BUTTONS */}
-                <div
-                    ref={buttonRef}
-                    className="flex flex-wrap gap-4 justify-center xl:justify-start"
-                >
-                    <Link
-                        href="#contact"
-                        className="btn-cyber animate-pulse-glow px-8 py-4 rounded-lg font-semibold text-lg bg-linear-to-r from-blue-600 to-cyan-500 inline-block"
-                    >
-                        Diskusikan Kebutuhan
-                    </Link>
-
-                    <Link
-                        href="#portfolio"
-                        className="btn-cyber px-8 py-4 rounded-lg font-semibold text-lg border border-blue-500/50 hover:bg-blue-500/10 flex items-center gap-3"
-                    >
-                        <EyeIcon />
-                        Lihat Produk
-                    </Link>
-                </div>
-
-            </div>
-        </RevealSection>
-    );
+          <Link
+            href="#portfolio"
+            className="btn-cyber px-8 py-4 rounded-lg font-semibold text-lg border border-blue-500/50 hover:bg-blue-500/10 flex items-center gap-3"
+          >
+            <EyeIcon />
+            Lihat Produk
+          </Link>
+        </div>
+      </div>
+    </RevealSection>
+  );
 }
