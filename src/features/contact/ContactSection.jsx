@@ -2,7 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { EmailIcon, GitHubIcon } from "@/shared/icons/TechIcons";
-import { SITE } from "@/config/site";
+import {
+  getContactContent,
+  getSiteSettings,
+  getSocialLink,
+} from "@/content/repository";
+
+const contact = getContactContent();
+const site = getSiteSettings();
+const github = getSocialLink("github");
+const emailSubject = encodeURIComponent(contact.emailSubject);
 
 export default function Contact() {
   const ref = useRef(null);
@@ -67,23 +76,21 @@ export default function Contact() {
               border border-blue-500/30 bg-blue-500/10 mb-6"
             >
               <span className="text-blue-300 text-sm font-medium tracking-wider">
-                DISCUSS A REAL OPERATIONAL NEED
+                {contact.eyebrow}
               </span>
             </div>
 
             <h2 className="font-orbitron text-4xl lg:text-5xl font-bold mb-6">
-              Mari Bahas Kebutuhan Sistem Anda
+              {contact.title}
             </h2>
 
             <p className="text-[var(--muted-text)] text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-              Diskusikan kebutuhan operasional, pilot, integrasi, atau pengembangan
-              produk bersama Bakaran Project. Pembahasan dimulai dari masalah,
-              boundary, pengguna, dan source of truth sebelum menentukan solusi.
+              {contact.description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href={`mailto:${SITE.email}?subject=Diskusi%20Kebutuhan%20Sistem`}
+                href={`mailto:${site.publicEmail}?subject=${emailSubject}`}
                 className="
                   btn-cyber animate-pulse-glow
                   px-8 py-4 rounded-lg
@@ -94,11 +101,11 @@ export default function Contact() {
                 "
               >
                 <EmailIcon />
-                Diskusi via Email
+                {contact.primaryCtaLabel}
               </a>
 
               <a
-                href="#portfolio"
+                href={contact.secondaryCta.href}
                 className="
                   btn-cyber
                   px-8 py-4 rounded-lg
@@ -119,28 +126,30 @@ export default function Contact() {
                 >
                   <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>
-                Lihat Produk
+                {contact.secondaryCta.label}
               </a>
             </div>
 
             <div className="mt-12 flex flex-wrap justify-center gap-8">
               <a
-                href={`mailto:${SITE.email}`}
+                href={`mailto:${site.publicEmail}`}
                 className="flex items-center gap-2 text-[var(--muted-text)] hover:text-blue-400 transition-colors"
               >
                 <EmailIcon />
-                <span>{SITE.email}</span>
+                <span>{site.publicEmail}</span>
               </a>
 
-              <a
-                href={SITE.social.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[var(--muted-text)] hover:text-cyan-400 transition-colors"
-              >
-                <GitHubIcon className="w-5 h-5 text-blue-500" />
-                <span>github.com/Bakaran-Project</span>
-              </a>
+              {github && (
+                <a
+                  href={github.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-[var(--muted-text)] hover:text-cyan-400 transition-colors"
+                >
+                  <GitHubIcon className="w-5 h-5 text-blue-500" />
+                  <span>{github.display}</span>
+                </a>
+              )}
             </div>
           </div>
         </div>
