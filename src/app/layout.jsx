@@ -1,44 +1,42 @@
 import "./globals.css";
-import { Orbitron, Rajdhani } from "next/font/google";
 import MotionProvider from "@/shared/providers/MotionProvider";
-
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-orbitron",
-  display: "swap",
-});
-
-const rajdhani = Rajdhani({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-rajdhani",
-  display: "swap",
-});
+import { SITE } from "@/config/site";
 
 export const metadata = {
+  metadataBase: new URL(SITE.url),
+  applicationName: SITE.name,
   title: {
-    default: "Bakaran Project - Solusi Teknologi Terdepan",
-    template: "%s | Bakaran Project",
+    default: SITE.title,
+    template: `%s | ${SITE.name}`,
   },
+  description: SITE.description,
+  creator: SITE.name,
+  publisher: SITE.name,
   icons: {
     icon: "/ico.svg",
   },
-
-  description: "Solusi Teknologi Terdepan dalam pengembangan software dan teknologi digital.",
-  metadataBase: new URL("https://bakaranproject.com"),
+  manifest: "/manifest.webmanifest",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html
-      lang="id"
+      lang={SITE.language}
       className="scroll-smooth"
       suppressHydrationWarning
     >
-      <body
-        className={`${orbitron.variable} ${rajdhani.variable} font-rajdhani`}
-      >
+      <body className="font-rajdhani">
         {/* Inline script untuk mencegah theme flicker */}
         <script
           dangerouslySetInnerHTML={{

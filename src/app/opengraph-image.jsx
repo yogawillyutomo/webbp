@@ -1,0 +1,13 @@
+import {
+  createSocialImage,
+  socialImageAlt,
+  socialImageSize,
+} from "@/shared/seo/createSocialImage";
+
+export const alt = socialImageAlt;
+export const size = socialImageSize;
+export const contentType = "image/png";
+
+export default function OpenGraphImage() {
+  return createSocialImage();
+}

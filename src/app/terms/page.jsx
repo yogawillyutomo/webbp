@@ -1,9 +1,31 @@
 import Link from "next/link";
 import { SITE } from "@/config/site";
+import { SOCIAL_IMAGE } from "@/shared/seo/socialMetadata";
+
+const title = "Terms of Service";
+const description = "Ketentuan penggunaan website Bakaran Project.";
 
 export const metadata = {
-  title: "Terms of Service",
-  description: "Ketentuan penggunaan website Bakaran Project.",
+  title,
+  description,
+  alternates: {
+    canonical: "/terms",
+  },
+  openGraph: {
+    title: `${title} | ${SITE.name}`,
+    description,
+    url: "/terms",
+    siteName: SITE.name,
+    locale: SITE.locale,
+    type: "website",
+    images: [SOCIAL_IMAGE.openGraph],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ${SITE.name}`,
+    description,
+    images: [SOCIAL_IMAGE.twitter],
+  },
 };
 
 export default function TermsPage() {
