@@ -33,9 +33,9 @@ export default function PortfolioSection() {
             id="portfolio"
             className={`
                 relative py-28
-                transition-transform duration-500
+                transition-transform duration-300
                 ease-[cubic-bezier(0.22,1,0.36,1)]
-                ${selectedProject ? "scale-[0.98]" : "scale-100"}
+                ${isVisible ? "scale-[0.98]" : "scale-100"}
             `}
         >
             <div className="mx-auto max-w-7xl px-6">
@@ -51,7 +51,7 @@ export default function PortfolioSection() {
                 <PortfolioGrid
                     projects={filteredProjects}
                     openModal={openModal}
-                    isModalOpen={!!selectedProject}
+                    isModalOpen={isVisible}
                 />
 
                 <PortfolioModal
