@@ -1,21 +1,6 @@
 import "./globals.css";
-import { Orbitron, Rajdhani } from "next/font/google";
 import MotionProvider from "@/shared/providers/MotionProvider";
 import { SITE } from "@/config/site";
-
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-orbitron",
-  display: "swap",
-});
-
-const rajdhani = Rajdhani({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-rajdhani",
-  display: "swap",
-});
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -51,9 +36,7 @@ export default function RootLayout({ children }) {
       className="scroll-smooth"
       suppressHydrationWarning
     >
-      <body
-        className={`${orbitron.variable} ${rajdhani.variable} font-rajdhani`}
-      >
+      <body className="font-rajdhani">
         {/* Inline script untuk mencegah theme flicker */}
         <script
           dangerouslySetInnerHTML={{
