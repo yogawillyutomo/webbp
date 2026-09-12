@@ -6,7 +6,7 @@ import SectionDivider from "@/shared/ui/SectionDivider";
 import { useState } from "react";
 
 export default function HeroView(props) {
-    const { mouse, isMobile, hideScroll } = props;
+    const { mouse, isMobile, hideScroll, content } = props;
     const [hideCube, setHideCube] = useState(false);
 
     return (
@@ -21,7 +21,7 @@ export default function HeroView(props) {
 
                 <div className="grid xl:grid-cols-2 gap-12 items-center">
 
-                    <HeroContent onWrapChange={setHideCube} />
+                    <HeroContent content={content} onWrapChange={setHideCube} />
 
                     {!hideCube && (
                         <div className="hidden lg:flex justify-center animate-fade-in">
