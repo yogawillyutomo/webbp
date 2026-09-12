@@ -11,6 +11,8 @@ const FOCUSABLE_SELECTOR = [
     '[tabindex]:not([tabindex="-1"])',
 ].join(",");
 
+const CLOSE_DURATION_MS = 320;
+
 export default function usePortfolioModal() {
     const [selectedProject, setSelectedProject] = useState(null);
     const [isVisible, setIsVisible] = useState(false);
@@ -20,20 +22,45 @@ export default function usePortfolioModal() {
     const openerRef = useRef(null);
     const dialogRef = useRef(null);
     const closeTimerRef = useRef(null);
+    const openFrameRef = useRef(null);
 
     const openModal = (event, project) => {
+        if (closeTimerRef.current !== null) {
+            window.clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+        }
+
+        if (openFrameRef.current !== null) {
+            window.cancelAnimationFrame(openFrameRef.current);
+        }
+
         openerRef.current = event.currentTarget;
         setOriginRect(event.currentTarget.getBoundingClientRect());
+        setIsClosing(false);
+        setIsVisible(false);
         setSelectedProject(project);
+
+        openFrameRef.current = window.requestAnimationFrame(() => {
+            setIsVisible(true);
+            openFrameRef.current = null;
+        });
     };
 
     const closeModal = useCallback(() => {
+        if (openFrameRef.current !== null) {
+            window.cancelAnimationFrame(openFrameRef.current);
+            openFrameRef.current = null;
+        }
+
         if (closeTimerRef.current !== null) {
             window.clearTimeout(closeTimerRef.current);
         }
 
         setIsClosing(true);
         setIsVisible(false);
+
+        const opener = openerRef.current;
+        opener?.focus({ preventScroll: true });
 
         const reduceMotion = window.matchMedia(
             "(prefers-reduced-motion: reduce)"
@@ -43,20 +70,15 @@ export default function usePortfolioModal() {
             setSelectedProject(null);
             setOriginRect(null);
             setIsClosing(false);
-
-            const opener = openerRef.current;
             openerRef.current = null;
             closeTimerRef.current = null;
-            opener?.focus();
-        }, reduceMotion ? 0 : 500);
+        }, reduceMotion ? 0 : CLOSE_DURATION_MS);
     }, []);
 
     useEffect(() => {
-        if (!selectedProject) return;
+        if (!selectedProject || !isVisible) return;
 
         const frame = window.requestAnimationFrame(() => {
-            setIsVisible(true);
-
             const focusable = dialogRef.current?.querySelector(
                 FOCUSABLE_SELECTOR
             );
@@ -69,10 +91,10 @@ export default function usePortfolioModal() {
         });
 
         return () => window.cancelAnimationFrame(frame);
-    }, [selectedProject]);
+    }, [selectedProject, isVisible]);
 
     useEffect(() => {
-        if (!selectedProject) return;
+        if (!selectedProject || !isVisible) return;
 
         const dialog = dialogRef.current;
         if (!dialog) return;
@@ -120,12 +142,16 @@ export default function usePortfolioModal() {
             document.body.style.overflow = originalOverflow;
             window.removeEventListener("keydown", onKeyDown);
         };
-    }, [selectedProject, closeModal]);
+    }, [selectedProject, isVisible, closeModal]);
 
     useEffect(() => {
         return () => {
             if (closeTimerRef.current !== null) {
                 window.clearTimeout(closeTimerRef.current);
+            }
+
+            if (openFrameRef.current !== null) {
+                window.cancelAnimationFrame(openFrameRef.current);
             }
         };
     }, []);
