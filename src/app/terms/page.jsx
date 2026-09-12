@@ -30,7 +30,7 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <main className="min-h-screen px-6 py-20">
+    <main id="main-content" tabIndex={-1} className="min-h-screen px-6 py-20">
       <article className="max-w-3xl mx-auto">
         <Link
           href="/"
