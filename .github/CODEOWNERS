@@ -1,0 +1,10 @@
+# Default repository owner/reviewer
+* @yogawillyutomo
+
+# Governance and public website identity
+/.github/ @yogawillyutomo
+/docs/ @yogawillyutomo
+/SECURITY.md @yogawillyutomo
+/CONTRIBUTING.md @yogawillyutomo
+/src/config/ @yogawillyutomo
+/src/shared/seo/ @yogawillyutomo
