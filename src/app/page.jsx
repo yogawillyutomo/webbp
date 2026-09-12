@@ -7,7 +7,10 @@ import ContactSection from "@/features/contact/ContactSection";
 import Footer from "@/shared/layout/Footer";
 import OrganizationJsonLd from "@/shared/seo/OrganizationJsonLd";
 import { SOCIAL_IMAGE } from "@/shared/seo/socialMetadata";
-import { getSiteSettings } from "@/content/repository";
+import {
+  getHomePageContent,
+  getSiteSettings,
+} from "@/content/repository";
 
 const site = getSiteSettings();
 
@@ -37,20 +40,34 @@ export const metadata = {
 };
 
 export default function Home() {
+  const content = getHomePageContent();
+
   return (
     <>
       <OrganizationJsonLd />
-      <Navbar />
+      <Navbar site={content.site} navigation={content.navigation} />
 
       <main id="main-content" tabIndex={-1}>
-        <HeroSection />
-        <ServicesSection />
-        <PortfolioSection />
-        <AboutSection />
-        <ContactSection />
+        <HeroSection content={content.hero} />
+        <ServicesSection
+          sectionContent={content.solutionsSection}
+          services={content.solutionDomains}
+        />
+        <PortfolioSection
+          sectionContent={content.portfolioSection}
+          projects={content.products}
+          siteName={content.site.siteName}
+        />
+        <AboutSection content={content.about} />
+        <ContactSection content={content.contact} site={content.site} />
       </main>
 
-      <Footer />
+      <Footer
+        content={content.footer}
+        navigation={content.navigation}
+        services={content.solutionDomains}
+        site={content.site}
+      />
     </>
   );
 }
