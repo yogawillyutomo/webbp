@@ -9,6 +9,8 @@ This directory is the documentation source of truth for WEBBP roadmap, architect
 - [`architecture/CMS-STRATEGY.md`](architecture/CMS-STRATEGY.md) — decision to remain repository-driven while becoming CMS-ready.
 - [`release/V1-READINESS.md`](release/V1-READINESS.md) — v1.0.0 readiness evidence and accepted limitations.
 - [`release/V1-RELEASE-NOTES.md`](release/V1-RELEASE-NOTES.md) — stable WEBBP v1.0.0 release record.
+- [`release/V1.1-READINESS.md`](release/V1.1-READINESS.md) — v1.1.0 readiness and final release gate.
+- [`release/V1.1-RELEASE-NOTES.md`](release/V1.1-RELEASE-NOTES.md) — v1.1.0 release-candidate record covering M10 and the completed M11 Product Detail Pages tranche.
 
 ## Milestone evidence
 
@@ -18,7 +20,13 @@ Current sequence:
 
 - M0–M9 — baseline through stable public v1.0.0;
 - [`hardening/M10.md`](hardening/M10.md) — Content Architecture & CMS Readiness;
-- [`hardening/M11.md`](hardening/M11.md) — active Public Content Expansion tranche, beginning with evidence-backed Product Detail Pages.
+- [`hardening/M11.md`](hardening/M11.md) — completed initial Public Content Expansion tranche: evidence-backed Product Detail Pages.
+
+## Current release direction
+
+- stable historical baseline: `v1.0.0`;
+- release candidate in progress: `v1.1.0`;
+- M12 headless CMS adoption remains conditional on demonstrated editorial need.
 
 ## Decision hierarchy
 
