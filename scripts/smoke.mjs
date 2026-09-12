@@ -19,6 +19,11 @@ const routeChecks = [
     status: 404,
     contentType: "text/html",
   },
+  {
+    path: "/products/__webbp_missing_product__",
+    status: 404,
+    contentType: "text/html",
+  },
 ];
 
 const failures = [];
@@ -209,6 +214,15 @@ if (missing) {
     fail("custom 404 product recovery link missing");
   } else {
     pass("custom 404 product recovery link");
+  }
+}
+
+const missingProduct = responses.get("/products/__webbp_missing_product__");
+if (missingProduct) {
+  if (!missingProduct.body.includes("Apakah Anda tersesat?")) {
+    fail("unknown product route does not use established 404 experience");
+  } else {
+    pass("unknown product route uses established 404 experience");
   }
 }
 
