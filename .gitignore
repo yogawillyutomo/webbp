@@ -20,6 +20,10 @@
 # production
 /build
 
+# generated / local artifacts
+/purged/
+*.zip
+
 # misc
 .DS_Store
 *.pem
