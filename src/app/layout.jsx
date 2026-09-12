@@ -19,7 +19,7 @@ export const metadata = {
   creator: SITE.name,
   publisher: SITE.name,
   icons: {
-    icon: "/ico.svg",
+    icon: "/favicon.ico",
   },
   manifest: "/manifest.webmanifest",
   robots: {
