@@ -96,6 +96,7 @@ if (home) {
     ['property="og:title"', "Open Graph title"],
     ['name="twitter:card"', "Twitter card metadata"],
     ['type="application/ld+json"', "Organization JSON-LD"],
+    ['href="/ico.png"', "BP browser icon metadata"],
   ];
 
   for (const [needle, label] of homeExpectations) {
@@ -129,10 +130,16 @@ for (const [path, canonical] of [
 
 const missing = responses.get("/__webbp_release_smoke_missing__");
 if (missing) {
-  if (!missing.body.includes("Halaman tidak ditemukan")) {
-    fail("custom 404 copy missing");
+  if (!missing.body.includes("Apakah Anda tersesat?")) {
+    fail("custom 404 conversational heading missing");
   } else {
-    pass("custom 404 copy");
+    pass("custom 404 conversational heading");
+  }
+
+  if (!missing.body.includes("/#portfolio")) {
+    fail("custom 404 product recovery link missing");
+  } else {
+    pass("custom 404 product recovery link");
   }
 }
 
