@@ -79,7 +79,7 @@ export default function ProjectCard({ project, onClick, isModalOpen }) {
                     </h3>
 
                     <div className="mb-3 min-h-5 text-sm text-[var(--brand-color)]">
-                        {project.category}
+                        {project.primaryCategory}
                     </div>
 
                     <p className="mb-5 flex-1 text-sm leading-relaxed text-[var(--muted-text)]">
@@ -87,7 +87,7 @@ export default function ProjectCard({ project, onClick, isModalOpen }) {
                     </p>
 
                     <div className="mt-auto flex min-h-8 flex-wrap content-end gap-2">
-                        {project.tech.slice(0, 3).map((tech) => (
+                        {project.technology.slice(0, 3).map((tech) => (
                             <span
                                 key={tech}
                                 className="
