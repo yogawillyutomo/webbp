@@ -109,7 +109,7 @@ export default function PortfolioModal({
                 <div className="max-h-[52vh] overflow-y-auto p-8 md:p-10">
                     <div className="mb-8">
                         <div className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--brand-color)]">
-                            {selectedProject.category}
+                            {selectedProject.primaryCategory}
                         </div>
                         <p className="text-base leading-relaxed text-[var(--muted-text)]">
                             {selectedProject.description}
@@ -138,7 +138,7 @@ export default function PortfolioModal({
                             Technology
                         </h4>
                         <div className="flex flex-wrap gap-3">
-                            {selectedProject.tech.map((tech) => (
+                            {selectedProject.technology.map((tech) => (
                                 <span
                                     key={tech}
                                     className="
