@@ -1,7 +1,10 @@
 import { repositoryContent } from "./content.data.js";
+import { legalContent } from "./legal.data.js";
 import { validateContent } from "./validation.js";
+import { validateLegalContent } from "./legal.validation.js";
 
 validateContent(repositoryContent);
+validateLegalContent(legalContent);
 
 const byOrder = (items) => [...items].sort((a, b) => a.order - b.order);
 
@@ -55,6 +58,10 @@ export function getFooterContent() {
   return repositoryContent.footer;
 }
 
+export function getLegalPage(key) {
+  return legalContent[key] ?? null;
+}
+
 export const contentRepository = {
   getSiteSettings,
   getSocialLink,
@@ -68,4 +75,5 @@ export const contentRepository = {
   getAboutContent,
   getContactContent,
   getFooterContent,
+  getLegalPage,
 };
