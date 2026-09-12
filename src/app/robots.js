@@ -1,4 +1,6 @@
-import { SITE } from "@/config/site";
+import { getSiteSettings } from "@/content/repository";
+
+const site = getSiteSettings();
 
 export default function robots() {
   return {
@@ -6,7 +8,7 @@ export default function robots() {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: `${SITE.url}/sitemap.xml`,
-    host: SITE.url,
+    sitemap: `${site.siteUrl}/sitemap.xml`,
+    host: site.siteUrl,
   };
 }

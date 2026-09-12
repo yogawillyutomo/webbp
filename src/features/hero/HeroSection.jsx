@@ -3,7 +3,7 @@
 import HeroView from "./HeroView";
 import useHeroEffects from "./hooks/useHeroEffects";
 
-export default function HeroSection() {
+export default function HeroSection({ content }) {
   const heroProps = useHeroEffects();
-  return <HeroView {...heroProps} />;
+  return <HeroView {...heroProps} content={content} />;
 }

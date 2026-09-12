@@ -1,18 +1,20 @@
-import { SITE } from "@/config/site";
+import { getSiteSettings } from "@/content/repository";
+
+const site = getSiteSettings();
 
 export default function manifest() {
   return {
-    name: SITE.name,
+    name: site.siteName,
     short_name: "BP",
-    description: SITE.description,
+    description: site.defaultDescription,
     start_url: "/",
     display: "standalone",
     background_color: "#050508",
     theme_color: "#050508",
-    lang: SITE.language,
+    lang: site.language,
     icons: [
       {
-        src: "/ico.svg",
+        src: site.brandAssets.vectorLogo,
         sizes: "any",
         type: "image/svg+xml",
         purpose: "any",

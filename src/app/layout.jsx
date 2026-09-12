@@ -6,22 +6,24 @@ import "@fontsource/rajdhani/600.css";
 import "@fontsource/rajdhani/700.css";
 import "./globals.css";
 import MotionProvider from "@/shared/providers/MotionProvider";
-import { SITE } from "@/config/site";
+import { getSiteSettings } from "@/content/repository";
+
+const site = getSiteSettings();
 
 export const metadata = {
-  metadataBase: new URL(SITE.url),
-  applicationName: SITE.name,
+  metadataBase: new URL(site.siteUrl),
+  applicationName: site.siteName,
   title: {
-    default: SITE.title,
-    template: `%s | ${SITE.name}`,
+    default: site.defaultTitle,
+    template: `%s | ${site.siteName}`,
   },
-  description: SITE.description,
-  creator: SITE.name,
-  publisher: SITE.name,
+  description: site.defaultDescription,
+  creator: site.siteName,
+  publisher: site.siteName,
   icons: {
-    icon: "/ico.png",
-    shortcut: "/ico.png",
-    apple: "/ico.png",
+    icon: site.brandAssets.browserIcon,
+    shortcut: site.brandAssets.browserIcon,
+    apple: site.brandAssets.browserIcon,
   },
   manifest: "/manifest.webmanifest",
   robots: {
@@ -40,7 +42,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html
-      lang={SITE.language}
+      lang={site.language}
       className="scroll-smooth"
       suppressHydrationWarning
     >

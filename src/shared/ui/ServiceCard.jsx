@@ -7,8 +7,8 @@ export default function ServiceCard({
   icon,
   title,
   subtitle,
-  shortDesc,
-  fullDesc,
+  summary,
+  detail,
   active,
   onClick,
 }) {
@@ -127,7 +127,7 @@ export default function ServiceCard({
           </div>
 
           <p className="min-h-[2.75rem] text-sm text-[var(--muted-text)]">
-            {shortDesc}
+            {summary}
           </p>
 
           <motion.div
@@ -142,7 +142,7 @@ export default function ServiceCard({
             className="overflow-hidden"
           >
             <p className="mt-4 text-sm leading-relaxed text-[var(--muted-text)]">
-              {fullDesc}
+              {detail}
             </p>
           </motion.div>
 

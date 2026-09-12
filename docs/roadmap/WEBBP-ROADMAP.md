@@ -13,7 +13,7 @@ WEBBP owns:
 - public Bakaran Project positioning;
 - solution-domain presentation;
 - product portfolio and maturity labels;
-- public product detail and evidence pages;
+- public product detail and evidence pages when justified;
 - case studies and public updates when evidence exists;
 - public contact information;
 - SEO, metadata, social previews, sitemap, and robots policy;
@@ -30,41 +30,41 @@ WEBBP does not own:
 - internal financial or operational dashboards;
 - AI/MCP operational execution.
 
-## Completed foundation
+## Completed milestones
 
-Milestones M0–M8 established the current baseline:
+### M0–M8 — Foundation and repositioning
 
-- M0–M2 — baseline, security/dependency hardening, production-trust cleanup;
-- M3 — evidence-led product portfolio;
+The pre-v1 sequence established:
+
+- M0–M2 — baseline, security/dependency hardening, and production-trust cleanup;
+- M3 — evidence-led Product Portfolio;
 - M4 — theme/frontend correctness;
 - M5 — accessibility and motion safety;
 - M6 — SEO and discoverability;
 - M7 — repository and delivery governance;
 - M8 — corporate/product-house repositioning.
 
-The M8 merge baseline is `main@1978ccc500ee99aa5ec10e5de668790b331e8054`.
-
-## Forward roadmap
-
 ### M9 — Production Readiness & v1.0
 
-Goal: make the current public site releasable as a stable v1 without introducing a new product surface.
-
-Primary scope:
+M9 closed the stable public release gate with:
 
 - production/security headers;
-- final desktop/mobile regression;
-- dark/light theme regression;
-- keyboard and reduced-motion regression;
-- production-domain smoke tests;
-- 404/error behavior;
-- privacy/terms/robots/sitemap/manifest/social-preview checks;
-- performance and Web Vitals review;
+- desktop/mobile regression;
+- dark/light theme and reduced-motion regression;
+- production-domain smoke testing;
+- custom 404 behavior;
+- legal/robots/sitemap/manifest/social-preview verification;
 - dependency and clean-install verification;
-- release checklist and release notes;
-- release version decision only after all gates pass.
+- repeatable smoke tooling;
+- release checklist and release notes.
 
-Exit condition: `V1-READINESS.md` has no unresolved release-blocking item.
+Stable release:
+
+- version: `1.0.0`;
+- tag: `v1.0.0`;
+- final release-record commit: `3b373963efad12779de476fcd1f4b1cbdfff2dfe`.
+
+## Active milestone
 
 ### M10 — Content Architecture & CMS Readiness
 
@@ -73,13 +73,24 @@ Goal: separate content ownership from presentation without introducing a CMS yet
 Primary scope:
 
 - define canonical content models;
-- centralize product, solution, company, navigation, and public metadata;
-- introduce a content repository/adapter boundary;
-- remove presentation-layer dependence on scattered hardcoded copy;
-- preserve current static build and deployment simplicity;
-- prepare migration seams for a future headless CMS.
+- centralize product, solution, company, navigation, contact, legal metadata, and public SEO content;
+- introduce a server-side content repository/query boundary;
+- ensure Client Components receive normalized public props rather than importing content-source/CMS concerns directly;
+- add deterministic content validation to the standard verification gate;
+- remove duplicate presentation-local sources of truth;
+- preserve v1 visual and interaction behavior;
+- prepare a vendor-neutral migration seam for a future headless CMS.
 
-Exit condition: UI components consume normalized content models instead of owning source-of-truth content.
+Exit condition:
+
+- normalized repository-backed content is the canonical source for implemented public domains;
+- UI presentation no longer owns the migrated source-of-truth copy/data;
+- exact-head content validation, lint, build, smoke, visual regression, and Vercel gates pass;
+- no CMS provider is required for milestone closure.
+
+Implementation evidence is recorded in `docs/hardening/M10.md`.
+
+## Forward roadmap
 
 ### M11 — Public Content Expansion
 
@@ -94,9 +105,9 @@ Candidate scope:
 - richer evidence references;
 - structured public media.
 
-This milestone is content-demand driven. Features are not added solely to make the website appear larger.
+M11 is content-demand driven. Features are not added solely to make the website appear larger.
 
-Exit condition: content structures are proven by real publishing needs and do not weaken evidence-before-claims guardrails.
+Exit condition: new content structures are proven by real publishing needs and do not weaken evidence-before-claims guardrails.
 
 ### M12 — Headless CMS Adoption (Conditional)
 
@@ -104,16 +115,16 @@ Goal: introduce an editorial system only when the operational need is proven.
 
 M12 is **not automatically required** after M11.
 
-A CMS becomes justified when one or more of these conditions are persistent:
+A CMS becomes justified when one or more of these conditions becomes persistent rather than occasional:
 
-- non-developers must edit or publish content;
-- content changes are frequent enough that Git-based editing becomes a bottleneck;
-- multiple editors need draft/review/publish workflows;
-- case studies, updates, or media volume grows materially;
-- scheduled publishing, preview, revision history, or editorial permissions become necessary;
-- the same content must be distributed to more than one frontend/channel.
+- non-developers must edit or publish content independently;
+- publishing frequency makes pull-request-based content updates inefficient;
+- multiple editors need draft/review/publish workflows or permissions;
+- case-study/update/media volume grows materially;
+- scheduled publishing, preview, or separate editorial revision history is required;
+- one content source must feed multiple public channels.
 
-If these conditions are absent, WEBBP should remain repository-driven.
+If these conditions are absent, WEBBP should remain repository-driven and continue using the M10 content architecture.
 
 ## Release philosophy
 
@@ -123,10 +134,11 @@ If these conditions are absent, WEBBP should remain repository-driven.
 4. CMS adoption must solve a demonstrated editorial problem.
 5. Public website concerns stay separate from operational product concerns.
 6. A milestone is complete only when its verification gate passes.
+7. Stable release tags are immutable historical baselines; future milestones advance from `main` rather than rewriting `v1.0.0`.
 
 ## Versioning direction
 
-- `0.x` represents pre-v1 hardening and restructuring.
-- `1.0.0` is allowed only after M9 release criteria pass.
-- CMS adoption is not a prerequisite for `1.0.0`.
-- Content expansion and CMS work should not delay v1 if the current public site is otherwise production-ready.
+- `v1.0.0` is the stable public baseline produced by M9.
+- M10 architecture work does not itself require a major-version change because it is intended to preserve public behavior.
+- M11/M12 version changes should follow actual public-surface or compatibility impact rather than milestone numbering.
+- CMS adoption is not a prerequisite for a stable WEBBP release.

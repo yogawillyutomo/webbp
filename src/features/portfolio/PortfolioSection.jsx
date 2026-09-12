@@ -1,7 +1,5 @@
 "use client";
 
-import { projects } from "./portfolio.data";
-
 import usePortfolioFilter from "./hooks/usePortfolioFilter";
 import usePortfolioModal from "./hooks/usePortfolioModal";
 
@@ -10,7 +8,7 @@ import PortfolioFilter from "./components/PortfolioFilter";
 import PortfolioGrid from "./components/PortfolioGrid";
 import PortfolioModal from "./components/PortfolioModal";
 
-export default function PortfolioSection() {
+export default function PortfolioSection({ sectionContent, projects, siteName }) {
     const {
         categories,
         categoryCounts,
@@ -39,7 +37,7 @@ export default function PortfolioSection() {
             `}
         >
             <div className="mx-auto max-w-7xl px-6">
-                <PortfolioHeader />
+                <PortfolioHeader content={sectionContent} />
 
                 <PortfolioFilter
                     categories={categories}
@@ -50,12 +48,14 @@ export default function PortfolioSection() {
 
                 <PortfolioGrid
                     projects={filteredProjects}
+                    siteName={siteName}
                     openModal={openModal}
                     isModalOpen={isVisible}
                 />
 
                 <PortfolioModal
                     selectedProject={selectedProject}
+                    siteName={siteName}
                     isVisible={isVisible}
                     dialogRef={dialogRef}
                     closeModal={closeModal}

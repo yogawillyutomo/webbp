@@ -2,250 +2,294 @@
 
 ## Objective
 
-This document defines how public content should be modeled so WEBBP can remain simple today while being ready for a future headless CMS without a frontend rewrite.
+WEBBP separates public content ownership from presentation so the current repository-backed site can later adopt a headless CMS without rewriting the frontend.
 
-The key rule is:
+The governing rule is:
 
-> Presentation components render normalized content. They should not become the source of truth for business/public content.
+> Presentation components render normalized public content. They are not the source of truth for business facts, product maturity, evidence wording, contact identity, legal metadata, or public SEO copy.
 
-## Content layers
+M10 implements this boundary while keeping WEBBP repository-driven. No CMS provider is adopted by this milestone.
 
-### 1. Presentation layer
+## Implemented architecture
 
-Owned by React/Next.js components.
+```text
+Verified product/project evidence
+            ↓
+Repository-backed canonical content
+            ↓
+Validation gate
+            ↓
+Server-side content repository / queries
+            ↓
+Next.js server entry points
+            ↓
+Normalized public props
+            ↓
+Presentation + interactive Client Components
+```
 
-Responsibilities:
+The important security and migration boundary is between the content repository and Client Components.
 
-- layout;
-- interaction;
-- animation;
-- accessibility;
-- responsive behavior;
-- visual state;
-- modal/filter rendering.
+Client Components do not import the repository/CMS source directly. Server entry points obtain public normalized content and pass only the required serializable content to interactive components.
 
-Presentation must not decide product maturity, public claims, contact identity, or evidence wording.
+This preserves a future migration path:
 
-### 2. Content model layer
+```text
+Headless CMS SDK / API response
+            ↓
+CMS adapter on server
+            ↓
+WEBBP normalized content model
+            ↓
+Existing server queries
+            ↓
+Public props
+            ↓
+Existing UI
+```
 
-Defines normalized shapes consumed by the UI.
+Vendor-specific CMS response shapes must not leak into presentation components.
 
-Initial domains:
+## Current source modules
 
-- site settings;
+Repository-backed content is currently version-controlled under `src/content/`.
+
+Canonical domains include:
+
+- site settings and public brand identity;
 - navigation;
-- solution domains;
-- products;
-- company/about content;
-- case studies;
-- public updates/insights;
-- legal metadata;
-- SEO metadata.
+- Hero content;
+- Solution Domains;
+- Product Portfolio;
+- About content;
+- Contact content;
+- Footer content;
+- legal-page metadata and effective-date labels;
+- social-image / SEO copy.
 
-### 3. Content source layer
+The canonical data and standalone validators use explicit ESM modules (`.mjs`) so the same validation logic can run deterministically from Node and the Next.js application.
 
-Current source: version-controlled repository data.
+## Repository/query boundary
 
-Future source: repository data or a headless CMS through an adapter.
+`src/content/repository.js` owns the public query interface.
 
-The frontend should not care which storage implementation supplies the normalized models.
+Current responsibilities include:
 
-## Proposed models
+- `getSiteSettings()`;
+- `getSocialLink(key)`;
+- `getNavigation()`;
+- `getHeroContent()`;
+- `getSolutionsSection()`;
+- `getSolutionDomains()`;
+- `getPortfolioSection()`;
+- `getProducts()`;
+- `getProductBySlug(slug)`;
+- `getAboutContent()`;
+- `getContactContent()`;
+- `getFooterContent()`;
+- `getLegalPage(key)`;
+- `getSocialImageContent()`;
+- `getHomePageContent()`.
+
+The repository filters publication state before public UI consumption. A future CMS adapter must preserve this behavior so draft or unpublished content is not exposed merely because it exists in the editorial system.
+
+## Server/client boundary
+
+Interactive components such as Navbar, Hero, Solution cards, Product Portfolio, Contact, and Footer receive normalized content through props.
+
+`src/app/page.jsx` acts as the Home page server composition boundary:
+
+```text
+getHomePageContent()
+      ↓
+page.jsx
+      ↓
+Navbar / Hero / Solutions / Portfolio / About / Contact / Footer props
+```
+
+This rule is intentional. A future CMS SDK, draft token, privileged credential, preview client, or vendor-specific object must remain outside browser bundles unless an explicitly public client-side API is required and separately reviewed.
+
+Server-owned metadata routes and helpers may query the repository directly, including root metadata, legal-page metadata, sitemap, robots, manifest, Organization JSON-LD, and generated social images.
+
+## Implemented content models
 
 ### SiteSettings
 
-Suggested fields:
+Public site identity includes:
 
-- `siteName`
-- `siteUrl`
-- `defaultTitle`
-- `defaultDescription`
-- `locale`
-- `language`
-- `publicEmail`
-- `socialLinks[]`
-- `brandAssets`
+- `siteName`;
+- `siteUrl`;
+- `defaultTitle`;
+- `defaultDescription`;
+- `locale`;
+- `language`;
+- `publicEmail`;
+- `socialLinks[]`;
+- `brandAssets`.
 
 ### NavigationItem
 
-Suggested fields:
+Navigation items include:
 
-- `label`
-- `href`
-- `order`
-- `visibility`
+- `id`;
+- `label`;
+- `href`;
+- `order`;
+- `visibility`.
 
-Navigation labels and destinations should be content configuration, while interaction behavior remains presentation code.
+Interaction behavior remains presentation code.
 
 ### SolutionDomain
 
-Suggested fields:
+Solution domains include:
 
-- `slug`
-- `title`
-- `subtitle`
-- `summary`
-- `detail`
-- `iconKey`
-- `relatedProductCodes[]`
-- `order`
-- `published`
+- `slug`;
+- `title`;
+- `subtitle`;
+- `summary`;
+- `detail`;
+- `iconKey`;
+- `relatedProductCodes[]`;
+- `published`;
+- `order`.
 
-Solution domains describe public problem/solution areas. They must not imply that every listed capability is production-complete.
+`iconKey` is intentionally data-only. React icon components remain in a presentation-owned icon registry so canonical content stays serializable and CMS-compatible.
 
 ### Product
 
-Suggested fields:
+Products include:
 
-- `code`
-- `slug`
-- `title`
-- `primaryCategory`
-- `filterTags[]`
-- `status`
-- `statusDetail`
-- `summary`
-- `description`
-- `proof[]`
-- `technology[]`
-- `relatedSolutionSlugs[]`
-- `publicLinks[]`
-- `published`
-- `order`
+- `code`;
+- `slug`;
+- `title`;
+- `primaryCategory`;
+- `filterTags[]`;
+- `status`;
+- `statusDetail`;
+- `description`;
+- `proof[]`;
+- `technology[]`;
+- `relatedSolutionSlugs[]`;
+- `publicLinks[]`;
+- `published`;
+- `order`.
 
-Recommended maturity vocabulary remains explicit and controlled. Current public values include:
+The approved public maturity vocabulary at the M10 baseline remains:
 
-- `In Development`
-- `Pre-production`
-- `Prototype`
+- `In Development`;
+- `Pre-production`;
+- `Prototype`.
 
-New statuses must not be introduced casually because they are public claims.
+Adding another maturity value is a public-claim change, not merely a UI change.
 
-### EvidenceItem
+### Legal content
 
-Where portfolio evidence becomes richer, proof should evolve from free text into a normalized shape:
+Legal metadata is normalized separately from presentation markup. Current legal data covers route identity, metadata description, canonical path, and effective-date label for Privacy Policy and Terms of Service.
 
-- `type`
-- `label`
-- `description`
-- `source`
-- `verifiedAt`
-- `visibility`
+The substantive legal body remains intentionally presentation-controlled for now. Moving long-form legal body content into a future editorial source requires a separate governance review rather than being bundled into M10.
 
-This enables stronger evidence-before-claims governance later without requiring it for every M10 change.
+### SEO/social content
 
-### CaseStudy
+Generated social-image public copy is repository-backed so brand headline/description content is not duplicated in rendering helpers.
 
-Suggested fields:
+## Validation gate
 
-- `slug`
-- `title`
-- `summary`
-- `problem`
-- `approach`
-- `outcome`
-- `relatedProducts[]`
-- `evidence[]`
-- `publishedAt`
-- `updatedAt`
-- `published`
+`npm run validate:content` executes repository-content validation without requiring a browser runtime.
 
-A case study must not be published if its outcome cannot be supported by evidence approved for public use.
-
-### PublicUpdate / Insight
-
-Suggested fields:
-
-- `slug`
-- `title`
-- `summary`
-- `body`
-- `type`
-- `relatedProducts[]`
-- `publishedAt`
-- `updatedAt`
-- `authorDisplayName`
-- `published`
-
-This model should only be implemented if M11 proves there is a real publishing need.
-
-## Content adapter boundary
-
-M10 should introduce one stable access boundary, conceptually:
+`npm run verify` runs:
 
 ```text
-UI components
+content validation
     ↓
-content queries / repository
+lint
     ↓
-normalized content adapter
-    ↓
-repository data today
-headless CMS later
+production build
 ```
 
-Possible query responsibilities:
+Validation currently enforces, among other rules:
 
-- `getSiteSettings()`
-- `getNavigation()`
-- `getSolutionDomains()`
-- `getProducts()`
-- `getProductBySlug()`
-- `getCaseStudies()`
+- required public fields are non-empty;
+- product codes are unique;
+- product slugs are unique;
+- Solution Domain slugs are unique;
+- navigation IDs and hrefs are unique;
+- order values are positive integers;
+- product status belongs to the controlled maturity vocabulary;
+- Product Portfolio filter tags are centrally registered;
+- solution → product references resolve;
+- product → solution references resolve;
+- solution `iconKey` belongs to the presentation registry contract;
+- publication flags are explicit booleans;
+- required product proof and technology arrays are populated;
+- legal metadata is structurally valid;
+- social-image content is structurally valid.
 
-Function names are illustrative; implementation should follow the codebase conventions when M10 begins.
+Validation does not prove a marketing or product claim is true. Evidence-before-claims review remains a separate governance responsibility.
 
 ## Source-of-truth hierarchy
 
-For public facts:
+For public product facts and maturity claims:
 
-1. verified evidence / committed product source of truth;
-2. normalized WEBBP content model;
-3. UI rendering.
+1. verified product/project evidence and committed source of truth;
+2. normalized WEBBP repository content;
+3. public query/adapter layer;
+4. UI rendering.
 
-The UI must never silently upgrade a product status or invent a claim.
-
-## Validation rules
-
-At minimum, M10 should make invalid public content difficult to commit:
-
-- product codes and slugs unique;
-- required public fields non-empty;
-- `status` constrained to approved values;
-- solution/product references valid;
-- unknown filter tags either rejected or centrally registered;
-- unpublished content excluded from public output;
-- external links explicitly defined rather than inferred.
-
-Schema validation may use plain JavaScript validation, JSON Schema, Zod, or another small mechanism, but the choice should be made during M10 based on actual code complexity rather than introduced prematurely.
+The UI must never silently upgrade maturity, invent evidence, infer partnerships, or convert an engineering capability into a production-adoption claim.
 
 ## CMS migration rule
 
-If a headless CMS is adopted later, the CMS schema should map onto these normalized models. The UI should not be rewritten around vendor-specific CMS response shapes.
+M10 makes WEBBP CMS-ready but does not select or install a CMS.
 
-Preferred boundary:
+If CMS adoption is justified later, the provider integration must map into the existing normalized models:
 
 ```text
-CMS SDK/API response
-      ↓
-CMS adapter
-      ↓
-WEBBP normalized content models
-      ↓
+CMS
+ ↓
+server-only provider adapter
+ ↓
+validation / normalization
+ ↓
+WEBBP repository/query contract
+ ↓
+server composition
+ ↓
 existing UI
 ```
 
-This prevents CMS vendor lock-in from leaking through the entire frontend.
+A migration should therefore primarily replace the content-source adapter, not the presentation layer.
+
+## Publishing safety requirements for a future CMS
+
+A future CMS integration must preserve these invariants:
+
+- privileged CMS credentials never enter client bundles;
+- draft/unpublished content is excluded from normal production queries;
+- preview access is explicitly authorized and isolated;
+- controlled maturity vocabulary remains enforced;
+- product/solution references remain validated;
+- evidence-before-claims review remains mandatory;
+- provider response shapes are normalized before UI consumption;
+- export/backup/provider-exit capability exists before the CMS becomes operationally critical.
+
+## Deferred models
+
+Case studies, public updates, insights, richer evidence objects, and editorial workflows are intentionally deferred until real M11 publishing requirements exist.
+
+M10 does not create unused schema merely to imitate a large CMS.
 
 ## Non-goals
 
 This architecture does not turn WEBBP into:
 
 - Bakaran Platform admin;
-- product master data storage;
-- operational database;
-- identity provider;
-- customer CRM;
-- tenant configuration service.
+- product master-data storage;
+- an operational database;
+- an identity provider;
+- a CRM;
+- tenant configuration;
+- a customer portal;
+- a product-local authorization system;
+- an AI/MCP operational gateway.
 
-Those concerns belong outside the public website.
+Those concerns remain outside the public website.

@@ -4,7 +4,12 @@ const STATUS_STYLES = {
     "In Development": "border-cyan-400/30 bg-cyan-400/10 text-cyan-300",
 };
 
-export default function ProjectCard({ project, onClick, isModalOpen }) {
+export default function ProjectCard({
+    project,
+    siteName,
+    onClick,
+    isModalOpen,
+}) {
     const statusStyle =
         STATUS_STYLES[project.status] ??
         "border-slate-400/30 bg-slate-400/10 text-slate-300";
@@ -54,7 +59,7 @@ export default function ProjectCard({ project, onClick, isModalOpen }) {
                     <div className="relative z-10 flex w-full items-end justify-between gap-4">
                         <div className="min-w-0">
                             <div className="mb-2 text-xs font-medium uppercase tracking-[0.28em] text-cyan-200/80">
-                                Bakaran Project
+                                {siteName}
                             </div>
                             <div className="truncate font-orbitron text-3xl font-bold text-white">
                                 {project.code}
@@ -79,7 +84,7 @@ export default function ProjectCard({ project, onClick, isModalOpen }) {
                     </h3>
 
                     <div className="mb-3 min-h-5 text-sm text-[var(--brand-color)]">
-                        {project.category}
+                        {project.primaryCategory}
                     </div>
 
                     <p className="mb-5 flex-1 text-sm leading-relaxed text-[var(--muted-text)]">
@@ -87,7 +92,7 @@ export default function ProjectCard({ project, onClick, isModalOpen }) {
                     </p>
 
                     <div className="mt-auto flex min-h-8 flex-wrap content-end gap-2">
-                        {project.tech.slice(0, 3).map((tech) => (
+                        {project.technology.slice(0, 3).map((tech) => (
                             <span
                                 key={tech}
                                 className="

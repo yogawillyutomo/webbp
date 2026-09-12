@@ -5,7 +5,7 @@ const getProjectFilterTags = (project) => {
         return project.filterTags;
     }
 
-    return [project.category];
+    return [project.primaryCategory];
 };
 
 export default function usePortfolioFilter(projects) {

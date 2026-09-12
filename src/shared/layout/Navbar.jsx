@@ -3,14 +3,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
-import { NAV_LINKS } from "@/constants/navigation";
 import useScrollProgress from "@/core/scroll/useScrollProgress";
 import useTheme from "@/core/theme/useTheme";
 import useActiveSection from "@/core/scroll/useActiveSection";
 
 import ThemeToggle from "./ThemeToggle";
 
-export default function Navbar() {
+export default function Navbar({ site, navigation }) {
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const mobileMenuRef = useRef(null);
@@ -20,8 +19,8 @@ export default function Navbar() {
     useScrollProgress();
 
   const sectionIds = useMemo(() => {
-    return NAV_LINKS.map((link) => link.href);
-  }, []);
+    return navigation.map((link) => link.href);
+  }, [navigation]);
 
   const active = useActiveSection(sectionIds) || "#home";
 
@@ -105,7 +104,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <a
             href="#home"
-            aria-label="Bakaran Project — kembali ke beranda"
+            aria-label={`${site.siteName} — kembali ke beranda`}
             className="flex items-center gap-2 font-orbitron text-xl font-bold rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
             style={{
               transform: `scale(${logoScale})`,
@@ -113,7 +112,7 @@ export default function Navbar() {
             }}
           >
             <Image
-              src="/ico.png"
+              src={site.brandAssets.logo}
               alt=""
               width={26}
               height={26}
@@ -122,13 +121,13 @@ export default function Navbar() {
             />
 
             <span className="tracking-wide bg-[linear-gradient(120deg,#3b82f6,#06b6d4,#3b82f6)] bg-[length:200%_200%] bg-clip-text text-transparent animate-gradient">
-              Bakaran Project
+              {site.siteName}
             </span>
           </a>
 
           <div className="flex items-center gap-6">
             <div className="hidden md:flex gap-8 items-center">
-              {NAV_LINKS.map((link) => {
+              {navigation.map((link) => {
                 const isActive = active === link.href;
 
                 return (
@@ -173,7 +172,7 @@ export default function Navbar() {
           className="fixed inset-0 z-40 backdrop-blur-xl md:hidden"
         >
           <div className="flex flex-col items-center justify-center h-full gap-8 text-2xl">
-            {NAV_LINKS.map((link) => {
+            {navigation.map((link) => {
               const isActive = active === link.href;
 
               return (
