@@ -1,8 +1,12 @@
+import { getPortfolioSection } from "@/content/repository";
+
+const section = getPortfolioSection();
+
 export default function PortfolioHeader() {
   return (
     <div className="mb-20 text-center">
       <div className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">
-        Product Portfolio
+        {section.eyebrow}
       </div>
 
       <h2
@@ -17,7 +21,7 @@ export default function PortfolioHeader() {
           animate-gradient
         "
       >
-        Produk yang Sedang Dibangun Bakaran Project
+        {section.title}
       </h2>
 
       <p
@@ -30,9 +34,7 @@ export default function PortfolioHeader() {
           text-[var(--muted-text)]
         "
       >
-        Portofolio ini menampilkan produk dengan status engineering yang dapat
-        dibuktikan. Kematangan setiap sistem ditulis apa adanya—termasuk ketika
-        masih dalam development, pre-production, atau prototype.
+        {section.description}
       </p>
     </div>
   );
