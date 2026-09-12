@@ -46,17 +46,7 @@ The pre-v1 sequence established:
 
 ### M9 — Production Readiness & v1.0
 
-M9 closed the stable public release gate with:
-
-- production/security headers;
-- desktop/mobile regression;
-- dark/light theme and reduced-motion regression;
-- production-domain smoke testing;
-- custom 404 behavior;
-- legal/robots/sitemap/manifest/social-preview verification;
-- dependency and clean-install verification;
-- repeatable smoke tooling;
-- release checklist and release notes.
+M9 closed the stable public release gate with production/security headers, responsive regression coverage, legal/SEO runtime checks, repeatable smoke tooling, and release governance evidence.
 
 Stable release:
 
@@ -78,52 +68,60 @@ Implemented scope:
 - duplicate presentation-local content sources removed;
 - vendor-neutral CMS migration seam preserved.
 
-Merge baseline:
+Merge commit:
 
-- `main@c7c108926ad3f27a0b7a05bca3d0e3d74645a5da`.
-
-M10 local exact-head validation, build, runtime smoke, and visual regression passed. The merge explicitly accepted an external Vercel build-rate-limit condition; that provider quota state was not treated as evidence of an application compile failure.
+- `c7c108926ad3f27a0b7a05bca3d0e3d74645a5da`.
 
 Implementation evidence is recorded in `docs/hardening/M10.md`.
 
-## Active milestone
+### M11 — Public Content Expansion: Product Detail Pages
 
-### M11 — Public Content Expansion
+The first M11 tranche made every published product individually addressable and shareable using the canonical M10 content architecture.
 
-Goal: add useful public content only where Bakaran Project has evidence and an ongoing public need.
+Implemented scope:
 
-Initial tranche: **Product Detail Pages**.
-
-This tranche exists because the current Product Portfolio already contains evidence-backed product maturity, descriptions, technology, and claim-safe proof, but those records are not individually addressable or shareable.
-
-Primary scope:
-
-- static public route for each published product at `/products/[slug]`;
-- metadata and canonical URL derived from canonical product content;
-- explicit product maturity/status presentation;
-- evidence and technology sections using existing normalized product data;
-- related solution-domain navigation;
-- portfolio modal links to the canonical product page;
-- sitemap inclusion for published product routes;
+- static route for each published product at `/products/[slug]`;
+- canonical metadata derived from normalized product content;
+- explicit maturity/status presentation;
+- evidence and technology sections using canonical product data;
+- related solution-domain presentation;
+- portfolio modal links to canonical product pages;
+- sitemap inclusion for all published product routes;
 - smoke verification for every product route exposed by the sitemap;
-- nested-route navigation/footer behavior without introducing a second content source.
+- nested-route navigation/footer behavior;
+- unknown product slug verification against the branded 404 experience.
 
-Non-goals for the initial M11 tranche:
+The tranche intentionally did not add invented case studies, unsupported adoption/revenue/SLA claims, a generic newsroom, or a CMS.
 
-- no invented customer case studies;
-- no production/adoption/revenue/SLA claims beyond evidence already approved for public content;
-- no generic blog or newsroom added only to increase page count;
-- no headless CMS adoption;
-- no operational product functionality moved into WEBBP.
+Merge commit:
 
-Exit condition for the tranche:
+- `6df7388b6f3af2dd1a81ea45c7c9f207ae6d16c6`.
 
-- every published product has a stable, indexable, evidence-backed public detail page;
-- homepage portfolio behavior remains intact;
-- sitemap and smoke gates cover published product routes;
-- content validation, lint, build, runtime smoke, visual/accessibility regression, and available deployment gates pass.
+Post-merge Vercel for that exact commit completed successfully, and production smoke was confirmed safe.
 
-Further M11 content structures such as case studies, updates, or technical notes remain demand-driven and require source evidence before implementation.
+Implementation evidence is recorded in `docs/hardening/M11.md`.
+
+Further M11 content structures such as case studies, updates, technical notes, or structured public media remain demand-driven and require supporting evidence before implementation.
+
+## Current release direction
+
+### v1.1.0
+
+`v1.1.0` is the approved release target for the completed M10 architecture work plus the M11 Product Detail Pages tranche.
+
+Why a minor release:
+
+- the public site gains new backward-compatible routes and discoverability;
+- the established v1 routes remain available;
+- the operational product boundary is unchanged;
+- the release does not require a breaking public contract change.
+
+Release records:
+
+- `docs/release/V1.1-READINESS.md`;
+- `docs/release/V1.1-RELEASE-NOTES.md`.
+
+The final tag is `v1.1.0` after the release branch, merge, deployment, production smoke, and final release-record gates complete.
 
 ## Forward roadmap
 
@@ -131,7 +129,7 @@ Further M11 content structures such as case studies, updates, or technical notes
 
 Goal: introduce an editorial system only when the operational need is proven.
 
-M12 is **not automatically required** after M11.
+M12 is **not automatically required** after `v1.1.0` or after the first M11 tranche.
 
 A CMS becomes justified when one or more of these conditions becomes persistent rather than occasional:
 
@@ -151,13 +149,14 @@ If these conditions are absent, WEBBP should remain repository-driven and contin
 3. Content architecture before CMS adoption.
 4. CMS adoption must solve a demonstrated editorial problem.
 5. Public website concerns stay separate from operational product concerns.
-6. A milestone is complete only when its verification gate passes.
-7. Stable release tags are immutable historical baselines; future milestones advance from `main` rather than rewriting `v1.0.0`.
+6. A milestone or release is complete only when its verification gate passes.
+7. Stable release tags are immutable historical baselines.
 
 ## Versioning direction
 
 - `v1.0.0` is the stable public baseline produced by M9.
-- M10 architecture work does not itself require a major-version change because it preserves public behavior.
-- M11 introduces new public routes and should receive a version decision only after its public-surface scope and release impact are closed.
+- M10 preserves public behavior and establishes architecture rather than a breaking contract.
+- M11 Product Detail Pages add backward-compatible public routes, justifying `v1.1.0`.
+- Future M11 content additions should be versioned according to actual public-surface impact rather than milestone numbering.
 - M12/CMS work should not dictate versioning unless it changes the public contract or compatibility surface.
 - CMS adoption is not a prerequisite for a stable WEBBP release.
