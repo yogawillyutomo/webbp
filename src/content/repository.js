@@ -1,10 +1,13 @@
 import { repositoryContent } from "./content.data.js";
 import { legalContent } from "./legal.data.js";
+import { seoContent } from "./seo.data.js";
 import { validateContent } from "./validation.js";
 import { validateLegalContent } from "./legal.validation.js";
+import { validateSeoContent } from "./seo.validation.js";
 
 validateContent(repositoryContent);
 validateLegalContent(legalContent);
+validateSeoContent(seoContent);
 
 const byOrder = (items) => [...items].sort((a, b) => a.order - b.order);
 
@@ -62,6 +65,10 @@ export function getLegalPage(key) {
   return legalContent[key] ?? null;
 }
 
+export function getSocialImageContent() {
+  return seoContent.socialImage;
+}
+
 export const contentRepository = {
   getSiteSettings,
   getSocialLink,
@@ -76,4 +83,5 @@ export const contentRepository = {
   getContactContent,
   getFooterContent,
   getLegalPage,
+  getSocialImageContent,
 };
