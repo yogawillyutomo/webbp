@@ -2,20 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { EmailIcon, GitHubIcon } from "@/shared/icons/TechIcons";
-import {
-  getContactContent,
-  getSiteSettings,
-  getSocialLink,
-} from "@/content/repository";
 
-const contact = getContactContent();
-const site = getSiteSettings();
-const github = getSocialLink("github");
-const emailSubject = encodeURIComponent(contact.emailSubject);
-
-export default function Contact() {
+export default function Contact({ content, site }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
+  const emailSubject = encodeURIComponent(content.emailSubject);
+  const github = site.socialLinks.find((item) => item.key === "github") ?? null;
 
   useEffect(() => {
     const element = ref.current;
@@ -76,16 +68,16 @@ export default function Contact() {
               border border-blue-500/30 bg-blue-500/10 mb-6"
             >
               <span className="text-blue-300 text-sm font-medium tracking-wider">
-                {contact.eyebrow}
+                {content.eyebrow}
               </span>
             </div>
 
             <h2 className="font-orbitron text-4xl lg:text-5xl font-bold mb-6">
-              {contact.title}
+              {content.title}
             </h2>
 
             <p className="text-[var(--muted-text)] text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-              {contact.description}
+              {content.description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -101,11 +93,11 @@ export default function Contact() {
                 "
               >
                 <EmailIcon />
-                {contact.primaryCtaLabel}
+                {content.primaryCtaLabel}
               </a>
 
               <a
-                href={contact.secondaryCta.href}
+                href={content.secondaryCta.href}
                 className="
                   btn-cyber
                   px-8 py-4 rounded-lg
@@ -126,7 +118,7 @@ export default function Contact() {
                 >
                   <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>
-                {contact.secondaryCta.label}
+                {content.secondaryCta.label}
               </a>
             </div>
 
