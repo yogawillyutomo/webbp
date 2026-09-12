@@ -5,12 +5,13 @@ import RevealStagger from "@/shared/ui/RevealStagger";
 
 export default function ServicesGrid({ activeIndex, onToggle }) {
     return (
-        <RevealStagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
+        <RevealStagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 items-stretch">
 
             {servicesData.map((service, index) => (
                 <RevealSection
-                    key={index}
+                    key={service.title}
                     direction="up"
+                    className="h-full"
                 >
                     <ServiceCard
                         {...service}
