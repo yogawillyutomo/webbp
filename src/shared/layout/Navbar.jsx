@@ -3,12 +3,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
-import { NAV_LINKS } from "@/constants/navigation";
+import { getNavigation, getSiteSettings } from "@/content/repository";
 import useScrollProgress from "@/core/scroll/useScrollProgress";
 import useTheme from "@/core/theme/useTheme";
 import useActiveSection from "@/core/scroll/useActiveSection";
 
 import ThemeToggle from "./ThemeToggle";
+
+const NAV_LINKS = getNavigation();
+const site = getSiteSettings();
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -105,7 +108,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <a
             href="#home"
-            aria-label="Bakaran Project — kembali ke beranda"
+            aria-label={`${site.siteName} — kembali ke beranda`}
             className="flex items-center gap-2 font-orbitron text-xl font-bold rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
             style={{
               transform: `scale(${logoScale})`,
@@ -113,7 +116,7 @@ export default function Navbar() {
             }}
           >
             <Image
-              src="/ico.png"
+              src={site.brandAssets.logo}
               alt=""
               width={26}
               height={26}
@@ -122,7 +125,7 @@ export default function Navbar() {
             />
 
             <span className="tracking-wide bg-[linear-gradient(120deg,#3b82f6,#06b6d4,#3b82f6)] bg-[length:200%_200%] bg-clip-text text-transparent animate-gradient">
-              Bakaran Project
+              {site.siteName}
             </span>
           </a>
 
