@@ -10,38 +10,36 @@ export default function ProjectCard({ project, onClick, isModalOpen }) {
         "border-slate-400/30 bg-slate-400/10 text-slate-300";
 
     return (
-        <button
-            type="button"
-            onClick={onClick}
-            aria-label={`Lihat detail ${project.title}`}
-            aria-haspopup="dialog"
-            className="
-                group relative h-full w-full rounded-2xl text-left
-                cursor-pointer focus-visible:outline-none
-                focus-visible:ring-2 focus-visible:ring-cyan-400
-                focus-visible:ring-offset-2 focus-visible:ring-offset-transparent
-            "
-        >
+        <div className="group relative h-full w-full rounded-2xl">
             <div
+                aria-hidden="true"
                 className={`
-                    relative flex h-full min-h-[29rem] flex-col overflow-hidden rounded-2xl
-                    border border-[var(--card-border)]
-                    bg-[var(--card-bg)]
-                    transition-[transform,border-color,box-shadow]
-                    duration-300 ease-[cubic-bezier(.22,1,.36,1)]
-                    will-change-transform
-                    before:absolute before:inset-0
-                    before:bg-cyan-500/5
-                    before:opacity-0
-                    before:transition-opacity before:duration-300
-                    group-hover:before:opacity-100
-                    group-focus-visible:border-cyan-400/60
-                    ${!isModalOpen ? "group-hover:-translate-y-2" : ""}
-                    ${!isModalOpen ? "group-hover:border-cyan-400/50" : ""}
-                    ${!isModalOpen ? "group-hover:shadow-[0_22px_55px_rgba(6,182,212,0.22)]" : ""}
-                    group-active:translate-y-0 group-active:scale-[0.995]
+                    pointer-events-none relative flex h-full min-h-[29rem] flex-col overflow-hidden rounded-2xl
+                    border border-[var(--card-border)] bg-[var(--card-bg)]
+                    transform-gpu
+                    transition-transform duration-200 ease-out
+                    group-focus-within:border-cyan-400/60
+                    ${!isModalOpen ? "group-hover:-translate-y-1 group-hover:scale-[1.005]" : ""}
                 `}
             >
+                <div
+                    className={`
+                        pointer-events-none absolute inset-0 rounded-2xl
+                        opacity-0 transition-opacity duration-200
+                        ${!isModalOpen ? "group-hover:opacity-100" : ""}
+                        bg-[radial-gradient(circle_at_50%_0%,rgba(6,182,212,0.12),transparent_58%)]
+                    `}
+                />
+
+                <div
+                    className={`
+                        pointer-events-none absolute inset-0 rounded-2xl
+                        opacity-0 transition-opacity duration-200
+                        ${!isModalOpen ? "group-hover:opacity-100" : ""}
+                        shadow-[0_18px_45px_rgba(6,182,212,0.18)]
+                    `}
+                />
+
                 <div
                     data-project-image={project.code}
                     className="
@@ -104,6 +102,22 @@ export default function ProjectCard({ project, onClick, isModalOpen }) {
                     </div>
                 </div>
             </div>
-        </button>
+
+            <button
+                type="button"
+                onClick={onClick}
+                aria-label={`Lihat detail ${project.title}`}
+                aria-haspopup="dialog"
+                className="
+                    absolute inset-0 z-30 rounded-2xl cursor-pointer
+                    bg-transparent
+                    focus-visible:outline-none
+                    focus-visible:ring-2 focus-visible:ring-cyan-400
+                    focus-visible:ring-offset-2 focus-visible:ring-offset-transparent
+                "
+            >
+                <span className="sr-only">Lihat detail {project.title}</span>
+            </button>
+        </div>
     );
 }
