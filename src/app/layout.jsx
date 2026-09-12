@@ -1,3 +1,9 @@
+import "@fontsource-variable/orbitron";
+import "@fontsource/rajdhani/300.css";
+import "@fontsource/rajdhani/400.css";
+import "@fontsource/rajdhani/500.css";
+import "@fontsource/rajdhani/600.css";
+import "@fontsource/rajdhani/700.css";
 import "./globals.css";
 import MotionProvider from "@/shared/providers/MotionProvider";
 import { SITE } from "@/config/site";
