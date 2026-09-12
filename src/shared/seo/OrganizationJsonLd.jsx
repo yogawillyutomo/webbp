@@ -1,15 +1,18 @@
-import { SITE } from "@/config/site";
+import { getSiteSettings, getSocialLink } from "@/content/repository";
+
+const site = getSiteSettings();
+const github = getSocialLink("github");
 
 export default function OrganizationJsonLd() {
   const organization = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: SITE.name,
-    url: SITE.url,
-    logo: `${SITE.url}/ico.svg`,
-    description: SITE.description,
-    email: SITE.email,
-    sameAs: [SITE.social.github],
+    name: site.siteName,
+    url: site.siteUrl,
+    logo: `${site.siteUrl}${site.brandAssets.vectorLogo}`,
+    description: site.defaultDescription,
+    email: site.publicEmail,
+    sameAs: github ? [github.href] : [],
   };
 
   return (
