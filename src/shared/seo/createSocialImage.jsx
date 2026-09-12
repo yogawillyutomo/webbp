@@ -1,13 +1,18 @@
 import { ImageResponse } from "next/og";
-import { SITE } from "@/config/site";
+import {
+  getSiteSettings,
+  getSocialImageContent,
+} from "@/content/repository";
+
+const site = getSiteSettings();
+const socialImage = getSocialImageContent();
 
 export const socialImageSize = {
   width: 1200,
   height: 630,
 };
 
-export const socialImageAlt =
-  "Bakaran Project — Sistem Digital untuk Operasional Nyata";
+export const socialImageAlt = socialImage.alt;
 
 export function createSocialImage() {
   return new ImageResponse(
@@ -35,7 +40,7 @@ export function createSocialImage() {
             color: "#67e8f9",
           }}
         >
-          BAKARAN PROJECT
+          {socialImage.eyebrow}
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
@@ -49,7 +54,7 @@ export function createSocialImage() {
               letterSpacing: -2,
             }}
           >
-            Sistem Digital untuk Operasional Nyata
+            {socialImage.title}
           </div>
 
           <div
@@ -61,7 +66,7 @@ export function createSocialImage() {
               color: "#cbd5e1",
             }}
           >
-            Digitalisasi sekolah, integrasi data, dan mobility systems yang dibangun bertahap dengan evidence engineering yang jelas.
+            {socialImage.description}
           </div>
         </div>
 
@@ -76,8 +81,8 @@ export function createSocialImage() {
             color: "#94a3b8",
           }}
         >
-          <span>{SITE.url.replace("https://", "")}</span>
-          <span>Product Engineering • Education • Mobility</span>
+          <span>{site.siteUrl.replace("https://", "")}</span>
+          <span>{socialImage.footerLabel}</span>
         </div>
       </div>
     ),
