@@ -1,6 +1,6 @@
 "use client";
 
-import { projects } from "./portfolio.data";
+import { getProducts } from "@/content/repository";
 
 import usePortfolioFilter from "./hooks/usePortfolioFilter";
 import usePortfolioModal from "./hooks/usePortfolioModal";
@@ -9,6 +9,8 @@ import PortfolioHeader from "./components/PortfolioHeader";
 import PortfolioFilter from "./components/PortfolioFilter";
 import PortfolioGrid from "./components/PortfolioGrid";
 import PortfolioModal from "./components/PortfolioModal";
+
+const projects = getProducts();
 
 export default function PortfolioSection() {
     const {
