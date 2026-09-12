@@ -13,6 +13,7 @@ import PortfolioModal from "./components/PortfolioModal";
 export default function PortfolioSection() {
     const {
         categories,
+        categoryCounts,
         activeCategory,
         setActiveCategory,
         filteredProjects,
@@ -42,6 +43,7 @@ export default function PortfolioSection() {
 
                 <PortfolioFilter
                     categories={categories}
+                    categoryCounts={categoryCounts}
                     activeCategory={activeCategory}
                     setActiveCategory={setActiveCategory}
                 />
