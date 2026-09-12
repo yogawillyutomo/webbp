@@ -1,12 +1,9 @@
 import Link from "next/link";
 import { EyeIcon } from "@/shared/icons/TechIcons";
 import RevealSection from "@/shared/ui/RevealSection";
-import { getHeroContent } from "@/content/repository";
 import { useEffect, useRef } from "react";
 
-const hero = getHeroContent();
-
-export default function HeroContent({ onWrapChange }) {
+export default function HeroContent({ content, onWrapChange }) {
   const buttonRef = useRef(null);
 
   useEffect(() => {
@@ -43,22 +40,22 @@ export default function HeroContent({ onWrapChange }) {
         <div className="cyber-badge mt-6 xl:mt-0 mx-auto xl:mx-0 inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm text-[var(--brand-color)] bg-blue-500/15 border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.25)] xl:bg-transparent xl:border-[rgba(59,130,246,0.3)] xl:shadow-none">
           <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
           <span className="text-sm font-medium tracking-wide">
-            {hero.eyebrow}
+            {content.eyebrow}
           </span>
         </div>
 
         <h1 className="font-orbitron font-bold tracking-tight leading-[1.25] pb-1 hero-title">
           <span className="block text-3xl md:text-5xl xl:text-6xl text-slate-900 hero-main-title">
-            {hero.title}
+            {content.title}
           </span>
 
           <span className="block mt-3 text-lg md:text-3xl xl:text-4xl bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-clip-text text-transparent animate-gradient">
-            {hero.subtitle}
+            {content.subtitle}
           </span>
         </h1>
 
         <p className="text-base md:text-lg muted-text leading-relaxed max-w-xl xl:max-w-2xl mx-auto xl:mx-0">
-          {hero.description}
+          {content.description}
         </p>
 
         <div
@@ -66,18 +63,18 @@ export default function HeroContent({ onWrapChange }) {
           className="flex flex-wrap gap-4 justify-center xl:justify-start"
         >
           <Link
-            href={hero.primaryCta.href}
+            href={content.primaryCta.href}
             className="btn-cyber animate-pulse-glow px-8 py-4 rounded-lg font-semibold text-lg bg-linear-to-r from-blue-600 to-cyan-500 inline-block"
           >
-            {hero.primaryCta.label}
+            {content.primaryCta.label}
           </Link>
 
           <Link
-            href={hero.secondaryCta.href}
+            href={content.secondaryCta.href}
             className="btn-cyber px-8 py-4 rounded-lg font-semibold text-lg border border-blue-500/50 hover:bg-blue-500/10 flex items-center gap-3"
           >
             <EyeIcon />
-            {hero.secondaryCta.label}
+            {content.secondaryCta.label}
           </Link>
         </div>
       </div>
