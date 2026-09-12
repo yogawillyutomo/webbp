@@ -1,22 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import { GitHubIcon } from "@/shared/icons/TechIcons";
-import {
-  getFooterContent,
-  getNavigation,
-  getSiteSettings,
-  getSocialLink,
-  getSolutionDomains,
-} from "@/content/repository";
 
-const footer = getFooterContent();
-const navigation = getNavigation();
-const solutions = getSolutionDomains();
-const site = getSiteSettings();
-const github = getSocialLink("github");
+export default function Footer({ content, navigation, services, site }) {
+  const github = site.socialLinks.find((item) => item.key === "github") ?? null;
 
-export default function Footer() {
   return (
     <footer className="py-20 border-t border-[var(--card-border)] relative overflow-hidden">
       <div
@@ -41,7 +28,7 @@ export default function Footer() {
             </div>
 
             <p className="text-[var(--muted-text)] mb-6 max-w-md leading-relaxed">
-              {footer.description}
+              {content.description}
             </p>
 
             <div className="flex gap-4">
@@ -54,13 +41,13 @@ export default function Footer() {
           </div>
 
           <FooterColumn
-            title={footer.navigationTitle}
+            title={content.navigationTitle}
             links={navigation.map(({ label, href }) => ({ label, href }))}
           />
 
           <FooterColumn
-            title={footer.solutionsTitle}
-            links={solutions.map(({ title }) => ({
+            title={content.solutionsTitle}
+            links={services.map(({ title }) => ({
               label: title,
               href: "#solutions",
             }))}
@@ -81,11 +68,11 @@ export default function Footer() {
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[var(--muted-text)] text-sm">
-            © {new Date().getFullYear()} {site.siteName}. {footer.copyrightSuffix}
+            © {new Date().getFullYear()} {site.siteName}. {content.copyrightSuffix}
           </p>
 
           <div className="flex gap-6 text-sm">
-            {footer.legalLinks.map((link) => (
+            {content.legalLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
