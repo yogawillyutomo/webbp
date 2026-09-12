@@ -1,12 +1,8 @@
-import { getPortfolioSection } from "@/content/repository";
-
-const section = getPortfolioSection();
-
-export default function PortfolioHeader() {
+export default function PortfolioHeader({ content }) {
   return (
     <div className="mb-20 text-center">
       <div className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">
-        {section.eyebrow}
+        {content.eyebrow}
       </div>
 
       <h2
@@ -21,7 +17,7 @@ export default function PortfolioHeader() {
           animate-gradient
         "
       >
-        {section.title}
+        {content.title}
       </h2>
 
       <p
@@ -34,7 +30,7 @@ export default function PortfolioHeader() {
           text-[var(--muted-text)]
         "
       >
-        {section.description}
+        {content.description}
       </p>
     </div>
   );
