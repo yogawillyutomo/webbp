@@ -19,6 +19,11 @@ const routeChecks = [
     status: 404,
     contentType: "text/html",
   },
+  {
+    path: "/products/__webbp_missing_product__",
+    status: 404,
+    contentType: "text/html",
+  },
 ];
 
 const failures = [];
@@ -128,6 +133,75 @@ for (const [path, canonical] of [
   }
 }
 
+const sitemap = responses.get("/sitemap.xml");
+if (sitemap) {
+  const locations = Array.from(
+    sitemap.body.matchAll(/<loc>([^<]+)<\/loc>/g),
+    (match) => match[1].trim()
+  );
+  const productUrls = locations.filter((location) => {
+    try {
+      return new URL(location).pathname.startsWith("/products/");
+    } catch {
+      return false;
+    }
+  });
+
+  if (productUrls.length === 0) {
+    fail("sitemap contains no product detail routes");
+  } else {
+    pass(`sitemap exposes ${productUrls.length} product detail route(s)`);
+  }
+
+  for (const canonical of productUrls) {
+    const path = new URL(canonical).pathname;
+    const localUrl = new URL(path.replace(/^\//, ""), baseUrl);
+
+    try {
+      const response = await fetch(localUrl, {
+        redirect: "follow",
+        headers: {
+          "user-agent": "WEBBP-release-smoke/1.0",
+        },
+      });
+      const body = await response.text();
+      const contentType = response.headers.get("content-type") || "";
+
+      if (response.status !== 200) {
+        fail(`${path} expected HTTP 200, got ${response.status}`);
+      } else {
+        pass(`${path} HTTP 200`);
+      }
+
+      if (!contentType.toLowerCase().includes("text/html")) {
+        fail(`${path} expected HTML content-type, got ${contentType || "<missing>"}`);
+      } else {
+        pass(`${path} content-type ${contentType}`);
+      }
+
+      if (!body.includes(canonical)) {
+        fail(`${path} canonical URL missing`);
+      } else {
+        pass(`${path} canonical URL`);
+      }
+
+      if (!body.includes('id="main-content"')) {
+        fail(`${path} is missing #main-content skip-link target`);
+      } else {
+        pass(`${path} skip-link target`);
+      }
+
+      if (!body.includes("Evidence yang dapat diklaim")) {
+        fail(`${path} evidence section missing`);
+      } else {
+        pass(`${path} evidence section`);
+      }
+    } catch (error) {
+      fail(`${path} request failed: ${error.message}`);
+    }
+  }
+}
+
 const missing = responses.get("/__webbp_release_smoke_missing__");
 if (missing) {
   if (!missing.body.includes("Apakah Anda tersesat?")) {
@@ -140,6 +214,15 @@ if (missing) {
     fail("custom 404 product recovery link missing");
   } else {
     pass("custom 404 product recovery link");
+  }
+}
+
+const missingProduct = responses.get("/products/__webbp_missing_product__");
+if (missingProduct) {
+  if (!missingProduct.body.includes("Apakah Anda tersesat?")) {
+    fail("unknown product route does not use established 404 experience");
+  } else {
+    pass("unknown product route uses established 404 experience");
   }
 }
 

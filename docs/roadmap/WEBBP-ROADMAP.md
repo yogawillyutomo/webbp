@@ -64,50 +64,68 @@ Stable release:
 - tag: `v1.0.0`;
 - final release-record commit: `3b373963efad12779de476fcd1f4b1cbdfff2dfe`.
 
-## Active milestone
-
 ### M10 — Content Architecture & CMS Readiness
 
-Goal: separate content ownership from presentation without introducing a CMS yet.
+M10 separated public content ownership from presentation without adopting a CMS.
 
-Primary scope:
+Implemented scope:
 
-- define canonical content models;
-- centralize product, solution, company, navigation, contact, legal metadata, and public SEO content;
-- introduce a server-side content repository/query boundary;
-- ensure Client Components receive normalized public props rather than importing content-source/CMS concerns directly;
-- add deterministic content validation to the standard verification gate;
-- remove duplicate presentation-local sources of truth;
-- preserve v1 visual and interaction behavior;
-- prepare a vendor-neutral migration seam for a future headless CMS.
+- canonical repository-backed content models;
+- centralized site, navigation, product, solution, company, contact, legal, and SEO content;
+- server-side content repository/query boundary;
+- normalized public props passed into Client Components;
+- deterministic content validation in the standard verification gate;
+- duplicate presentation-local content sources removed;
+- vendor-neutral CMS migration seam preserved.
 
-Exit condition:
+Merge baseline:
 
-- normalized repository-backed content is the canonical source for implemented public domains;
-- UI presentation no longer owns the migrated source-of-truth copy/data;
-- exact-head content validation, lint, build, smoke, visual regression, and Vercel gates pass;
-- no CMS provider is required for milestone closure.
+- `main@c7c108926ad3f27a0b7a05bca3d0e3d74645a5da`.
+
+M10 local exact-head validation, build, runtime smoke, and visual regression passed. The merge explicitly accepted an external Vercel build-rate-limit condition; that provider quota state was not treated as evidence of an application compile failure.
 
 Implementation evidence is recorded in `docs/hardening/M10.md`.
 
-## Forward roadmap
+## Active milestone
 
 ### M11 — Public Content Expansion
 
-Goal: add useful public content only where Bakaran Project has evidence and an ongoing editorial need.
+Goal: add useful public content only where Bakaran Project has evidence and an ongoing public need.
 
-Candidate scope:
+Initial tranche: **Product Detail Pages**.
 
-- product detail routes;
-- case studies;
-- project/product updates;
-- insights or technical notes;
-- richer evidence references;
-- structured public media.
+This tranche exists because the current Product Portfolio already contains evidence-backed product maturity, descriptions, technology, and claim-safe proof, but those records are not individually addressable or shareable.
 
-M11 is content-demand driven. Features are not added solely to make the website appear larger.
+Primary scope:
 
-Exit condition: new content structures are proven by real publishing needs and do not weaken evidence-before-claims guardrails.
+- static public route for each published product at `/products/[slug]`;
+- metadata and canonical URL derived from canonical product content;
+- explicit product maturity/status presentation;
+- evidence and technology sections using existing normalized product data;
+- related solution-domain navigation;
+- portfolio modal links to the canonical product page;
+- sitemap inclusion for published product routes;
+- smoke verification for every product route exposed by the sitemap;
+- nested-route navigation/footer behavior without introducing a second content source.
+
+Non-goals for the initial M11 tranche:
+
+- no invented customer case studies;
+- no production/adoption/revenue/SLA claims beyond evidence already approved for public content;
+- no generic blog or newsroom added only to increase page count;
+- no headless CMS adoption;
+- no operational product functionality moved into WEBBP.
+
+Exit condition for the tranche:
+
+- every published product has a stable, indexable, evidence-backed public detail page;
+- homepage portfolio behavior remains intact;
+- sitemap and smoke gates cover published product routes;
+- content validation, lint, build, runtime smoke, visual/accessibility regression, and available deployment gates pass.
+
+Further M11 content structures such as case studies, updates, or technical notes remain demand-driven and require source evidence before implementation.
+
+## Forward roadmap
 
 ### M12 — Headless CMS Adoption (Conditional)
 
@@ -139,6 +157,7 @@ If these conditions are absent, WEBBP should remain repository-driven and contin
 ## Versioning direction
 
 - `v1.0.0` is the stable public baseline produced by M9.
-- M10 architecture work does not itself require a major-version change because it is intended to preserve public behavior.
-- M11/M12 version changes should follow actual public-surface or compatibility impact rather than milestone numbering.
+- M10 architecture work does not itself require a major-version change because it preserves public behavior.
+- M11 introduces new public routes and should receive a version decision only after its public-surface scope and release impact are closed.
+- M12/CMS work should not dictate versioning unless it changes the public contract or compatibility surface.
 - CMS adoption is not a prerequisite for a stable WEBBP release.

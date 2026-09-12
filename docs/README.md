@@ -17,7 +17,8 @@ The [`hardening/`](hardening/) directory records milestone-specific implementati
 Current sequence:
 
 - M0–M9 — baseline through stable public v1.0.0;
-- [`hardening/M10.md`](hardening/M10.md) — Content Architecture & CMS Readiness implementation and verification gate.
+- [`hardening/M10.md`](hardening/M10.md) — Content Architecture & CMS Readiness;
+- [`hardening/M11.md`](hardening/M11.md) — active Public Content Expansion tranche, beginning with evidence-backed Product Detail Pages.
 
 ## Decision hierarchy
 

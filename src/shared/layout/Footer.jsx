@@ -1,8 +1,15 @@
 import Image from "next/image";
 import { GitHubIcon } from "@/shared/icons/TechIcons";
 
-export default function Footer({ content, navigation, services, site }) {
+export default function Footer({
+  content,
+  navigation,
+  services,
+  site,
+  rootHref = "",
+}) {
   const github = site.socialLinks.find((item) => item.key === "github") ?? null;
+  const resolveHref = (href) => (rootHref ? `${rootHref}${href}` : href);
 
   return (
     <footer className="py-20 border-t border-[var(--card-border)] relative overflow-hidden">
@@ -42,14 +49,17 @@ export default function Footer({ content, navigation, services, site }) {
 
           <FooterColumn
             title={content.navigationTitle}
-            links={navigation.map(({ label, href }) => ({ label, href }))}
+            links={navigation.map(({ label, href }) => ({
+              label,
+              href: resolveHref(href),
+            }))}
           />
 
           <FooterColumn
             title={content.solutionsTitle}
             links={services.map(({ title }) => ({
               label: title,
-              href: "#solutions",
+              href: resolveHref("#solutions"),
             }))}
           />
         </div>
