@@ -8,11 +8,13 @@ Passing this checklist does not mean every future feature is complete. It means 
 
 ## Release baseline
 
-Current pre-M9 baseline:
+Current M9 implementation baseline:
 
-- `main@1978ccc500ee99aa5ec10e5de668790b331e8054`
+- `main@84a89e062bb1c7913ded7369f08a7d34f6c536db`
 - M0–M8 completed
-- post-M8 Vercel deployment successful
+- roadmap/content/CMS strategy merged through PR #13
+- post-baseline Vercel deployment successful
+- M9 implementation branch: `feat/m9-production-readiness`
 
 ## 1. Source and dependency gate
 
