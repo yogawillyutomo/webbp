@@ -3,17 +3,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 
-import { getNavigation, getSiteSettings } from "@/content/repository";
 import useScrollProgress from "@/core/scroll/useScrollProgress";
 import useTheme from "@/core/theme/useTheme";
 import useActiveSection from "@/core/scroll/useActiveSection";
 
 import ThemeToggle from "./ThemeToggle";
 
-const NAV_LINKS = getNavigation();
-const site = getSiteSettings();
-
-export default function Navbar() {
+export default function Navbar({ site, navigation }) {
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const mobileMenuRef = useRef(null);
@@ -23,8 +19,8 @@ export default function Navbar() {
     useScrollProgress();
 
   const sectionIds = useMemo(() => {
-    return NAV_LINKS.map((link) => link.href);
-  }, []);
+    return navigation.map((link) => link.href);
+  }, [navigation]);
 
   const active = useActiveSection(sectionIds) || "#home";
 
@@ -131,7 +127,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-6">
             <div className="hidden md:flex gap-8 items-center">
-              {NAV_LINKS.map((link) => {
+              {navigation.map((link) => {
                 const isActive = active === link.href;
 
                 return (
@@ -176,7 +172,7 @@ export default function Navbar() {
           className="fixed inset-0 z-40 backdrop-blur-xl md:hidden"
         >
           <div className="flex flex-col items-center justify-center h-full gap-8 text-2xl">
-            {NAV_LINKS.map((link) => {
+            {navigation.map((link) => {
               const isActive = active === link.href;
 
               return (
