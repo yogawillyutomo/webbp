@@ -36,7 +36,6 @@ export default function Contact() {
     };
   }, []);
 
-
   return (
     <section id="contact" className="py-32 relative">
       <div
@@ -68,23 +67,23 @@ export default function Contact() {
               border border-blue-500/30 bg-blue-500/10 mb-6"
             >
               <span className="text-blue-300 text-sm font-medium tracking-wider">
-                LET&apos;S BUILD TOGETHER
+                DISCUSS A REAL OPERATIONAL NEED
               </span>
             </div>
 
             <h2 className="font-orbitron text-4xl lg:text-5xl font-bold mb-6">
-              Siap Memulai Project Anda?
+              Mari Bahas Kebutuhan Sistem Anda
             </h2>
 
             <p className="text-[var(--muted-text)] text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-              Mari diskusikan kebutuhan dan tantangan operasional Anda. Tim
-              Bakaran Project siap membantu merancang solusi digital yang tepat
-              guna dan dapat dikembangkan secara bertahap.
+              Diskusikan kebutuhan operasional, pilot, integrasi, atau pengembangan
+              produk bersama Bakaran Project. Pembahasan dimulai dari masalah,
+              boundary, pengguna, dan source of truth sebelum menentukan solusi.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href={`mailto:${SITE.email}?subject=Inquiry%20Project`}
+                href={`mailto:${SITE.email}?subject=Diskusi%20Kebutuhan%20Sistem`}
                 className="
                   btn-cyber animate-pulse-glow
                   px-8 py-4 rounded-lg
@@ -95,7 +94,7 @@ export default function Contact() {
                 "
               >
                 <EmailIcon />
-                Konsultasi via Email
+                Diskusi via Email
               </a>
 
               <a
