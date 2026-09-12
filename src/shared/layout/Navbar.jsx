@@ -9,7 +9,7 @@ import useActiveSection from "@/core/scroll/useActiveSection";
 
 import ThemeToggle from "./ThemeToggle";
 
-export default function Navbar({ site, navigation }) {
+export default function Navbar({ site, navigation, rootHref = "" }) {
   const [open, setOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const mobileMenuRef = useRef(null);
@@ -19,10 +19,13 @@ export default function Navbar({ site, navigation }) {
     useScrollProgress();
 
   const sectionIds = useMemo(() => {
-    return navigation.map((link) => link.href);
-  }, [navigation]);
+    return rootHref ? [] : navigation.map((link) => link.href);
+  }, [navigation, rootHref]);
 
-  const active = useActiveSection(sectionIds) || "#home";
+  const observedActive = useActiveSection(sectionIds);
+  const active = rootHref ? "" : observedActive || "#home";
+  const resolveHref = (href) => (rootHref ? `${rootHref}${href}` : href);
+  const logoHref = resolveHref("#home");
 
   useEffect(() => {
     if (!open) return;
@@ -103,7 +106,7 @@ export default function Navbar({ site, navigation }) {
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <a
-            href="#home"
+            href={logoHref}
             aria-label={`${site.siteName} — kembali ke beranda`}
             className="flex items-center gap-2 font-orbitron text-xl font-bold rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
             style={{
@@ -133,7 +136,7 @@ export default function Navbar({ site, navigation }) {
                 return (
                   <a
                     key={link.id}
-                    href={link.href}
+                    href={resolveHref(link.href)}
                     aria-current={isActive ? "location" : undefined}
                     className={`nav-link rounded-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
                       isActive ? "text-blue-400" : ""
@@ -178,7 +181,7 @@ export default function Navbar({ site, navigation }) {
               return (
                 <a
                   key={link.id}
-                  href={link.href}
+                  href={resolveHref(link.href)}
                   aria-current={isActive ? "location" : undefined}
                   className={`nav-link rounded-sm transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${
                     isActive ? "text-blue-400" : ""
