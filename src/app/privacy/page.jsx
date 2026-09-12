@@ -1,29 +1,29 @@
 import Link from "next/link";
-import { SITE } from "@/config/site";
+import { getLegalPage, getSiteSettings } from "@/content/repository";
 import { SOCIAL_IMAGE } from "@/shared/seo/socialMetadata";
 
-const title = "Privacy Policy";
-const description = "Kebijakan privasi website Bakaran Project.";
+const site = getSiteSettings();
+const privacy = getLegalPage("privacy");
 
 export const metadata = {
-  title,
-  description,
+  title: privacy.title,
+  description: privacy.description,
   alternates: {
-    canonical: "/privacy",
+    canonical: privacy.canonicalPath,
   },
   openGraph: {
-    title: `${title} | ${SITE.name}`,
-    description,
-    url: "/privacy",
-    siteName: SITE.name,
-    locale: SITE.locale,
+    title: `${privacy.title} | ${site.siteName}`,
+    description: privacy.description,
+    url: privacy.canonicalPath,
+    siteName: site.siteName,
+    locale: site.locale,
     type: "website",
     images: [SOCIAL_IMAGE.openGraph],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${title} | ${SITE.name}`,
-    description,
+    title: `${privacy.title} | ${site.siteName}`,
+    description: privacy.description,
     images: [SOCIAL_IMAGE.twitter],
   },
 };
@@ -40,10 +40,10 @@ export default function PrivacyPage() {
         </Link>
 
         <h1 className="font-orbitron text-4xl font-bold mt-10 mb-4">
-          Privacy Policy
+          {privacy.title}
         </h1>
         <p className="text-[var(--muted-text)] mb-10">
-          Berlaku sejak 10 September 2026.
+          {privacy.effectiveDateLabel}
         </p>
 
         <div className="space-y-8 text-[var(--muted-text)] leading-relaxed">
@@ -101,10 +101,10 @@ export default function PrivacyPage() {
             <p>
               Pertanyaan mengenai privasi dapat dikirim ke{" "}
               <a
-                href={`mailto:${SITE.email}`}
+                href={`mailto:${site.publicEmail}`}
                 className="text-blue-400 hover:text-cyan-400"
               >
-                {SITE.email}
+                {site.publicEmail}
               </a>
               .
             </p>
