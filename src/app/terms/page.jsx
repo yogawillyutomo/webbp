@@ -1,29 +1,29 @@
 import Link from "next/link";
-import { SITE } from "@/config/site";
+import { getLegalPage, getSiteSettings } from "@/content/repository";
 import { SOCIAL_IMAGE } from "@/shared/seo/socialMetadata";
 
-const title = "Terms of Service";
-const description = "Ketentuan penggunaan website Bakaran Project.";
+const site = getSiteSettings();
+const terms = getLegalPage("terms");
 
 export const metadata = {
-  title,
-  description,
+  title: terms.title,
+  description: terms.description,
   alternates: {
-    canonical: "/terms",
+    canonical: terms.canonicalPath,
   },
   openGraph: {
-    title: `${title} | ${SITE.name}`,
-    description,
-    url: "/terms",
-    siteName: SITE.name,
-    locale: SITE.locale,
+    title: `${terms.title} | ${site.siteName}`,
+    description: terms.description,
+    url: terms.canonicalPath,
+    siteName: site.siteName,
+    locale: site.locale,
     type: "website",
     images: [SOCIAL_IMAGE.openGraph],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${title} | ${SITE.name}`,
-    description,
+    title: `${terms.title} | ${site.siteName}`,
+    description: terms.description,
     images: [SOCIAL_IMAGE.twitter],
   },
 };
@@ -40,10 +40,10 @@ export default function TermsPage() {
         </Link>
 
         <h1 className="font-orbitron text-4xl font-bold mt-10 mb-4">
-          Terms of Service
+          {terms.title}
         </h1>
         <p className="text-[var(--muted-text)] mb-10">
-          Berlaku sejak 10 September 2026.
+          {terms.effectiveDateLabel}
         </p>
 
         <div className="space-y-8 text-[var(--muted-text)] leading-relaxed">
@@ -52,7 +52,7 @@ export default function TermsPage() {
               Ruang lingkup
             </h2>
             <p>
-              Halaman ini mengatur penggunaan website publik {SITE.name}.
+              Halaman ini mengatur penggunaan website publik {site.siteName}.
               Informasi di website ditujukan untuk memperkenalkan layanan,
               kapabilitas, dan karya Bakaran Project.
             </p>
@@ -109,10 +109,10 @@ export default function TermsPage() {
             <p>
               Pertanyaan mengenai website atau layanan dapat dikirim ke{" "}
               <a
-                href={`mailto:${SITE.email}`}
+                href={`mailto:${site.publicEmail}`}
                 className="text-blue-400 hover:text-cyan-400"
               >
-                {SITE.email}
+                {site.publicEmail}
               </a>
               .
             </p>
