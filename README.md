@@ -1,18 +1,18 @@
 # Bakaran Project Website
 
-Official frontend website for **Bakaran Project**, presenting the team, services, portfolio, and contact information for its software and digital technology work.
+Official public website for **Bakaran Project**, presenting its engineering capabilities, product portfolio, and contact information.
 
 🌐 **Live:** https://bakaranproject.com
 
 ## Overview
 
-This repository contains the public-facing Bakaran Project website. The current landing page is organized around a clear company narrative:
+This repository contains the public-facing Bakaran Project website. The current site is organized around:
 
-- **Hero** — primary positioning and introduction
-- **Services** — software and digital technology capabilities
-- **Portfolio** — selected work and product highlights
+- **Hero** — evidence-led positioning and introduction
+- **Services** — engineering capabilities grounded in current work
+- **Products** — selected products with explicit maturity/status wording
 - **Contact** — inquiry and collaboration entry point
-- **Shared navigation and footer** — consistent site-level experience
+- **Legal & metadata** — privacy, terms, canonical metadata, crawl routes, and social previews
 
 ## Tech Stack
 
@@ -26,19 +26,20 @@ This repository contains the public-facing Bakaran Project website. The current 
 
 ```text
 src/
-├── app/          # Next.js app entry, layout, metadata, and global styles
-├── constants/    # Shared static values and configuration
+├── app/          # Next.js app entry, legal pages, metadata routes, global styles
+├── config/       # Public site identity / canonical configuration
+├── constants/    # Shared static values
 ├── core/         # Core application concerns
-├── features/     # Page features such as hero, services, portfolio, and contact
-└── shared/       # Shared UI and layout components
+├── features/     # Hero, services, portfolio, and contact features
+└── shared/       # Shared UI, layout, providers, and SEO helpers
 ```
-
-The project follows a feature-oriented structure so page sections can evolve independently while common UI remains reusable.
 
 ## Local Development
 
+Install exactly from the committed lockfile:
+
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -48,27 +49,47 @@ Then open:
 http://localhost:3000
 ```
 
-## Production Build
+## Verification
+
+The local merge gate is:
 
 ```bash
-npm run build
-npm start
+npm ci
+npm audit
+npm audit --omit=dev
+npm run verify
+git diff --check
+git status --short
 ```
 
-Run lint checks with:
+`npm run verify` runs ESLint and the production Next.js build.
 
-```bash
-npm run lint
-```
+Browser-visible changes should also receive a focused manual smoke test. When a Vercel preview is available, verify the exact pull-request HEAD rather than assuming an older preview represents the current branch.
+
+## Contribution & Security
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the branch/PR workflow and required evidence.
+
+Potential vulnerabilities should be reported privately according to [SECURITY.md](./SECURITY.md), not through public issues.
+
+## Repository Governance
+
+- `main` is the production source branch.
+- Pull requests should carry local verification evidence and exact-head deployment evidence when available.
+- Dependency updates are tracked by Dependabot.
+- Ownership defaults are declared in `.github/CODEOWNERS`.
+- Generated archives/build artifacts should not be committed.
+
+GitHub branch/ruleset configuration is repository-level state and must be verified separately from committed files. A green Vercel deployment is useful evidence, but it does not replace the local audit/lint/build gate.
 
 ## Website Metadata
 
-The application is configured for **Bakaran Project** with Indonesian-language metadata and `https://bakaranproject.com` as its canonical base URL.
+The application uses Indonesian-language public metadata with `https://bakaranproject.com` as the canonical base URL. Metadata claims must stay aligned with evidence-backed product status and public identity.
 
-## Repository Status
+## License
 
-This repository represents the current public website frontend and will continue to evolve alongside Bakaran Project's product and company positioning.
+This public repository currently does **not** include an open-source license. Public visibility alone does not grant reuse, redistribution, or modification rights beyond rights provided by applicable law.
 
 ---
 
-**Bakaran Project** — building practical software and digital solutions for real operational problems.
+**Bakaran Project** — building digital systems for real operational needs.
