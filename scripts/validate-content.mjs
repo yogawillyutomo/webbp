@@ -1,9 +1,9 @@
-import { repositoryContent } from "../src/content/content.data.js";
-import { legalContent } from "../src/content/legal.data.js";
-import { seoContent } from "../src/content/seo.data.js";
-import { validateContent } from "../src/content/validation.js";
-import { validateLegalContent } from "../src/content/legal.validation.js";
-import { validateSeoContent } from "../src/content/seo.validation.js";
+import { repositoryContent } from "../src/content/content.data.mjs";
+import { legalContent } from "../src/content/legal.data.mjs";
+import { seoContent } from "../src/content/seo.data.mjs";
+import { validateContent } from "../src/content/validation.mjs";
+import { validateLegalContent } from "../src/content/legal.validation.mjs";
+import { validateSeoContent } from "../src/content/seo.validation.mjs";
 
 try {
   validateContent(repositoryContent);
