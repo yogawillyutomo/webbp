@@ -113,7 +113,7 @@ export default function Navbar() {
             }}
           >
             <Image
-              src="/ico.svg"
+              src="/ico.png"
               alt=""
               width={26}
               height={26}
