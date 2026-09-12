@@ -55,9 +55,9 @@ The hardening sequence established:
 - independent Solution Domain expansion;
 - multi-tag Product Portfolio filtering;
 - responsive product modal lifecycle;
-- branded 404 behavior.
+- branded 404 behavior with conversational recovery copy and direct recovery links.
 
-### SEO and discoverability
+### SEO, browser identity, and discoverability
 
 The site includes:
 
@@ -67,6 +67,7 @@ The site includes:
 - `robots.txt`;
 - `sitemap.xml`;
 - web manifest;
+- Bakaran Project browser/tab icon metadata;
 - self-hosted brand fonts.
 
 ### Production hardening
