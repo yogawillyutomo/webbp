@@ -10,7 +10,7 @@ import SectionDivider from "@/shared/ui/SectionDivider";
 
 import { staggerContainer } from "@/shared/animations/staggerContainer";
 
-export default function ServicesSection() {
+export default function ServicesSection({ sectionContent, services }) {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const handleToggle = (index) => {
@@ -28,9 +28,10 @@ export default function ServicesSection() {
         viewport={{ once: true, margin: "-100px" }}
         className="relative z-10 max-w-7xl mx-auto px-6"
       >
-        <ServicesHeader />
+        <ServicesHeader content={sectionContent} />
 
         <ServicesGrid
+          services={services}
           activeIndex={activeIndex}
           onToggle={handleToggle}
         />
