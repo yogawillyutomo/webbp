@@ -19,7 +19,9 @@ export const metadata = {
   creator: SITE.name,
   publisher: SITE.name,
   icons: {
-    icon: "/favicon.ico",
+    icon: "/ico.png",
+    shortcut: "/ico.png",
+    apple: "/ico.png",
   },
   manifest: "/manifest.webmanifest",
   robots: {
