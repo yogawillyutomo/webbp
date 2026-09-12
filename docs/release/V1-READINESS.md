@@ -2,37 +2,43 @@
 
 ## Purpose
 
-This checklist defines the evidence required before WEBBP is released as stable `v1.0.0`.
+This checklist records the evidence used to approve WEBBP as stable `v1.0.0`.
 
 The stable v1 scope is the public Bakaran Project corporate/product website. It is not the Bakaran operational platform and it is not a CMS.
 
-## Release candidate baseline
+## Release baseline
 
 - M0–M8 completed before M9.
 - Roadmap/content/CMS strategy merged through PR #13.
 - M9 merged through PR #15.
 - M9 main commit: `74bb027bf9c8748b4ba8e5ef5846b5f7a2c74160`.
 - M9 post-merge Vercel deployment: SUCCESS.
-- Production smoke on `https://bakaranproject.com` was manually confirmed safe before this release tranche.
+- Production smoke on `https://bakaranproject.com` was manually confirmed safe before the version-release tranche.
 - Release branch: `release/v1.0.0`.
+- Release PR: #16.
+- Version-release merge commit: `178f4a63ec6d01edb1be6bac99a0ce62a3f71c21`.
+- Version-release post-merge Vercel deployment: SUCCESS.
 
 ## 1. Source and dependency gate
 
-- [x] Clean `npm ci` completed during M9 verification.
-- [x] `npm audit` reported 0 vulnerabilities for the unchanged dependency set.
-- [x] `npm audit --omit=dev` reported 0 vulnerabilities for production dependencies.
-- [x] `npm run verify` passed on final M9 implementation.
+- [x] Clean `npm ci` passed on the final release branch.
+- [x] `npm audit` reported 0 vulnerabilities.
+- [x] `npm audit --omit=dev` reported 0 production vulnerabilities.
+- [x] `npm run verify` passed under `bp-fe@1.0.0`.
 - [x] `git diff --check` passed.
-- [x] Working tree was clean at the final M9 parity gate.
+- [x] Final release-branch working tree was clean.
+- [x] `package.json` and `package-lock.json` are both versioned `1.0.0`.
+- [x] The version bump changed no dependency versions.
 - [x] Package lock is committed and dependency-consistent.
 - [x] M7 removed known generated/archive repository junk and ignore rules prevent recurrence.
 - [x] Release history is traceable through PRs and exact-head deployment evidence.
-- [ ] Release-branch parity must be rerun after the `1.0.0` package/lock version bump.
 
 ## 2. Build and runtime gate
 
 - [x] Production build succeeds without external Google-font/build-time font network dependency.
 - [x] M9 post-merge production deployment completed successfully.
+- [x] Release PR #16 exact-head Vercel completed successfully.
+- [x] Release PR #16 post-merge Vercel completed successfully.
 - [x] Homepage returns success.
 - [x] `/privacy` loads.
 - [x] `/terms` loads.
@@ -42,9 +48,10 @@ The stable v1 scope is the public Bakaran Project corporate/product website. It 
 - [x] Open Graph image route loads.
 - [x] Twitter image route loads.
 - [x] Unknown route returns the branded 404 experience.
-- [x] Production browser smoke was reported safe after the M9 favicon/404 polish.
+- [x] `npm run smoke -- http://localhost:3000` passed on the final release branch.
+- [x] Production browser smoke was confirmed safe for the M9 runtime inherited unchanged by the release tranche.
 
-Evidence is reinforced by `npm run smoke -- <base-url>`, which checks routes, content types, metadata, headers, 404 behavior, BP browser icon metadata, and legal-page skip-link targets.
+The release/version tranche changed only documentation and package-version metadata relative to the already-verified M9 runtime.
 
 ## 3. Production security gate
 
@@ -68,12 +75,12 @@ The CSP intentionally allows inline script/style behavior required by the curren
 - [x] No unsupported customer, partner, revenue, adoption, SLA, or production-performance claim is published.
 - [x] No unverified registered/legal-entity claim is published.
 - [x] Public contact data remains centralized through `SITE` configuration.
-- [x] Privacy policy reflects the current public website behavior (no user account or website data-entry form).
+- [x] Privacy policy reflects the current public website behavior.
 - [x] Terms page reflects the current website scope.
 - [x] Portfolio filter tags are navigation metadata and do not override maturity status.
 - [x] Public evidence language remains deliberately bounded.
 
-Current product maturity at release candidate time:
+Current product maturity at v1 release:
 
 - Bakaran Platform — In Development;
 - HADIRA — In Development;
@@ -85,7 +92,7 @@ Current product maturity at release candidate time:
 
 - [x] Desktop navigation smoke-tested through the hardening sequence.
 - [x] Mobile navigation behavior was hardened and keyboard/focus-managed in M5.
-- [x] Home → Solutions → Products → About → Contact navigation remains the approved IA.
+- [x] Home → Solutions → Products → About → Contact remains the approved information architecture.
 - [x] Solution Domain expansion works independently.
 - [x] Product filters return the intended multi-tag product subsets/counts.
 - [x] ProductCard opens on first interaction.
@@ -97,7 +104,7 @@ Current product maturity at release candidate time:
 
 ## 6. Accessibility regression gate
 
-- [x] Skip link target exists on home and legal pages.
+- [x] Skip-link target exists on home and legal pages.
 - [x] Primary navigation is keyboard-operable.
 - [x] Hero capability interaction uses an accessible button and keyboard activation.
 - [x] Solution cards remain keyboard-operable.
@@ -138,54 +145,59 @@ The two `[~]` items are accepted non-blocking measurement limitations. No Lighth
 ## 9. Governance and release gate
 
 - [x] M9 PR #15 documents implementation and verification evidence.
+- [x] Release PR #16 documents version and release evidence.
 - [x] M9 post-merge production deployment was verified SUCCESS.
+- [x] Release PR #16 post-merge Vercel deployment was verified SUCCESS.
 - [x] Repository protection/ruleset status is explicitly recorded.
-- [x] Governance limitation is documented in M7, M9, and release notes.
+- [x] Governance limitation is documented in M7, M9, readiness, and release notes.
 - [x] `SECURITY.md` and `CONTRIBUTING.md` remain present.
 - [x] Release notes summarize the stable public scope and hardening work.
-- [x] Version decision: release candidate is approved for `1.0.0` after the package/lock bump passes final parity and deployment gates.
+- [x] Version decision is `1.0.0`.
 
 ### Accepted governance limitation
 
-At release-candidate time:
+At v1 release time:
 
 - GitHub `main` branch protection is disabled;
 - repository rulesets are empty.
 
-This is accepted as a known non-blocking governance limitation for v1. Merge discipline therefore continues to rely on PR review/process, exact-head verification, local parity, and Vercel deployment evidence until repository-level enforcement is added.
+This is accepted as a known non-blocking governance limitation for v1. Merge discipline therefore continues to rely on PR process, exact-head verification, local parity, and Vercel deployment evidence until repository-level enforcement is added.
 
 ## 10. v1 version decision
 
-`1.0.0` is approved as the release version once all of the following release-branch checks pass after the version bump:
+`1.0.0` is approved as the stable release version.
 
-```bash
-npm ci
-npm audit
-npm audit --omit=dev
-npm run verify
-git diff --check
-git status --short
+Final release-branch verification on `ec1753b80121765cf7a13dbb9021f6d14fd82f2f` passed:
+
+```text
+npm ci                       PASS
+npm audit                    0 vulnerabilities
+npm audit --omit=dev         0 vulnerabilities
+npm run verify               PASS
+git diff --check             PASS
+git status --short           clean
+npm run smoke -- localhost   PASS
 ```
-
-Then runtime smoke must pass against localhost and the final production deployment.
 
 A CMS is **not** required for `1.0.0`. M10 remains Content Architecture & CMS Readiness; M12 headless CMS adoption remains conditional on real editorial triggers.
 
-## Remaining release actions
+## Final release actions
 
-1. Bump `package.json` and `package-lock.json` to `1.0.0` using npm.
-2. Run final release-branch parity.
-3. Merge the release PR only if exact-head Vercel and local gates pass.
-4. Verify post-merge production deployment and smoke.
-5. Create the `v1.0.0` Git tag/release on the exact verified main release commit.
+- [x] Package and lockfile version bumped to `1.0.0` using npm.
+- [x] Final release-branch parity passed.
+- [x] Release PR #16 merged.
+- [x] Post-merge Vercel deployment verified SUCCESS.
+- [x] Production runtime smoke evidence remains valid because the release tranche changed no runtime code relative to the verified M9 deployment.
+- [ ] Create Git tag `v1.0.0` on the final verified `main` commit after the documentation-only final release record is merged.
 
 ## Exit artifacts
 
-- this completed readiness record;
+- this readiness record;
 - `docs/hardening/M9.md`;
 - `docs/release/V1-RELEASE-NOTES.md`;
 - PR #15 M9 evidence;
-- final release PR evidence;
-- exact release commit and `v1.0.0` tag;
-- production deployment evidence;
-- accepted limitations above.
+- PR #16 release evidence;
+- version-release merge commit `178f4a63ec6d01edb1be6bac99a0ce62a3f71c21`;
+- post-merge Vercel deployment evidence;
+- accepted non-blocking limitations above;
+- `v1.0.0` tag on the final verified `main` commit.
