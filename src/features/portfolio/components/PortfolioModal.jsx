@@ -26,11 +26,11 @@ export default function PortfolioModal({
                 onClick={closeModal}
                 className={`
                     fixed inset-0 z-40
-                    transition-all duration-500
+                    transition-all duration-300
                     ${
                         isVisible
-                            ? "bg-black/60 backdrop-blur-xl opacity-100"
-                            : "bg-black/0 backdrop-blur-0 opacity-0"
+                            ? "pointer-events-auto bg-black/60 backdrop-blur-xl opacity-100"
+                            : "pointer-events-none bg-black/0 backdrop-blur-0 opacity-0"
                     }
                 `}
             />
@@ -39,11 +39,12 @@ export default function PortfolioModal({
                 ref={dialogRef}
                 role="dialog"
                 aria-modal="true"
+                aria-hidden={!isVisible}
                 aria-labelledby={`portfolio-title-${selectedProject.code}`}
                 tabIndex={-1}
                 onClick={(event) => event.stopPropagation()}
                 style={getFlipTransform()}
-                className="
+                className={`
                     fixed left-1/2 top-1/2 z-50
                     w-[min(900px,92vw)] max-h-[86vh]
                     overflow-hidden rounded-2xl
@@ -51,9 +52,10 @@ export default function PortfolioModal({
                     bg-[var(--card-bg)]
                     shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]
                     origin-center transform-gpu will-change-transform
-                    transition-all duration-500
+                    transition-all duration-300
                     ease-[cubic-bezier(.16,1,.3,1)]
-                "
+                    ${isVisible ? "pointer-events-auto" : "pointer-events-none"}
+                `}
             >
                 <button
                     type="button"
