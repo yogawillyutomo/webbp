@@ -1,39 +1,39 @@
 export default function PortfolioHeader() {
-    return (
-        <div className="mb-20 text-center">
-            <div className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">
-                Product Ecosystem
-            </div>
+  return (
+    <div className="mb-20 text-center">
+      <div className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">
+        Product Portfolio
+      </div>
 
-            <h2
-                className="
-                    font-orbitron
-                    text-4xl
-                    font-bold
-                    lg:text-5xl
-                    bg-[linear-gradient(120deg,#3b82f6,#06b6d4,#3b82f6)]
-                    bg-clip-text
-                    text-transparent
-                    animate-gradient
-                "
-            >
-                Produk & Sistem Bakaran Project
-            </h2>
+      <h2
+        className="
+          font-orbitron
+          text-4xl
+          font-bold
+          lg:text-5xl
+          bg-[linear-gradient(120deg,#3b82f6,#06b6d4,#3b82f6)]
+          bg-clip-text
+          text-transparent
+          animate-gradient
+        "
+      >
+        Produk yang Sedang Dibangun Bakaran Project
+      </h2>
 
-            <p
-                className="
-                    mx-auto
-                    mt-6
-                    max-w-3xl
-                    text-lg
-                    leading-relaxed
-                    text-[var(--muted-text)]
-                "
-            >
-                Produk yang ditampilkan di sini mengikuti kondisi engineering yang
-                dapat dibuktikan. Status pengembangan ditulis apa adanya—termasuk
-                ketika sebuah sistem masih pre-production atau prototype.
-            </p>
-        </div>
-    );
+      <p
+        className="
+          mx-auto
+          mt-6
+          max-w-3xl
+          text-lg
+          leading-relaxed
+          text-[var(--muted-text)]
+        "
+      >
+        Portofolio ini menampilkan produk dengan status engineering yang dapat
+        dibuktikan. Kematangan setiap sistem ditulis apa adanya—termasuk ketika
+        masih dalam development, pre-production, atau prototype.
+      </p>
+    </div>
+  );
 }

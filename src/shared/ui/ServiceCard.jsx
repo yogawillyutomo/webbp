@@ -43,10 +43,10 @@ export default function ServiceCard({
       onClick={onClick}
       onKeyDown={handleKeyDown}
       onMouseMove={handleMouseMove}
-      whileHover={{ scale: 1.03, y: -8 }}
-      transition={{ duration: 0.35, ease: "easeOut" }}
+      whileHover={{ scale: 1.015, y: -4 }}
+      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
       className={`
-        relative isolate p-8 rounded-2xl cursor-pointer
+        relative isolate flex w-full min-h-[21rem] flex-col rounded-2xl p-8 cursor-pointer
         border overflow-hidden backdrop-blur-xl
         bg-[var(--card-bg)]
         group will-change-transform
@@ -57,8 +57,6 @@ export default function ServiceCard({
           : "border-[var(--card-border)]"}
       `}
     >
-
-      {/* Animated Border */}
       {active && (
         <motion.div
           layoutId="activeBorder"
@@ -72,15 +70,13 @@ export default function ServiceCard({
         </motion.div>
       )}
 
-      {/* Scan Light */}
       {active && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
           <div className="scan-line absolute -top-full left-0 w-full h-[200%]" />
         </div>
       )}
 
-      {/* Spotlight */}
-      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div
           className="absolute w-[500px] h-[500px] bg-blue-500/10 blur-3xl"
           style={{
@@ -91,14 +87,12 @@ export default function ServiceCard({
         />
       </div>
 
-      <div className="relative z-20 space-y-6">
-
-        {/* ICON */}
+      <div className="relative z-20 flex min-h-[17rem] flex-1 flex-col gap-6">
         <motion.div
-          whileHover={{ scale: 1.15, rotate: 3 }}
-          transition={{ duration: 0.3 }}
+          whileHover={{ scale: 1.08, rotate: 2 }}
+          transition={{ duration: 0.2 }}
           className="
-            w-16 h-16 rounded-xl
+            w-16 h-16 shrink-0 rounded-xl
             bg-gradient-to-br from-blue-600 to-cyan-500
             flex items-center justify-center
             shadow-lg shadow-blue-500/20
@@ -107,12 +101,12 @@ export default function ServiceCard({
           {icon}
         </motion.div>
 
-        <div>
+        <div className="flex flex-1 flex-col">
           <h3
             className={`
-              font-orbitron text-xl mb-1
+              min-h-[3.25rem] font-orbitron text-xl mb-1
               text-blue-600 dark:text-blue-400
-              transition-all duration-300
+              transition-colors duration-200
               group-hover:text-blue-500
               ${active ? "drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]" : ""}
             `}
@@ -123,7 +117,7 @@ export default function ServiceCard({
           <div
             aria-hidden="true"
             className={`
-              text-sm mb-3 transition-colors duration-300
+              min-h-6 text-sm mb-3 transition-colors duration-200
               ${active
                 ? "text-cyan-600 dark:text-cyan-400 font-semibold"
                 : "text-cyan-600 dark:text-[var(--brand-color)]"}
@@ -132,7 +126,7 @@ export default function ServiceCard({
             {subtitle}
           </div>
 
-          <p className="text-sm text-[var(--muted-text)]">
+          <p className="min-h-[2.75rem] text-sm text-[var(--muted-text)]">
             {shortDesc}
           </p>
 
@@ -142,9 +136,9 @@ export default function ServiceCard({
             initial={false}
             animate={{
               height: active ? "auto" : 0,
-              opacity: active ? 1 : 0
+              opacity: active ? 1 : 0,
             }}
-            transition={{ duration: 0.35 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="overflow-hidden"
           >
             <p className="mt-4 text-sm leading-relaxed text-[var(--muted-text)]">
@@ -154,8 +148,8 @@ export default function ServiceCard({
 
           <div
             className={`
-              mt-4 text-sm font-semibold tracking-[0.08em]
-              transition-all duration-300
+              mt-auto pt-4 text-sm font-semibold tracking-[0.08em]
+              transition-colors duration-200
               ${active
                 ? "text-cyan-300 drop-shadow-[0_0_6px_rgba(6,182,212,0.6)]"
                 : "text-cyan-600 dark:text-[var(--brand-color)] group-hover:text-blue-500"}

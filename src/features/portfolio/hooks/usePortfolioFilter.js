@@ -1,59 +1,55 @@
 import { useState, useMemo } from "react";
 
+const getProjectFilterTags = (project) => {
+    if (Array.isArray(project.filterTags) && project.filterTags.length > 0) {
+        return project.filterTags;
+    }
+
+    return [project.category];
+};
+
 export default function usePortfolioFilter(projects) {
-
-    /*
-    ================================
-    CATEGORY LIST
-    ================================
-    Mengambil semua category dari project
-    lalu membuat list unik
-    */
-
     const categories = useMemo(() => {
-        return ["All", ...new Set(projects.map(p => p.category))];
+        const uniqueCategories = new Set(
+            projects.flatMap((project) => getProjectFilterTags(project))
+        );
+
+        return ["All", ...uniqueCategories];
     }, [projects]);
 
+    const categoryCounts = useMemo(() => {
+        return Object.fromEntries(
+            categories.map((category) => {
+                if (category === "All") {
+                    return [category, projects.length];
+                }
 
-    /*
-    ================================
-    ACTIVE CATEGORY
-    ================================
-    */
+                const count = projects.filter((project) =>
+                    getProjectFilterTags(project).includes(category)
+                ).length;
+
+                return [category, count];
+            })
+        );
+    }, [categories, projects]);
 
     const [activeCategory, setActiveCategory] = useState("All");
 
-
-    /*
-    ================================
-    FILTERED PROJECTS
-    ================================
-    */
-
     const filteredProjects = useMemo(() => {
-
         if (activeCategory === "All") {
             return projects;
         }
 
-        return projects.filter(
-            project => project.category === activeCategory
+        return projects.filter((project) =>
+            getProjectFilterTags(project).includes(activeCategory)
         );
-
     }, [projects, activeCategory]);
-
-
-    /*
-    ================================
-    RETURN
-    ================================
-    */
 
     return {
         categories,
+        categoryCounts,
         activeCategory,
         setActiveCategory,
-        filteredProjects
+        filteredProjects,
     };
-
 }

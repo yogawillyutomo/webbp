@@ -1,57 +1,21 @@
-# Bakaran Project Website
+# WEBBP
 
-Official public website for **Bakaran Project**, presenting its engineering capabilities, product portfolio, and contact information.
+Public website for Bakaran Project.
 
-🌐 **Live:** https://bakaranproject.com
+## Local development
 
-## Overview
-
-This repository contains the public-facing Bakaran Project website. The current site is organized around:
-
-- **Hero** — evidence-led positioning and introduction
-- **Services** — engineering capabilities grounded in current work
-- **Products** — selected products with explicit maturity/status wording
-- **Contact** — inquiry and collaboration entry point
-- **Legal & metadata** — privacy, terms, canonical metadata, crawl routes, and social previews
-
-## Tech Stack
-
-- **Next.js 16** — App Router
-- **React 19**
-- **Tailwind CSS 4**
-- **Framer Motion**
-- **ESLint**
-
-## Project Structure
-
-```text
-src/
-├── app/          # Next.js app entry, legal pages, metadata routes, global styles
-├── config/       # Public site identity / canonical configuration
-├── constants/    # Shared static values
-├── core/         # Core application concerns
-├── features/     # Hero, services, portfolio, and contact features
-└── shared/       # Shared UI, layout, providers, and SEO helpers
-```
-
-## Local Development
-
-Install exactly from the committed lockfile:
+Use the committed lockfile for reproducible installs:
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Then open:
-
-```text
-http://localhost:3000
-```
+The local development server is available at `http://localhost:3000` unless another port is selected by Next.js.
 
 ## Verification
 
-The local merge gate is:
+Before a change is considered merge-ready, run:
 
 ```bash
 npm ci
@@ -62,34 +26,20 @@ git diff --check
 git status --short
 ```
 
-`npm run verify` runs ESLint and the production Next.js build.
+`npm run verify` runs ESLint and a production Next.js build.
 
-Browser-visible changes should also receive a focused manual smoke test. When a Vercel preview is available, verify the exact pull-request HEAD rather than assuming an older preview represents the current branch.
+For UI changes, also perform focused manual smoke testing for the affected flows. Portfolio changes should verify filter counts/results, first-click modal opening, keyboard activation, equal card alignment, and smooth hover/focus transitions.
 
-## Contribution & Security
+## Delivery policy
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for the branch/PR workflow and required evidence.
+- `main` is the source of truth for released website code.
+- Feature work should be reviewed through a pull request before merge.
+- Exact-head Vercel status is supporting evidence, not a substitute for the local verification gate.
+- Public product, partnership, legal, customer, adoption, or performance claims require evidence before publication.
+- Do not weaken lint, build, security, or accessibility checks merely to make a merge gate pass.
 
-Potential vulnerabilities should be reported privately according to [SECURITY.md](./SECURITY.md), not through public issues.
+See `CONTRIBUTING.md` and `docs/hardening/` for additional delivery and hardening guidance.
 
-## Repository Governance
+## Repository visibility and licensing
 
-- `main` is the production source branch.
-- Pull requests should carry local verification evidence and exact-head deployment evidence when available.
-- Dependency updates are tracked by Dependabot.
-- Ownership defaults are declared in `.github/CODEOWNERS`.
-- Generated archives/build artifacts should not be committed.
-
-GitHub branch/ruleset configuration is repository-level state and must be verified separately from committed files. A green Vercel deployment is useful evidence, but it does not replace the local audit/lint/build gate.
-
-## Website Metadata
-
-The application uses Indonesian-language public metadata with `https://bakaranproject.com` as the canonical base URL. Metadata claims must stay aligned with evidence-backed product status and public identity.
-
-## License
-
-This public repository currently does **not** include an open-source license. Public visibility alone does not grant reuse, redistribution, or modification rights beyond rights provided by applicable law.
-
----
-
-**Bakaran Project** — building digital systems for real operational needs.
+This repository being public does not grant an open-source license. No open-source license is currently declared.

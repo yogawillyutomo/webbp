@@ -2,6 +2,7 @@ import Navbar from "@/shared/layout/Navbar";
 import HeroSection from "@/features/hero/HeroSection";
 import ServicesSection from "@/features/services/ServicesSection";
 import PortfolioSection from "@/features/portfolio/PortfolioSection";
+import AboutSection from "@/features/about/AboutSection";
 import ContactSection from "@/features/contact/ContactSection";
 import Footer from "@/shared/layout/Footer";
 import OrganizationJsonLd from "@/shared/seo/OrganizationJsonLd";
@@ -43,6 +44,7 @@ export default function Home() {
         <HeroSection />
         <ServicesSection />
         <PortfolioSection />
+        <AboutSection />
         <ContactSection />
       </main>
 

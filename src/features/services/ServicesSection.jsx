@@ -18,8 +18,7 @@ export default function ServicesSection() {
   };
 
   return (
-    <section id="services" className="relative py-28 overflow-hidden">
-
+    <section id="solutions" className="relative py-28 overflow-hidden">
       <ServicesBackground />
 
       <motion.div
@@ -35,11 +34,9 @@ export default function ServicesSection() {
           activeIndex={activeIndex}
           onToggle={handleToggle}
         />
-
       </motion.div>
 
       <SectionDivider />
-
     </section>
   );
 }

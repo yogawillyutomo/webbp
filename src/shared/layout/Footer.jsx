@@ -16,12 +16,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <Image
-                src="/ico.svg"
-                alt=""
-                width={26}
-                height={26}
-              />
+              <Image src="/ico.svg" alt="" width={26} height={26} />
 
               <span className="font-orbitron text-xl font-bold text-[var(--text-primary)]">
                 {SITE.name}
@@ -29,8 +24,9 @@ export default function Footer() {
             </div>
 
             <p className="text-[var(--muted-text)] mb-6 max-w-md leading-relaxed">
-              Membangun solusi digital yang praktis untuk membantu organisasi
-              menyelesaikan masalah operasional nyata.
+              Digital product & systems engineering untuk kebutuhan operasional
+              nyata—dengan fokus pada pendidikan, platform dan integrasi, serta
+              smart mobility dan edge systems.
             </p>
 
             <div className="flex gap-4">
@@ -41,24 +37,22 @@ export default function Footer() {
           </div>
 
           <FooterColumn
-            title="Quick Links"
+            title="Navigate"
             links={[
               { label: "Home", href: "#home" },
-              { label: "Services", href: "#services" },
-              { label: "Produk", href: "#portfolio" },
+              { label: "Solutions", href: "#solutions" },
+              { label: "Products", href: "#portfolio" },
+              { label: "About", href: "#about" },
               { label: "Contact", href: "#contact" },
             ]}
           />
 
           <FooterColumn
-            title="Services"
+            title="Solution Domains"
             links={[
-              { label: "Digital Platforms", href: "#services" },
-              { label: "Digitalisasi Sekolah", href: "#services" },
-              { label: "System Integration", href: "#services" },
-              { label: "IoT & Edge Systems", href: "#services" },
-              { label: "AI & Computer Vision R&D", href: "#services" },
-              { label: "Operational UI", href: "#services" },
+              { label: "Education Systems", href: "#solutions" },
+              { label: "Operational Platforms & Integration", href: "#solutions" },
+              { label: "Smart Mobility & Edge", href: "#solutions" },
             ]}
           />
         </div>
