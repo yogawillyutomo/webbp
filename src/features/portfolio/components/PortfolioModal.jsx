@@ -134,7 +134,7 @@ export default function PortfolioModal({
                         </ul>
                     </div>
 
-                    <div>
+                    <div className="mb-8">
                         <h4 className="mb-4 font-orbitron text-base font-semibold">
                             Technology
                         </h4>
@@ -154,6 +154,13 @@ export default function PortfolioModal({
                             ))}
                         </div>
                     </div>
+
+                    <a
+                        href={`/products/${selectedProject.slug}`}
+                        className="btn-cyber inline-flex rounded-lg bg-linear-to-r from-blue-600 to-cyan-500 px-5 py-3 font-semibold text-white"
+                    >
+                        Buka halaman produk
+                    </a>
                 </div>
             </div>
         </>,
