@@ -1,15 +1,12 @@
 import RevealSection from "@/shared/ui/RevealSection";
 import CyberBadge from "./CyberBadge";
-import { getSolutionsSection } from "@/content/repository";
 
-const section = getSolutionsSection();
-
-export default function ServicesHeader() {
+export default function ServicesHeader({ content }) {
   return (
     <RevealSection direction="up" duration={0.9}>
       <div className="text-center mb-20 space-y-6">
         <div className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">
-          {section.eyebrow}
+          {content.eyebrow}
         </div>
 
         <h2
@@ -23,15 +20,15 @@ export default function ServicesHeader() {
             bg-clip-text text-transparent animate-gradient
           "
         >
-          {section.title}
+          {content.title}
         </h2>
 
         <p className="text-lg muted-text max-w-3xl mx-auto">
-          {section.description}
+          {content.description}
         </p>
 
         <div className="flex flex-wrap justify-center gap-8 mt-12">
-          {section.badges.map((item, index) => (
+          {content.badges.map((item, index) => (
             <RevealSection
               key={item}
               delay={index * 0.12}
