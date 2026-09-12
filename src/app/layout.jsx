@@ -42,7 +42,13 @@ export default function RootLayout({ children }) {
       className="scroll-smooth"
       suppressHydrationWarning
     >
-      <body className="font-rajdhani">
+      <body
+        className="font-rajdhani"
+        style={{
+          "--font-orbitron": "'Orbitron Variable', 'Orbitron', sans-serif",
+          "--font-rajdhani": "'Rajdhani', sans-serif",
+        }}
+      >
         {/* Inline script untuk mencegah theme flicker */}
         <script
           dangerouslySetInnerHTML={{
