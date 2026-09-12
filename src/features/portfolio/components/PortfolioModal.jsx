@@ -8,6 +8,7 @@ const STATUS_STYLES = {
 
 export default function PortfolioModal({
     selectedProject,
+    siteName,
     isVisible,
     dialogRef,
     closeModal,
@@ -84,7 +85,7 @@ export default function PortfolioModal({
                     <div className="relative z-10 pr-14">
                         <div className="mb-5 flex flex-wrap items-center gap-3">
                             <span className="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200/80">
-                                Bakaran Project
+                                {siteName}
                             </span>
                             <span className={`rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wider ${statusStyle}`}>
                                 {selectedProject.status}
